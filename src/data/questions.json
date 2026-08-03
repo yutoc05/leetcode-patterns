@@ -2732,6 +2732,19 @@
       ]
     },
     {
+      "id": 543,
+      "title": "Diameter of Binary Tree",
+      "slug": "diameter-of-binary-tree",
+      "pattern": [
+        "Tree",
+        "Depth-First Search",
+        "Binary Tree"
+      ],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 105,
       "title": "Construct Binary Tree from Preorder and Inorder Traversal",
       "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
