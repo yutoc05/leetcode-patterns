@@ -81,6 +81,27 @@ npm test            # single run
 npm run test:watch  # watch mode
 ```
 
+### Supabase setup
+
+The app uses Supabase for authentication and syncing user progress. Create a
+Supabase project, then copy its URL and browser-safe publishable key from
+**Project Settings > API** into `.env.local`:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Set these values in `.env.local`:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-or-anon-key
+```
+
+The publishable key (or legacy `anon` key) is intended for browser use. Never
+put a Supabase `service_role` or secret key in a `NEXT_PUBLIC_*` variable or
+commit it to the repository. Restart the dev server after changing env vars.
+
 A [Husky] `pre-push` hook runs `npm test` automatically before every push. This is set up for every clone via the `prepare` script.
 
 ## Acknowledgements
