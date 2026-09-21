@@ -6852,6 +6852,15 @@
       ]
     },
     {
+      "id": 1046,
+      "title": "Last Stone Weight",
+      "slug": "last-stone-weight",
+      "pattern": ["Array", "Heap (Priority Queue)"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 1075,
       "title": "Index Pairs of a String",
       "slug": "index-pairs-of-a-string",
