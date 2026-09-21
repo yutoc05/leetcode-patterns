@@ -4149,6 +4149,15 @@
       ]
     },
     {
+      "id": 703,
+      "title": "Kth Largest Element in a Stream",
+      "slug": "kth-largest-element-in-a-stream",
+      "pattern": ["Array", "Design", "Heap (Priority Queue)", "Data Stream"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 216,
       "title": "Combination Sum III",
       "slug": "combination-sum-iii",
