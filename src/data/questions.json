@@ -5,10 +5,7 @@
       "id": 1,
       "title": "Two Sum",
       "slug": "two-sum",
-      "pattern": [
-        "Array",
-        "Hash Table"
-      ],
+      "pattern": ["Array", "Hash Table"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -118,11 +115,7 @@
       "id": 2,
       "title": "Add Two Numbers",
       "slug": "add-two-numbers",
-      "pattern": [
-        "Linked List",
-        "Math",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Math", "Recursion"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -177,11 +170,7 @@
       "id": 3,
       "title": "Longest Substring Without Repeating Characters",
       "slug": "longest-substring-without-repeating-characters",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Sliding Window"
-      ],
+      "pattern": ["Hash Table", "String", "Sliding Window"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -291,11 +280,7 @@
       "id": 4,
       "title": "Median of Two Sorted Arrays",
       "slug": "median-of-two-sorted-arrays",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Divide and Conquer"
-      ],
+      "pattern": ["Array", "Binary Search", "Divide and Conquer"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -360,11 +345,7 @@
       "id": 5,
       "title": "Longest Palindromic Substring",
       "slug": "longest-palindromic-substring",
-      "pattern": [
-        "Two Pointers",
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Two Pointers", "String", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -449,11 +430,7 @@
       "id": 11,
       "title": "Container With Most Water",
       "slug": "container-with-most-water",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Greedy"
-      ],
+      "pattern": ["Array", "Two Pointers", "Greedy"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -513,11 +490,7 @@
       "id": 15,
       "title": "3Sum",
       "slug": "3sum",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Two Pointers", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -612,11 +585,7 @@
       "id": 16,
       "title": "3Sum Closest",
       "slug": "3sum-closest",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Two Pointers", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -651,11 +620,7 @@
       "id": 17,
       "title": "Letter Combinations of a Phone Number",
       "slug": "letter-combinations-of-a-phone-number",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Backtracking"
-      ],
+      "pattern": ["Hash Table", "String", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -705,10 +670,7 @@
       "id": 19,
       "title": "Remove Nth Node From End of List",
       "slug": "remove-nth-node-from-end-of-list",
-      "pattern": [
-        "Linked List",
-        "Two Pointers"
-      ],
+      "pattern": ["Linked List", "Two Pointers"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -743,10 +705,7 @@
       "id": 21,
       "title": "Merge Two Sorted Lists",
       "slug": "merge-two-sorted-lists",
-      "pattern": [
-        "Linked List",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Recursion"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -786,11 +745,7 @@
       "id": 22,
       "title": "Generate Parentheses",
       "slug": "generate-parentheses",
-      "pattern": [
-        "String",
-        "Dynamic Programming",
-        "Backtracking"
-      ],
+      "pattern": ["String", "Dynamic Programming", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -915,10 +870,7 @@
       "id": 24,
       "title": "Swap Nodes in Pairs",
       "slug": "swap-nodes-in-pairs",
-      "pattern": [
-        "Linked List",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Recursion"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -958,10 +910,7 @@
       "id": 25,
       "title": "Reverse Nodes in k-Group",
       "slug": "reverse-nodes-in-k-group",
-      "pattern": [
-        "Linked List",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Recursion"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -1016,11 +965,7 @@
       "id": 30,
       "title": "Substring with Concatenation of All Words",
       "slug": "substring-with-concatenation-of-all-words",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Sliding Window"
-      ],
+      "pattern": ["Hash Table", "String", "Sliding Window"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -1050,10 +995,7 @@
       "id": 33,
       "title": "Search in Rotated Sorted Array",
       "slug": "search-in-rotated-sorted-array",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1113,12 +1055,7 @@
       "id": 37,
       "title": "Sudoku Solver",
       "slug": "sudoku-solver",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Backtracking",
-        "Matrix"
-      ],
+      "pattern": ["Array", "Hash Table", "Backtracking", "Matrix"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -1148,10 +1085,7 @@
       "id": 39,
       "title": "Combination Sum",
       "slug": "combination-sum",
-      "pattern": [
-        "Array",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1186,10 +1120,7 @@
       "id": 40,
       "title": "Combination Sum II",
       "slug": "combination-sum-ii",
-      "pattern": [
-        "Array",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1219,10 +1150,7 @@
       "id": 41,
       "title": "First Missing Positive",
       "slug": "first-missing-positive",
-      "pattern": [
-        "Array",
-        "Hash Table"
-      ],
+      "pattern": ["Array", "Hash Table"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -1338,10 +1266,7 @@
       "id": 46,
       "title": "Permutations",
       "slug": "permutations",
-      "pattern": [
-        "Array",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1386,11 +1311,7 @@
       "id": 47,
       "title": "Permutations II",
       "slug": "permutations-ii",
-      "pattern": [
-        "Array",
-        "Backtracking",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Backtracking", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1410,11 +1331,7 @@
       "id": 48,
       "title": "Rotate Image",
       "slug": "rotate-image",
-      "pattern": [
-        "Array",
-        "Math",
-        "Matrix"
-      ],
+      "pattern": ["Array", "Math", "Matrix"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1469,10 +1386,7 @@
       "id": 51,
       "title": "N-Queens",
       "slug": "n-queens",
-      "pattern": [
-        "Array",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Backtracking"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -1507,11 +1421,7 @@
       "id": 53,
       "title": "Maximum Subarray",
       "slug": "maximum-subarray",
-      "pattern": [
-        "Array",
-        "Divide and Conquer",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Divide and Conquer", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1566,11 +1476,7 @@
       "id": 54,
       "title": "Spiral Matrix",
       "slug": "spiral-matrix",
-      "pattern": [
-        "Array",
-        "Matrix",
-        "Simulation"
-      ],
+      "pattern": ["Array", "Matrix", "Simulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1640,11 +1546,7 @@
       "id": 55,
       "title": "Jump Game",
       "slug": "jump-game",
-      "pattern": [
-        "Array",
-        "Dynamic Programming",
-        "Greedy"
-      ],
+      "pattern": ["Array", "Dynamic Programming", "Greedy"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1689,10 +1591,7 @@
       "id": 56,
       "title": "Merge Intervals",
       "slug": "merge-intervals",
-      "pattern": [
-        "Array",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1802,9 +1701,7 @@
       "id": 57,
       "title": "Insert Interval",
       "slug": "insert-interval",
-      "pattern": [
-        "Array"
-      ],
+      "pattern": ["Array"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1834,10 +1731,7 @@
       "id": 61,
       "title": "Rotate List",
       "slug": "rotate-list",
-      "pattern": [
-        "Linked List",
-        "Two Pointers"
-      ],
+      "pattern": ["Linked List", "Two Pointers"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1872,11 +1766,7 @@
       "id": 62,
       "title": "Unique Paths",
       "slug": "unique-paths",
-      "pattern": [
-        "Math",
-        "Dynamic Programming",
-        "Combinatorics"
-      ],
+      "pattern": ["Math", "Dynamic Programming", "Combinatorics"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -1921,11 +1811,7 @@
       "id": 70,
       "title": "Climbing Stairs",
       "slug": "climbing-stairs",
-      "pattern": [
-        "Math",
-        "Dynamic Programming",
-        "Memoization"
-      ],
+      "pattern": ["Math", "Dynamic Programming", "Memoization"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -1990,11 +1876,7 @@
       "id": 73,
       "title": "Set Matrix Zeroes",
       "slug": "set-matrix-zeroes",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Matrix"
-      ],
+      "pattern": ["Array", "Hash Table", "Matrix"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2034,11 +1916,7 @@
       "id": 74,
       "title": "Search a 2D Matrix",
       "slug": "search-a-2d-matrix",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Matrix"
-      ],
+      "pattern": ["Array", "Binary Search", "Matrix"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2083,11 +1961,7 @@
       "id": 75,
       "title": "Sort Colors",
       "slug": "sort-colors",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Two Pointers", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2147,11 +2021,7 @@
       "id": 76,
       "title": "Minimum Window Substring",
       "slug": "minimum-window-substring",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Sliding Window"
-      ],
+      "pattern": ["Hash Table", "String", "Sliding Window"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -2201,9 +2071,7 @@
       "id": 77,
       "title": "Combinations",
       "slug": "combinations",
-      "pattern": [
-        "Backtracking"
-      ],
+      "pattern": ["Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2233,11 +2101,7 @@
       "id": 78,
       "title": "Subsets",
       "slug": "subsets",
-      "pattern": [
-        "Array",
-        "Backtracking",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Array", "Backtracking", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2333,10 +2197,7 @@
       "id": 81,
       "title": "Search in Rotated Sorted Array II",
       "slug": "search-in-rotated-sorted-array-ii",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2366,9 +2227,7 @@
       "id": 83,
       "title": "Remove Duplicates from Sorted List",
       "slug": "remove-duplicates-from-sorted-list",
-      "pattern": [
-        "Linked List"
-      ],
+      "pattern": ["Linked List"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -2408,11 +2267,7 @@
       "id": 90,
       "title": "Subsets II",
       "slug": "subsets-ii",
-      "pattern": [
-        "Array",
-        "Backtracking",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Array", "Backtracking", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2452,10 +2307,7 @@
       "id": 91,
       "title": "Decode Ways",
       "slug": "decode-ways",
-      "pattern": [
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["String", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2490,9 +2342,7 @@
       "id": 92,
       "title": "Reverse Linked List II",
       "slug": "reverse-linked-list-ii",
-      "pattern": [
-        "Linked List"
-      ],
+      "pattern": ["Linked List"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2612,11 +2462,7 @@
       "id": 102,
       "title": "Binary Tree Level Order Traversal",
       "slug": "binary-tree-level-order-traversal",
-      "pattern": [
-        "Tree",
-        "Breadth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Breadth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2651,11 +2497,7 @@
       "id": 103,
       "title": "Binary Tree Zigzag Level Order Traversal",
       "slug": "binary-tree-zigzag-level-order-traversal",
-      "pattern": [
-        "Tree",
-        "Breadth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Breadth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2732,14 +2574,19 @@
       ]
     },
     {
+      "id": 110,
+      "title": "Balanced Binary Tree",
+      "slug": "balanced-binary-tree",
+      "pattern": ["Tree", "Depth-First Search", "Binary Tree"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 543,
       "title": "Diameter of Binary Tree",
       "slug": "diameter-of-binary-tree",
-      "pattern": [
-        "Tree",
-        "Depth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Depth-First Search", "Binary Tree"],
       "difficulty": "Easy",
       "premium": false,
       "companies": []
@@ -2784,11 +2631,7 @@
       "id": 107,
       "title": "Binary Tree Level Order Traversal II",
       "slug": "binary-tree-level-order-traversal-ii",
-      "pattern": [
-        "Tree",
-        "Breadth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Breadth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2868,12 +2711,7 @@
       "id": 113,
       "title": "Path Sum II",
       "slug": "path-sum-ii",
-      "pattern": [
-        "Backtracking",
-        "Tree",
-        "Depth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Backtracking", "Tree", "Depth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -2898,10 +2736,7 @@
       "id": 121,
       "title": "Best Time to Buy and Sell Stock",
       "slug": "best-time-to-buy-and-sell-stock",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -3056,11 +2891,7 @@
       "id": 128,
       "title": "Longest Consecutive Sequence",
       "slug": "longest-consecutive-sequence",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Union-Find"
-      ],
+      "pattern": ["Array", "Hash Table", "Union-Find"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3115,11 +2946,7 @@
       "id": 131,
       "title": "Palindrome Partitioning",
       "slug": "palindrome-partitioning",
-      "pattern": [
-        "String",
-        "Dynamic Programming",
-        "Backtracking"
-      ],
+      "pattern": ["String", "Dynamic Programming", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3169,10 +2996,7 @@
       "id": 134,
       "title": "Gas Station",
       "slug": "gas-station",
-      "pattern": [
-        "Array",
-        "Greedy"
-      ],
+      "pattern": ["Array", "Greedy"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3222,10 +3046,7 @@
       "id": 136,
       "title": "Single Number",
       "slug": "single-number",
-      "pattern": [
-        "Array",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Array", "Bit Manipulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -3322,11 +3143,7 @@
       "id": 141,
       "title": "Linked List Cycle",
       "slug": "linked-list-cycle",
-      "pattern": [
-        "Hash Table",
-        "Linked List",
-        "Two Pointers"
-      ],
+      "pattern": ["Hash Table", "Linked List", "Two Pointers"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -3366,11 +3183,7 @@
       "id": 142,
       "title": "Linked List Cycle II",
       "slug": "linked-list-cycle-ii",
-      "pattern": [
-        "Hash Table",
-        "Linked List",
-        "Two Pointers"
-      ],
+      "pattern": ["Hash Table", "Linked List", "Two Pointers"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3405,12 +3218,7 @@
       "id": 143,
       "title": "Reorder List",
       "slug": "reorder-list",
-      "pattern": [
-        "Linked List",
-        "Two Pointers",
-        "Stack",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Two Pointers", "Stack", "Recursion"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3481,10 +3289,7 @@
       "id": 152,
       "title": "Maximum Product Subarray",
       "slug": "maximum-product-subarray",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3544,10 +3349,7 @@
       "id": 153,
       "title": "Find Minimum in Rotated Sorted Array",
       "slug": "find-minimum-in-rotated-sorted-array",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3582,10 +3384,7 @@
       "id": 162,
       "title": "Find Peak Element",
       "slug": "find-peak-element",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3681,10 +3480,7 @@
       "id": 198,
       "title": "House Robber",
       "slug": "house-robber",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -3910,10 +3706,7 @@
       "id": 203,
       "title": "Remove Linked List Elements",
       "slug": "remove-linked-list-elements",
-      "pattern": [
-        "Linked List",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Recursion"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -3943,10 +3736,7 @@
       "id": 206,
       "title": "Reverse Linked List",
       "slug": "reverse-linked-list",
-      "pattern": [
-        "Linked List",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Recursion"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -4081,12 +3871,7 @@
       "id": 208,
       "title": "Implement Trie (Prefix Tree)",
       "slug": "implement-trie-prefix-tree",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Design",
-        "Trie"
-      ],
+      "pattern": ["Hash Table", "String", "Design", "Trie"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4121,12 +3906,7 @@
       "id": 209,
       "title": "Minimum Size Subarray Sum",
       "slug": "minimum-size-subarray-sum",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Sliding Window",
-        "Prefix Sum"
-      ],
+      "pattern": ["Array", "Binary Search", "Sliding Window", "Prefix Sum"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4241,13 +4021,7 @@
       "id": 212,
       "title": "Word Search II",
       "slug": "word-search-ii",
-      "pattern": [
-        "Array",
-        "String",
-        "Backtracking",
-        "Trie",
-        "Matrix"
-      ],
+      "pattern": ["Array", "String", "Backtracking", "Trie", "Matrix"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -4282,10 +4056,7 @@
       "id": 213,
       "title": "House Robber II",
       "slug": "house-robber-ii",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4381,10 +4152,7 @@
       "id": 216,
       "title": "Combination Sum III",
       "slug": "combination-sum-iii",
-      "pattern": [
-        "Array",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4399,11 +4167,7 @@
       "id": 217,
       "title": "Contains Duplicate",
       "slug": "contains-duplicate",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Hash Table", "Sorting"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -4518,12 +4282,7 @@
       "id": 234,
       "title": "Palindrome Linked List",
       "slug": "palindrome-linked-list",
-      "pattern": [
-        "Linked List",
-        "Two Pointers",
-        "Stack",
-        "Recursion"
-      ],
+      "pattern": ["Linked List", "Two Pointers", "Stack", "Recursion"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -4608,11 +4367,7 @@
       "id": 236,
       "title": "Lowest Common Ancestor of a Binary Tree",
       "slug": "lowest-common-ancestor-of-a-binary-tree",
-      "pattern": [
-        "Tree",
-        "Depth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Depth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4647,10 +4402,7 @@
       "id": 238,
       "title": "Product of Array Except Self",
       "slug": "product-of-array-except-self",
-      "pattern": [
-        "Array",
-        "Prefix Sum"
-      ],
+      "pattern": ["Array", "Prefix Sum"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4756,12 +4508,7 @@
       "id": 240,
       "title": "Search a 2D Matrix II",
       "slug": "search-a-2d-matrix-ii",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Divide and Conquer",
-        "Matrix"
-      ],
+      "pattern": ["Array", "Binary Search", "Divide and Conquer", "Matrix"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -4801,10 +4548,7 @@
       "id": 252,
       "title": "Meeting Rooms",
       "slug": "meeting-rooms",
-      "pattern": [
-        "Array",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Sorting"],
       "difficulty": "Easy",
       "premium": true,
       "companies": [
@@ -4896,9 +4640,7 @@
       "id": 254,
       "title": "Factor Combinations",
       "slug": "factor-combinations",
-      "pattern": [
-        "Backtracking"
-      ],
+      "pattern": ["Backtracking"],
       "difficulty": "Medium",
       "premium": true,
       "companies": []
@@ -5021,10 +4763,7 @@
       "id": 283,
       "title": "Move Zeroes",
       "slug": "move-zeroes",
-      "pattern": [
-        "Array",
-        "Two Pointers"
-      ],
+      "pattern": ["Array", "Two Pointers"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -5094,12 +4833,7 @@
       "id": 287,
       "title": "Find the Duplicate Number",
       "slug": "find-the-duplicate-number",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Binary Search",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Array", "Two Pointers", "Binary Search", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5247,11 +4981,7 @@
       "id": 300,
       "title": "Longest Increasing Subsequence",
       "slug": "longest-increasing-subsequence",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Binary Search", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5311,11 +5041,7 @@
       "id": 303,
       "title": "Range Sum Query - Immutable",
       "slug": "range-sum-query-immutable",
-      "pattern": [
-        "Array",
-        "Design",
-        "Prefix Sum"
-      ],
+      "pattern": ["Array", "Design", "Prefix Sum"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -5340,10 +5066,7 @@
       "id": 309,
       "title": "Best Time to Buy and Sell Stock with Cooldown",
       "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5393,11 +5116,7 @@
       "id": 320,
       "title": "Generalized Abbreviation",
       "slug": "generalized-abbreviation",
-      "pattern": [
-        "String",
-        "Backtracking",
-        "Bit Manipulation"
-      ],
+      "pattern": ["String", "Backtracking", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": true,
       "companies": []
@@ -5406,11 +5125,7 @@
       "id": 322,
       "title": "Coin Change",
       "slug": "coin-change",
-      "pattern": [
-        "Array",
-        "Dynamic Programming",
-        "Breadth-First Search"
-      ],
+      "pattern": ["Array", "Dynamic Programming", "Breadth-First Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5507,9 +5222,7 @@
       "id": 328,
       "title": "Odd Even Linked List",
       "slug": "odd-even-linked-list",
-      "pattern": [
-        "Linked List"
-      ],
+      "pattern": ["Linked List"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5539,10 +5252,7 @@
       "id": 338,
       "title": "Counting Bits",
       "slug": "counting-bits",
-      "pattern": [
-        "Dynamic Programming",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Dynamic Programming", "Bit Manipulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -5673,10 +5383,7 @@
       "id": 373,
       "title": "Find K Pairs with Smallest Sums",
       "slug": "find-k-pairs-with-smallest-sums",
-      "pattern": [
-        "Array",
-        "Heap (Priority Queue)"
-      ],
+      "pattern": ["Array", "Heap (Priority Queue)"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5701,10 +5408,7 @@
       "id": 377,
       "title": "Combination Sum IV",
       "slug": "combination-sum-iv",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5745,11 +5449,7 @@
       "id": 392,
       "title": "Is Subsequence",
       "slug": "is-subsequence",
-      "pattern": [
-        "Two Pointers",
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Two Pointers", "String", "Dynamic Programming"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -5779,10 +5479,7 @@
       "id": 416,
       "title": "Partition Equal Subset Sum",
       "slug": "partition-equal-subset-sum",
-      "pattern": [
-        "Array",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Array", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5862,11 +5559,7 @@
       "id": 424,
       "title": "Longest Repeating Character Replacement",
       "slug": "longest-repeating-character-replacement",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Sliding Window"
-      ],
+      "pattern": ["Hash Table", "String", "Sliding Window"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5911,12 +5604,7 @@
       "id": 425,
       "title": "Word Squares",
       "slug": "word-squares",
-      "pattern": [
-        "Array",
-        "String",
-        "Backtracking",
-        "Trie"
-      ],
+      "pattern": ["Array", "String", "Backtracking", "Trie"],
       "difficulty": "Hard",
       "premium": true,
       "companies": []
@@ -5925,12 +5613,7 @@
       "id": 435,
       "title": "Non-overlapping Intervals",
       "slug": "non-overlapping-intervals",
-      "pattern": [
-        "Array",
-        "Dynamic Programming",
-        "Greedy",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Dynamic Programming", "Greedy", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -5970,11 +5653,7 @@
       "id": 437,
       "title": "Path Sum III",
       "slug": "path-sum-iii",
-      "pattern": [
-        "Tree",
-        "Depth-First Search",
-        "Binary Tree"
-      ],
+      "pattern": ["Tree", "Depth-First Search", "Binary Tree"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6004,11 +5683,7 @@
       "id": 442,
       "title": "Find All Duplicates in an Array",
       "slug": "find-all-duplicates-in-an-array",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Hash Table", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6023,10 +5698,7 @@
       "id": 448,
       "title": "Find All Numbers Disappeared in an Array",
       "slug": "find-all-numbers-disappeared-in-an-array",
-      "pattern": [
-        "Array",
-        "Hash Table"
-      ],
+      "pattern": ["Array", "Hash Table"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -6098,11 +5770,7 @@
       "id": 452,
       "title": "Minimum Number of Arrows to Burst Balloons",
       "slug": "minimum-number-of-arrows-to-burst-balloons",
-      "pattern": [
-        "Array",
-        "Greedy",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Greedy", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6174,11 +5842,7 @@
       "id": 494,
       "title": "Target Sum",
       "slug": "target-sum",
-      "pattern": [
-        "Array",
-        "Dynamic Programming",
-        "Backtracking"
-      ],
+      "pattern": ["Array", "Dynamic Programming", "Backtracking"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6198,12 +5862,7 @@
       "id": 567,
       "title": "Permutation in String",
       "slug": "permutation-in-string",
-      "pattern": [
-        "Hash Table",
-        "Two Pointers",
-        "String",
-        "Sliding Window"
-      ],
+      "pattern": ["Hash Table", "Two Pointers", "String", "Sliding Window"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6424,10 +6083,7 @@
       "id": 643,
       "title": "Maximum Average Subarray I",
       "slug": "maximum-average-subarray-i",
-      "pattern": [
-        "Array",
-        "Sliding Window"
-      ],
+      "pattern": ["Array", "Sliding Window"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -6467,11 +6123,7 @@
       "id": 647,
       "title": "Palindromic Substrings",
       "slug": "palindromic-substrings",
-      "pattern": [
-        "Two Pointers",
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Two Pointers", "String", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6661,12 +6313,7 @@
       "id": 713,
       "title": "Subarray Product Less Than K",
       "slug": "subarray-product-less-than-k",
-      "pattern": [
-        "Array",
-        "Binary Search",
-        "Sliding Window",
-        "Prefix Sum"
-      ],
+      "pattern": ["Array", "Binary Search", "Sliding Window", "Prefix Sum"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6701,13 +6348,7 @@
       "id": 720,
       "title": "Longest Word in Dictionary",
       "slug": "longest-word-in-dictionary",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "String",
-        "Trie",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Hash Table", "String", "Trie", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": []
@@ -6716,10 +6357,7 @@
       "id": 745,
       "title": "Find Smallest Letter Greater Than Target",
       "slug": "find-smallest-letter-greater-than-target",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -6734,13 +6372,7 @@
       "id": 746,
       "title": "Prefix and Suffix Search",
       "slug": "prefix-and-suffix-search",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "String",
-        "Design",
-        "Trie"
-      ],
+      "pattern": ["Array", "Hash Table", "String", "Design", "Trie"],
       "difficulty": "Hard",
       "premium": false,
       "companies": []
@@ -6749,12 +6381,7 @@
       "id": 761,
       "title": "Employee Free Time",
       "slug": "employee-free-time",
-      "pattern": [
-        "Array",
-        "Sweep Line",
-        "Sorting",
-        "Heap (Priority Queue)"
-      ],
+      "pattern": ["Array", "Sweep Line", "Sorting", "Heap (Priority Queue)"],
       "difficulty": "Hard",
       "premium": true,
       "companies": [
@@ -6816,10 +6443,7 @@
       "id": 792,
       "title": "Binary Search",
       "slug": "binary-search",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -6854,11 +6478,7 @@
       "id": 800,
       "title": "Letter Case Permutation",
       "slug": "letter-case-permutation",
-      "pattern": [
-        "String",
-        "Backtracking",
-        "Bit Manipulation"
-      ],
+      "pattern": ["String", "Backtracking", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -6873,11 +6493,7 @@
       "id": 855,
       "title": "Count Unique Characters of All Substrings of a Given String",
       "slug": "count-unique-characters-of-all-substrings-of-a-given-string",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["Hash Table", "String", "Dynamic Programming"],
       "difficulty": "Hard",
       "premium": false,
       "companies": []
@@ -6886,12 +6502,7 @@
       "id": 874,
       "title": "Backspace String Compare",
       "slug": "backspace-string-compare",
-      "pattern": [
-        "Two Pointers",
-        "String",
-        "Stack",
-        "Simulation"
-      ],
+      "pattern": ["Two Pointers", "String", "Stack", "Simulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -6911,10 +6522,7 @@
       "id": 882,
       "title": "Peak Index in a Mountain Array",
       "slug": "peak-index-in-a-mountain-array",
-      "pattern": [
-        "Array",
-        "Binary Search"
-      ],
+      "pattern": ["Array", "Binary Search"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7005,10 +6613,7 @@
       "id": 908,
       "title": "Middle of the Linked List",
       "slug": "middle-of-the-linked-list",
-      "pattern": [
-        "Linked List",
-        "Two Pointers"
-      ],
+      "pattern": ["Linked List", "Two Pointers"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7043,12 +6648,7 @@
       "id": 931,
       "title": "Maximum Frequency Stack",
       "slug": "maximum-frequency-stack",
-      "pattern": [
-        "Hash Table",
-        "Stack",
-        "Design",
-        "Ordered Set"
-      ],
+      "pattern": ["Hash Table", "Stack", "Design", "Ordered Set"],
       "difficulty": "Hard",
       "premium": false,
       "companies": [
@@ -7068,11 +6668,7 @@
       "id": 940,
       "title": "Fruit Into Baskets",
       "slug": "fruit-into-baskets",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "Sliding Window"
-      ],
+      "pattern": ["Array", "Hash Table", "Sliding Window"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7155,11 +6751,7 @@
       "id": 1019,
       "title": "Squares of a Sorted Array",
       "slug": "squares-of-a-sorted-array",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Two Pointers", "Sorting"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7214,11 +6806,7 @@
       "id": 1028,
       "title": "Interval List Intersections",
       "slug": "interval-list-intersections",
-      "pattern": [
-        "Array",
-        "Two Pointers",
-        "Sweep Line"
-      ],
+      "pattern": ["Array", "Two Pointers", "Sweep Line"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7258,12 +6846,7 @@
       "id": 1075,
       "title": "Index Pairs of a String",
       "slug": "index-pairs-of-a-string",
-      "pattern": [
-        "Array",
-        "String",
-        "Trie",
-        "Sorting"
-      ],
+      "pattern": ["Array", "String", "Trie", "Sorting"],
       "difficulty": "Easy",
       "premium": true,
       "companies": []
@@ -7272,11 +6855,7 @@
       "id": 2132,
       "title": "Convert 1D Array Into 2D Array",
       "slug": "convert-1d-array-into-2d-array",
-      "pattern": [
-        "Array",
-        "Matrix",
-        "Simulation"
-      ],
+      "pattern": ["Array", "Matrix", "Simulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7291,11 +6870,7 @@
       "id": 242,
       "title": "Valid Anagram",
       "slug": "valid-anagram",
-      "pattern": [
-        "Hash Table",
-        "String",
-        "Sorting"
-      ],
+      "pattern": ["Hash Table", "String", "Sorting"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7345,12 +6920,7 @@
       "id": 49,
       "title": "Group Anagrams",
       "slug": "group-anagrams",
-      "pattern": [
-        "Array",
-        "Hash Table",
-        "String",
-        "Sorting"
-      ],
+      "pattern": ["Array", "Hash Table", "String", "Sorting"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7460,11 +7030,7 @@
       "id": 271,
       "title": "Encode and Decode Strings",
       "slug": "encode-and-decode-strings",
-      "pattern": [
-        "Array",
-        "String",
-        "Design"
-      ],
+      "pattern": ["Array", "String", "Design"],
       "difficulty": "Medium",
       "premium": true,
       "companies": []
@@ -7473,10 +7039,7 @@
       "id": 125,
       "title": "Valid Palindrome",
       "slug": "valid-palindrome",
-      "pattern": [
-        "Two Pointers",
-        "String"
-      ],
+      "pattern": ["Two Pointers", "String"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7541,10 +7104,7 @@
       "id": 20,
       "title": "Valid Parentheses",
       "slug": "valid-parentheses",
-      "pattern": [
-        "String",
-        "Stack"
-      ],
+      "pattern": ["String", "Stack"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7644,12 +7204,7 @@
       "id": 211,
       "title": "Design Add and Search Words Data Structure",
       "slug": "design-add-and-search-words-data-structure",
-      "pattern": [
-        "String",
-        "Depth-First Search",
-        "Design",
-        "Trie"
-      ],
+      "pattern": ["String", "Depth-First Search", "Design", "Trie"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7699,10 +7254,7 @@
       "id": 191,
       "title": "Number of 1 Bits",
       "slug": "number-of-1-bits",
-      "pattern": [
-        "Divide and Conquer",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Divide and Conquer", "Bit Manipulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7727,10 +7279,7 @@
       "id": 190,
       "title": "Reverse Bits",
       "slug": "reverse-bits",
-      "pattern": [
-        "Divide and Conquer",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Divide and Conquer", "Bit Manipulation"],
       "difficulty": "Easy",
       "premium": false,
       "companies": [
@@ -7755,10 +7304,7 @@
       "id": 371,
       "title": "Sum of Two Integers",
       "slug": "sum-of-two-integers",
-      "pattern": [
-        "Math",
-        "Bit Manipulation"
-      ],
+      "pattern": ["Math", "Bit Manipulation"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7788,10 +7334,7 @@
       "id": 1250,
       "title": "Longest Common Subsequence",
       "slug": "longest-common-subsequence",
-      "pattern": [
-        "String",
-        "Dynamic Programming"
-      ],
+      "pattern": ["String", "Dynamic Programming"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
@@ -7831,11 +7374,7 @@
       "id": 189,
       "title": "Rotate Array",
       "slug": "rotate-array",
-      "pattern": [
-        "Array",
-        "Math",
-        "Two Pointers"
-      ],
+      "pattern": ["Array", "Math", "Two Pointers"],
       "difficulty": "Medium",
       "premium": false,
       "companies": [
