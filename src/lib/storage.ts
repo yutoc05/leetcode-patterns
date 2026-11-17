@@ -26,12 +26,23 @@ function saveJson(key: string, value: unknown): void {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+/** Fired after completed questions, solved dates or reminders change. */
+export const PROGRESS_CHANGE_EVENT = "yeetcode:progress-change";
+
+// Saves often run inside React state updaters, so listeners hear about them in
+// a microtask, after React has finished rendering.
+function notifyProgressChange(): void {
+  if (typeof window === "undefined") return;
+  queueMicrotask(() => window.dispatchEvent(new Event(PROGRESS_CHANGE_EVENT)));
+}
+
 export function loadCompleted(): Set<number> {
   return new Set(loadJson<number[]>(STORAGE_KEY, []));
 }
 
 export function saveCompleted(ids: Set<number>): void {
   saveJson(STORAGE_KEY, [...ids]);
+  notifyProgressChange();
 }
 
 export function loadStarred(): Set<number> {
@@ -56,6 +67,7 @@ export function loadSolvedDates(): Record<number, string> {
 
 export function saveSolvedDates(dates: Record<number, string>): void {
   saveJson(SOLVED_DATES_KEY, dates);
+  notifyProgressChange();
 }
 
 export function loadReminders(): Record<number, Reminder> {
@@ -64,6 +76,7 @@ export function loadReminders(): Record<number, Reminder> {
 
 export function saveReminders(reminders: Record<number, Reminder>): void {
   saveJson(REMINDERS_KEY, reminders);
+  notifyProgressChange();
 }
 
 export function loadShuffleOrder(): number[] | null {

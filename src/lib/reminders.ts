@@ -1,6 +1,22 @@
 export interface Reminder {
   nextReview: string; // ISO date string (date only, e.g. "2026-03-09")
   interval: number;   // current interval in days
+  /** FSRS memory state, present once the question has been rated in Revision. */
+  fsrs?: FsrsCardData;
+}
+
+/** A ts-fsrs Card with its dates as ISO strings, so it survives JSON (localStorage and sync). */
+export interface FsrsCardData {
+  due: string;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  learning_steps: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  last_review?: string;
 }
 
 const SCHEDULE = [1, 3, 7, 14, 30];

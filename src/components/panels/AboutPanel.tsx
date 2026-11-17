@@ -58,6 +58,9 @@ export default function AboutPanel() {
               Browse <span className="font-medium text-ink">All Questions</span> with filters for difficulty, pattern and company, or follow the <span className="font-medium text-ink">Beginner</span> and <span className="font-medium text-ink">Experienced</span> roadmaps. Tick questions off as you solve them, keep notes, and set review dates to come back to them.
             </p>
             <p>
+              When a solved question is due for another look, it comes back in <span className="font-medium text-ink">Revision</span>. Solve it again, rate how it went, and the next review is scheduled for you.
+            </p>
+            <p>
               Your progress is saved in this browser. Sign in with GitHub to sync it across devices.
             </p>
             <p>

@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useSyncExternalStore, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { TableProperties, Map, Trophy } from "lucide-react";
+import { TableProperties, Map, Trophy, Repeat } from "lucide-react";
 import QuestionsTable from "@/components/questions/QuestionsTable";
 import RoadmapView from "@/components/roadmaps/RoadmapView";
+import RevisionView from "@/components/revision/RevisionView";
+import { useDueCount } from "@/lib/revision/useDueCount";
 import { Question } from "@/types/question";
 import { beginnerRoadmap, experiencedRoadmap } from "@/data/roadmaps";
 import { trackEvent } from "@/lib/analytics";
 
-type View = "table" | "beginner" | "experienced";
+type View = "table" | "beginner" | "experienced" | "revision";
 
 const VIEW_KEY = "leetcode-patterns-view";
 
@@ -17,6 +19,7 @@ const views: { id: View; label: string; icon: typeof TableProperties; descriptio
   { id: "table", label: "All Questions", icon: TableProperties, description: "Browse all questions with filters" },
   { id: "beginner", label: "Beginner Roadmap", icon: Map, description: "Structured path for newcomers" },
   { id: "experienced", label: "Experienced Roadmap", icon: Trophy, description: "Must-know problems for experienced engineers" },
+  { id: "revision", label: "Revision", icon: Repeat, description: "Review solved questions when they're due" },
 ];
 
 function isValidView(v: string | null): v is View {
@@ -31,6 +34,7 @@ export default function ViewSwitcher({
   updatedDate: string;
 }) {
   const searchParams = useSearchParams();
+  const dueCount = useDueCount(questions);
 
   const paramView = searchParams.get("view");
 
@@ -99,10 +103,14 @@ export default function ViewSwitcher({
               type="button"
               onClick={() => switchView(v.id)}
               aria-pressed={isActive}
+              aria-label={v.id === "revision" && dueCount > 0 ? `${v.label}, ${dueCount} due` : undefined}
               className="tab"
             >
               <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span>{v.label}</span>
+              {v.id === "revision" && dueCount > 0 && (
+                <span className="font-outlier text-sm text-muted tabular-nums" aria-hidden="true">{dueCount}</span>
+              )}
             </button>
           );
         })}
@@ -121,6 +129,9 @@ export default function ViewSwitcher({
         )}
         {displayedView === "experienced" && (
           <RoadmapView roadmap={experiencedRoadmap} questions={questions} />
+        )}
+        {displayedView === "revision" && (
+          <RevisionView questions={questions} />
         )}
       </div>
     </>

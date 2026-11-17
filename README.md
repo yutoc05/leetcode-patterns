@@ -10,6 +10,7 @@ A curated list of LeetCode questions grouped by the pattern that solves them, so
 
 - **All Questions**: every question with filters for difficulty, pattern and company, plus stars, notes and review dates.
 - **Beginner and Experienced roadmaps**: ordered paths through the list, phase by phase.
+- **Revision**: solved questions come back when they're due, scheduled with [FSRS] (the spaced-repetition algorithm Anki uses). Rate each one Hard, Good or Easy and the next review date is set for you.
 - **Helpful Tips**: which approach to reach for, based on the problem's constraints.
 - Progress is saved in your browser. Sign in with GitHub to sync it across devices.
 
@@ -73,6 +74,7 @@ use and adapt with attribution, not for commercial use.
 [vitest]: https://vitest.dev
 [react testing library]: https://testing-library.com/docs/react-testing-library/intro
 [husky]: https://typicode.github.io/husky
+[fsrs]: https://github.com/open-spaced-repetition/ts-fsrs
 [leetcode patterns]: https://github.com/SeanPrashad/leetcode-patterns
 [blind 75 list]: https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU
 [grokking the coding interview]: https://www.designgurus.io/course/grokking-the-coding-interview
