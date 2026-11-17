@@ -41,17 +41,20 @@
   --color-muted: oklch(38% 0.016 245);
   --color-rule: oklch(73% 0.013 240);
   --color-rule-2: oklch(32% 0.018 240);
-  --color-accent: oklch(45% 0.180 350);
-  --color-accent-2: oklch(37% 0.160 350);
+  /* The accent is the wordmark's blue ("patterns" in the logo). */
+  --color-accent: oklch(45% 0.19 264);
+  --color-accent-2: oklch(38% 0.17 264);
   --color-accent-ink: oklch(97% 0.006 245);
-  --color-focus: oklch(46% 0.190 350);
+  --color-focus: oklch(47% 0.2 264);
   --color-sheet: oklch(93.5% 0.008 245);
-  /* Brand: the wordmark's two blues (placeholder until a wordmark is chosen). */
+  /* Brand: the wordmark's two blues ("yeetcode" and "patterns"). */
   --color-brand-ink: oklch(30% 0.13 264);
   --color-brand: oklch(45% 0.19 264);
   --font-display: var(--font-hanken), "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-newsreader), "Newsreader", ui-serif, Georgia, serif;
-  --font-outlier: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: var(--font-hanken), "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* Code, key hints and the ASCII dog only; figures use the body face's tabular numerals. */
+  --font-outlier: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  --font-wordmark: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --radius-card: 0;
   --radius-pill: 2px;
   --shadow-card: none;
@@ -104,10 +107,10 @@
   --color-muted: oklch(72% 0.014 245);
   --color-rule: oklch(34% 0.014 240);
   --color-rule-2: oklch(80% 0.012 240);
-  --color-accent: oklch(72% 0.14 350);
-  --color-accent-2: oklch(78% 0.12 350);
+  --color-accent: oklch(74% 0.13 264);
+  --color-accent-2: oklch(80% 0.11 264);
   --color-accent-ink: oklch(16% 0.020 245);
-  --color-focus: oklch(74% 0.15 350);
+  --color-focus: oklch(76% 0.14 264);
   --color-error: oklch(72% 0.15 27);
   --color-error-ink: oklch(16% 0.020 245);
   --color-success: oklch(78% 0.10 160);

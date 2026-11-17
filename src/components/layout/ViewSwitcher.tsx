@@ -109,7 +109,7 @@ export default function ViewSwitcher({
               <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span>{v.label}</span>
               {v.id === "revision" && dueCount > 0 && (
-                <span className="font-outlier text-sm text-muted tabular-nums" aria-hidden="true">{dueCount}</span>
+                <span className="text-sm text-muted tabular-nums" aria-hidden="true">{dueCount}</span>
               )}
             </button>
           );

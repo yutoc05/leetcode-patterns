@@ -221,7 +221,7 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
         {total > 0 && (
           <div className="mt-6">
             <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <span className="font-outlier text-lg font-medium text-ink tabular-nums">{done} of {total} reviewed</span>
+              <span className="text-lg font-medium text-ink tabular-nums">{done} of {total} reviewed</span>
               <span className="text-sm text-muted">Order: {strategy.label}</span>
             </div>
             <div className="relative h-1 overflow-hidden bg-sheet-3" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Revision progress">
@@ -392,7 +392,7 @@ function RevisionCardView({
                 <kbd className="kbd hidden sm:inline">{r.key}</kbd>
               </span>
               {intervals && (
-                <span className="font-outlier text-xs font-normal text-muted tabular-nums">
+                <span className="text-xs font-normal text-muted tabular-nums">
                   <span className="hidden sm:inline">next in </span>{plural(intervals[r.id], "day")}
                 </span>
               )}

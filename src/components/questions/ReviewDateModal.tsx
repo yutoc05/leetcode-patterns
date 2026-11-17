@@ -69,7 +69,7 @@ export default function ReviewDateModal({
                 className="option justify-between px-4 font-display text-sm font-medium text-ink"
               >
                 <span>{p.label}</span>
-                <span className="font-outlier text-xs font-normal text-muted tabular-nums">
+                <span className="text-xs font-normal text-muted tabular-nums">
                   {new Date(date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                 </span>
               </button>

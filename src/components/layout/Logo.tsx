@@ -1,10 +1,16 @@
-// Text wordmark. A placeholder until one of the wordmark directions is chosen;
-// swapping it means changing only this component.
+// The wordmark: "yeetcode" in the deep brand blue and "patterns" in the
+// accent blue, set together in Plus Jakarta Sans ExtraBold.
 export default function Logo() {
   return (
-    <span className="inline-block font-display text-3xl leading-none font-semibold tracking-[-0.035em] whitespace-nowrap sm:text-4xl">
-      <span className="text-brand-ink">Yeetcode</span>{" "}
-      <span className="text-brand">Patterns</span>
-    </span>
+    <>
+      <span className="sr-only">Yeetcode Patterns</span>
+      <span
+        aria-hidden="true"
+        className="inline-block font-wordmark text-3xl leading-none font-extrabold tracking-[-0.05em] whitespace-nowrap sm:text-4xl"
+      >
+        <span className="text-brand-ink">yeetcode</span>
+        <span className="text-brand">patterns</span>
+      </span>
+    </>
   );
 }

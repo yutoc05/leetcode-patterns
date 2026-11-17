@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Newsreader, IBM_Plex_Mono } from "next/font/google";
+import { Hanken_Grotesk, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ServiceWorkerRegistrar from "@/components/layout/ServiceWorkerRegistrar";
 import { AuthProvider } from "@/components/layout/AuthContext";
@@ -7,20 +7,22 @@ import { AuthProvider } from "@/components/layout/AuthContext";
 const hanken = Hanken_Grotesk({
   variable: "--font-hanken",
   subsets: ["latin"],
-  weight: ["500", "600"],
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+// The wordmark only.
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  weight: ["800"],
+  display: "swap",
+});
+
+// Code, key hints and the ASCII dog only.
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
@@ -81,7 +83,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${hanken.variable} ${newsreader.variable} ${plexMono.variable}`}
+      className={`${hanken.variable} ${jakarta.variable} ${geistMono.variable}`}
     >
       <head>
         <script

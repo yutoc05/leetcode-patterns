@@ -212,7 +212,7 @@ export default function NoteEditor({
         </div>
       ) : (
         <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <span className={`font-outlier text-xs tabular-nums ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-error" : "text-muted"}`}>
+          <span className={`text-xs tabular-nums ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-error" : "text-muted"}`}>
             {editingNote.draft.length.toLocaleString()} / {MAX_NOTE_LENGTH.toLocaleString()} characters
           </span>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
