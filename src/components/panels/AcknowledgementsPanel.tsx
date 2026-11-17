@@ -68,8 +68,21 @@ export default function AcknowledgementsPanel() {
           </button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+          <p className="mb-4 text-md leading-relaxed text-ink-2">
+            Yeetcode Patterns is adapted from <a
+              href="https://github.com/SeanPrashad/leetcode-patterns"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link"
+            >Leetcode Patterns</a> by Sean Prashad, used under <a
+              href="https://creativecommons.org/licenses/by-nc/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link"
+            >CC BY-NC 4.0</a>.
+          </p>
           <p className="mb-6 text-sm text-muted">
-            Leetcode Patterns wouldn&apos;t exist without the following resources:
+            The question list builds on these resources:
           </p>
           <ul className="space-y-6">
             {sources.map((source) => (

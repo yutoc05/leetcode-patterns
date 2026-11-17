@@ -52,29 +52,21 @@ export default function AboutPanel() {
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
           <div className="space-y-4 text-md leading-relaxed text-ink-2">
             <p>
-              In <span className="font-medium text-ink">2019</span>, as a broke college
-              student who couldn&apos;t afford premium interview resources, I spent countless hours searching
-              for free materials and teaching myself React to build <span className="font-medium text-ink">Leetcode Patterns</span>.
+              <span className="font-medium text-ink">Yeetcode Patterns</span> is a curated list of LeetCode questions grouped by the pattern that solves them, so you practise recognising patterns instead of tackling problems at random.
             </p>
             <p>
-              I believe <span className="font-medium text-ink">everyone</span>&nbsp;deserves
-              access to high-quality interview material - regardless of their financial situation. It&apos;s why I chose to make this website <a
-                href="https://github.com/seanprashad/leetcode-patterns/blob/main/LICENSE"
+              Browse <span className="font-medium text-ink">All Questions</span> with filters for difficulty, pattern and company, or follow the <span className="font-medium text-ink">Beginner</span> and <span className="font-medium text-ink">Experienced</span> roadmaps. Tick questions off as you solve them, keep notes, and set review dates to come back to them.
+            </p>
+            <p>
+              Your progress is saved in this browser. Sign in with GitHub to sync it across devices.
+            </p>
+            <p>
+              The site is <a
+                href="https://github.com/yutoc05/yeetcode-patterns"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link"
-              >free and open source</a>.
-            </p>
-            <p>
-              Best of luck on your journey!
-            </p>
-            <p className="text-2xl italic text-ink">
-              <a
-                href="https://github.com/SeanPrashad"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-              >Sean</a>
+              >open source</a> and free to use. Good luck with your interviews.
             </p>
           </div>
         </div>

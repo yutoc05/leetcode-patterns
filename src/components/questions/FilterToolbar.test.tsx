@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, act } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { createRef } from "react";
 import FilterToolbar from "@/components/questions/FilterToolbar";
 
@@ -54,164 +54,24 @@ function renderToolbar(globalFilter = "") {
   return { ...result, setGlobalFilter };
 }
 
-describe("FilterToolbar sean10 easter egg", () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it("does not show toast when search is empty", () => {
-    renderToolbar("");
-    expect(screen.queryByText("successfully applied")).not.toBeInTheDocument();
+describe("FilterToolbar", () => {
+  it("renders the search box with its keyboard hint", () => {
+    renderToolbar();
+    expect(screen.getByLabelText("Search questions")).toBeInTheDocument();
+    expect(screen.getByText("/")).toBeInTheDocument();
   });
 
-  it("does not show toast for unrelated search text", () => {
-    renderToolbar("binary search");
-    expect(screen.queryByText("successfully applied")).not.toBeInTheDocument();
+  it("passes typed text to setGlobalFilter", () => {
+    const { setGlobalFilter } = renderToolbar();
+    fireEvent.change(screen.getByLabelText("Search questions"), { target: { value: "two sum" } });
+    expect(setGlobalFilter).toHaveBeenCalledWith("two sum");
   });
 
-  it("shows toast when globalFilter is 'sean10'", () => {
-    renderToolbar("sean10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("is case-insensitive", () => {
-    renderToolbar("Sean10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("shows confetti when sean10 is typed", () => {
-    const { container } = renderToolbar("sean10");
-    const confettiPieces = container.querySelectorAll("[style*='sean10Fall']");
-    expect(confettiPieces.length).toBe(100);
-  });
-
-  it("shows sparkle emojis around the input", () => {
-    renderToolbar("sean10");
-    expect(screen.getAllByText("✨").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("💫").length).toBeGreaterThan(0);
-  });
-
-  it("applies green border to search input when active", () => {
-    renderToolbar("sean10");
-    const input = screen.getByLabelText("Search questions");
-    expect(input.className).toContain("border-green-500");
-  });
-
-  it("does not apply green border for normal search", () => {
-    renderToolbar("arrays");
-    const input = screen.getByLabelText("Search questions");
-    expect(input.className).not.toContain("border-green-500");
-  });
-
-  it("fades out after 5 seconds", () => {
-    const { container } = renderToolbar("sean10");
-    const toastOverlay = container.querySelector(".fixed.inset-0.z-\\[9999\\].flex");
-    expect(toastOverlay?.className).toContain("opacity-100");
-
-    act(() => {
-      vi.advanceTimersByTime(5000);
-    });
-
-    expect(toastOverlay?.className).toContain("opacity-0");
-  });
-
-  it("does not fade before 5 seconds", () => {
-    const { container } = renderToolbar("sean10");
-    const toastOverlay = container.querySelector(".fixed.inset-0.z-\\[9999\\].flex");
-
-    act(() => {
-      vi.advanceTimersByTime(4000);
-    });
-
-    expect(toastOverlay?.className).toContain("opacity-100");
-  });
-});
-
-describe("FilterToolbar maxson10 easter egg", () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it("shows toast when globalFilter is 'maxson10'", () => {
-    renderToolbar("maxson10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("is case-insensitive", () => {
-    renderToolbar("Maxson10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("shows confetti when maxson10 is typed", () => {
-    const { container } = renderToolbar("maxson10");
-    const confettiPieces = container.querySelectorAll("[style*='sean10Fall']");
-    expect(confettiPieces.length).toBe(100);
-  });
-
-  it("rains the configured emojis", () => {
-    renderToolbar("maxson10");
-    expect(screen.getAllByText("👹").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("🔥").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("🩸").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("6️⃣").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("🦆").length).toBeGreaterThan(0);
-  });
-
-  it("applies green border to search input when active", () => {
-    renderToolbar("maxson10");
-    const input = screen.getByLabelText("Search questions");
-    expect(input.className).toContain("border-green-500");
-  });
-});
-
-describe("FilterToolbar wendy10 easter egg", () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it("shows toast when globalFilter is 'wendy10'", () => {
-    renderToolbar("wendy10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("is case-insensitive", () => {
-    renderToolbar("Wendy10");
-    expect(screen.getByText(/successfully applied/)).toBeInTheDocument();
-  });
-
-  it("shows twice as much confetti when wendy10 is typed", () => {
-    const { container } = renderToolbar("wendy10");
-    const confettiPieces = container.querySelectorAll("[style*='sean10Fall']");
-    expect(confettiPieces.length).toBe(200);
-  });
-
-  it("rains only the Netflix company icon", () => {
-    const { container } = renderToolbar("wendy10");
-    const confettiPieces = container.querySelectorAll("[style*='sean10Fall']");
-    confettiPieces.forEach((piece) => {
-      const img = piece.querySelector("img");
-      expect(img?.getAttribute("src")).toContain("/icons/netflix.png");
-    });
-  });
-
-  it("shows the Netflix company icon in the toast", () => {
-    const { container } = renderToolbar("wendy10");
-    const toastIcon = container.querySelector(".text-xl img");
-    expect(toastIcon?.getAttribute("src")).toContain("/icons/netflix.png");
-  });
-
-  it("applies green border to search input when active", () => {
-    renderToolbar("wendy10");
-    const input = screen.getByLabelText("Search questions");
-    expect(input.className).toContain("border-green-500");
+  it("shows the filter dropdowns and view toggles", () => {
+    renderToolbar();
+    expect(screen.getByText("All Difficulties")).toBeInTheDocument();
+    expect(screen.getByText("All Patterns")).toBeInTheDocument();
+    expect(screen.getByText("All Companies")).toBeInTheDocument();
+    expect(screen.getByLabelText("Hide completed")).toBeInTheDocument();
   });
 });

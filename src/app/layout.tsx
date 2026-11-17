@@ -26,37 +26,37 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://seanprashad.com/leetcode-patterns";
+const siteUrl = "https://yutoc05.github.io/yeetcode-patterns";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Leetcode Patterns",
+  title: "Yeetcode Patterns",
   description:
-    "A curated list of LeetCode questions grouped by pattern to help you ace coding interviews. Filter by difficulty, company, and topic.",
+    "A curated list of LeetCode questions grouped by pattern to help you prepare for coding interviews. Filter by difficulty, company, and topic.",
   manifest: `${basePath}/manifest.json`,
   metadataBase: new URL(siteUrl),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Leetcode Patterns",
+    title: "Yeetcode Patterns",
     description:
-      "A curated list of LeetCode questions grouped by pattern to help you ace coding interviews.",
+      "A curated list of LeetCode questions grouped by pattern to help you prepare for coding interviews.",
     url: siteUrl,
-    siteName: "Leetcode Patterns",
+    siteName: "Yeetcode Patterns",
     images: [
       {
         url: `${basePath}/images/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "Leetcode Patterns – A curated list of LeetCode questions grouped by pattern",
+        alt: "Yeetcode Patterns: a curated list of LeetCode questions grouped by pattern",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leetcode Patterns",
+    title: "Yeetcode Patterns",
     description:
-      "A curated list of LeetCode questions grouped by pattern to help you ace coding interviews.",
+      "A curated list of LeetCode questions grouped by pattern to help you prepare for coding interviews.",
     images: [`${basePath}/images/og-image.png`],
   },
   keywords: [
@@ -67,8 +67,9 @@ export const metadata: Metadata = {
     "interview prep",
     "blind 75",
     "leetcode patterns",
+    "yeetcode patterns",
   ],
-  authors: [{ name: "Sean Prashad", url: "https://github.com/SeanPrashad" }],
+  authors: [{ name: "Yuto Chau", url: "https://github.com/yutoc05" }],
 };
 
 export default function RootLayout({

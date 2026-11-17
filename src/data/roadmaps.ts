@@ -22,11 +22,11 @@ export const beginnerRoadmap: Roadmap = {
   id: "beginner",
   name: "Beginner Roadmap",
   description:
-    "A structured path for those new to coding interviews.\n\n**Sean's Guidance:**\n" +
-    "1. Choose a programming language that you **feel most comfortable with** - for me that is Java. If you're new to programming, I would recommend **Python**.\n" +
+    "A structured path for those new to coding interviews.\n\n**Guidance:**\n" +
+    "1. Choose a programming language that you **feel most comfortable with**. If you're new to programming, **Python** is a good choice.\n" +
     "2. **Spend no more than 30 minutes** trying to think of *any* solution, even if it's brute force. You want to try applying what you know, and if stuck, then expand your skillset by **studying the solution until you're able to fully explain it to another individual**.\n" +
-    "3. **Expect to struggle at first** (*for my first time, it took at least a month to begin improving*).\n" + 
-    "4. **Do not memorize solutions** - this does not work in interviews when asked follow-up questions (*I speak from experience*).\n" +
+    "3. **Expect to struggle at first** (*it can take a month or more before you start to see improvement*).\n" +
+    "4. **Do not memorize solutions** - this does not work in interviews when asked follow-up questions.\n" +
     "5. Don't be afraid to **ask an AI agent to explain the solution** to you - *it's a great alternative to watching a video solution*.\n" +
     "6. Reference the **Helpful Tips** tab for which tools to consider pulling out of your toolkit when solving a problem - *don't use a screwdriver when you need a hammer!*",
   phases: [
@@ -410,10 +410,10 @@ export const experiencedRoadmap: Roadmap = {
   id: "experienced",
   name: "Experienced",
   description:
-    "Originally shared on [Blind.com](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu) by [Yangshun Tay](https://www.techinterviewhandbook.org/), the Blind 75 problemset represents the highest-value questions for coding interview preparation.\n\n**Sean's Guidance:**\n" +
+    "Originally shared on [Blind.com](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu) by [Yangshun Tay](https://www.techinterviewhandbook.org/), the Blind 75 problemset represents the highest-value questions for coding interview preparation.\n\n**Guidance:**\n" +
     "1. If you're here, you are familiar with technical interviews and the patterns you need to know. **Pick a language** and begin working through all easy problems to build confidence.\n" +
     "2. If you get stuck on a problem for **more than 15 minutes**, consult the **Helpful Tips** tab and proceed to study the solution using an AI agent/YouTube video.\n" +
-    "3. Once you have completed all 75 questions, I would recommend **reattempting ones that gave you trouble** before moving onto company-specific lists from [Leetcode Premium](https://leetcode.com/subscribe/) or [1point3acres](https://www.1point3acres.com/interview/).\n" +
+    "3. Once you have completed all 75 questions, **reattempt the ones that gave you trouble** before moving onto company-specific lists from [Leetcode Premium](https://leetcode.com/subscribe/) or [1point3acres](https://www.1point3acres.com/interview/).\n" +
     "4. Ensure to leverage free **mock interviews** on [Pramp](https://www.pramp.com/#/) to reacclimate to brain fog/interview anxiety - *you want to fail as many times practicing and not during an interview*.\n" +
     "5. Schedule interviews with companies that are **not your first choice** before interviewing with your goal companies - the practice will drastically help.\n",
   phases: [

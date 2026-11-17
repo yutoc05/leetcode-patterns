@@ -11,17 +11,6 @@ const difficultyColor: Record<string, string> = {
   Hard: "text-hard",
 };
 
-// Easter egg codes: type one in the search box for a celebration.
-// `icon` is a company icon slug (public/icons/<slug>.png) rained instead of emojis.
-const EASTER_EGGS: Record<string, { emojis: string[]; pieces: number; icon?: string }> = {
-  sean10: { emojis: ["🎉", "✨", "⭐", "🦧"], pieces: 100 },
-  maxson10: { emojis: ["👹", "🔥", "🩸", "6️⃣", "🦆"], pieces: 100 },
-  wendy10: { emojis: [], pieces: 200, icon: "netflix" },
-};
-
-const eggIconSrc = (icon: string) =>
-  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/icons/${icon}.png`;
-
 interface FilterToolbarProps {
   table: Table<Question>;
   globalFilter: string;
@@ -155,33 +144,6 @@ export default function FilterToolbar({
     };
   }, []);
 
-  const activeCode = globalFilter.toLowerCase();
-  const egg = EASTER_EGGS[activeCode];
-  const showSean10 = !!egg;
-  const [sean10Fading, setSean10Fading] = useState(false);
-
-  useEffect(() => {
-    if (!showSean10) {
-      setSean10Fading(false);
-      return;
-    }
-    const timer = setTimeout(() => setSean10Fading(true), 5000);
-    return () => clearTimeout(timer);
-  }, [showSean10]);
-
-  const confettiPieces = useMemo(
-    () =>
-      Array.from({ length: egg?.pieces ?? 0 }, (_, i) => ({
-        emoji: egg?.emojis.length ? egg.emojis[i % egg.emojis.length] : "",
-        left: Math.random() * 100,
-        delay: Math.random() * 2,
-        duration: 2 + Math.random() * 2,
-        size: 12 + Math.random() * 16,
-      })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeCode],
-  );
-
   return (
     <div className="flex flex-wrap items-center gap-x-2 gap-y-3 font-display text-sm">
       <div className="relative">
@@ -192,67 +154,9 @@ export default function FilterToolbar({
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
           aria-label="Search questions"
-          className={`field w-44 pr-8 ${showSean10 ? "border-green-500 border-accent" : ""}`}
+          className="field w-44 pr-8"
         />
         <kbd className="kbd pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">/</kbd>
-        {showSean10 && (
-          <>
-            {/* Sparkle particles around search input */}
-            <div className={`pointer-events-none absolute -inset-3 z-40 transition-opacity duration-700 ${sean10Fading ? "opacity-0" : "opacity-100"}`}>
-              {["✨", "⭐", "💫", "🌟", "✨", "⭐"].map((spark, i) => (
-                <span
-                  key={i}
-                  className="absolute animate-ping text-xs"
-                  style={{
-                    top: `${[0, 50, 100, 0, 50, 100][i]}%`,
-                    left: `${[0, 100, 50, 100, 0, 50][i]}%`,
-                    animationDelay: `${i * 150}ms`,
-                    animationDuration: "1s",
-                  }}
-                >
-                  {spark}
-                </span>
-              ))}
-            </div>
-            {/* Success toast centered on screen */}
-            <div className={`fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none transition-opacity duration-700 ${sean10Fading ? "opacity-0" : "opacity-100"}`}>
-              <div className="dialog whitespace-nowrap border-t-accent px-6 py-4 text-center"
-                style={{ animation: "sean10Pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both" }}
-              >
-                <div className="flex items-center gap-2 font-display text-md">
-                  <span className="font-medium text-ink">
-                    Code <code className="rounded-pill bg-sheet-2 px-1.5 py-0.5 font-outlier text-sm font-medium text-ink">{activeCode}</code> successfully applied
-                  </span>
-                  <span className="text-xl">
-                    {egg?.icon ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={eggIconSrc(egg.icon)}
-                        alt=""
-                        className="inline h-5 w-5 rounded-sm object-contain"
-                      />
-                    ) : (
-                      egg?.emojis[0]
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        {/* Easter egg keyframe styles */}
-        {showSean10 && (
-          <style>{`
-            @keyframes sean10Pop {
-              0% { opacity: 0; transform: scale(0.3); }
-              100% { opacity: 1; transform: scale(1); }
-            }
-            @keyframes sean10Spin {
-              0% { transform: rotate(-180deg) scale(0); }
-              100% { transform: rotate(0deg) scale(1); }
-            }
-          `}</style>
-        )}
       </div>
       <div ref={difficultyDropdownRef} className="relative">
         <button
@@ -567,41 +471,6 @@ export default function FilterToolbar({
         </div>
       )}
       </div>
-      {/* Full-screen confetti rain */}
-      {showSean10 && (
-        <div className={`pointer-events-none fixed inset-0 z-[9999] overflow-hidden transition-opacity duration-700 ${sean10Fading ? "opacity-0" : "opacity-100"}`}>
-          {confettiPieces.map((p, i) => (
-            <span
-              key={i}
-              className="absolute"
-              style={{
-                left: `${p.left}%`,
-                top: "-5%",
-                fontSize: `${p.size}px`,
-                animation: `sean10Fall ${p.duration}s linear ${p.delay}s infinite`,
-              }}
-            >
-              {egg?.icon ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={eggIconSrc(egg.icon)}
-                  alt=""
-                  className="object-contain"
-                  style={{ width: `${p.size}px`, height: `${p.size}px` }}
-                />
-              ) : (
-                p.emoji
-              )}
-            </span>
-          ))}
-          <style>{`
-            @keyframes sean10Fall {
-              0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-              100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-            }
-          `}</style>
-        </div>
-      )}
     </div>
   );
 }
