@@ -28,9 +28,9 @@ describe("registerServiceWorker", () => {
   });
 
   it("includes basePath in sw.js URL", () => {
-    registerServiceWorker("/leetcode-patterns");
+    registerServiceWorker("/yeetcode-patterns");
     window.dispatchEvent(new Event("load"));
-    expect(mockRegister).toHaveBeenCalledWith("/leetcode-patterns/sw.js");
+    expect(mockRegister).toHaveBeenCalledWith("/yeetcode-patterns/sw.js");
   });
 
   it("does not throw when registration fails", () => {

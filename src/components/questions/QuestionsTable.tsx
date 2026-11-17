@@ -856,7 +856,7 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `leetcode-patterns-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `yeetcode-patterns-progress-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
     trackEvent("export_progress", { completed_count: completed.size, notes_count: Object.keys(notes).length });

@@ -1,76 +1,21 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="public/images/logo-dark.png" />
-    <source media="(prefers-color-scheme: light)" srcset="public/images/logo-light.png" />
-    <img alt="Leetcode Patterns" src="public/images/logo-light.png" width="500" />
-  </picture>
-</p>
+# Yeetcode Patterns
 
-<p align="center">
-  <a href="https://github.com/seanprashad/leetcode-patterns/actions/workflows/deploy.yml"><img src="https://github.com/seanprashad/leetcode-patterns/actions/workflows/deploy.yml/badge.svg" alt="Deploy to GitHub Pages" /></a>
-  <a href="https://github.com/seanprashad/leetcode-patterns/actions/workflows/update-questions.yml"><img src="https://github.com/seanprashad/leetcode-patterns/actions/workflows/update-questions.yml/badge.svg" alt="Update Questions" /></a>
-</p>
+A curated list of LeetCode questions grouped by the pattern that solves them, so you practise recognising patterns instead of tackling problems at random.
 
-## Table of Contents
+**Live site:** https://yutoc05.github.io/yeetcode-patterns/
 
-- [Background](#background)
-- [Fundamentals](#fundamentals)
-- [Notes](#notes)
-- [Question List](#question-list)
-- [Solutions](#solutions)
-- [Contributing](#contributing)
-- [Suggestions](#suggestions)
-- [Acknowledgements](#acknowledgements)
+[![Deploy to GitHub Pages](https://github.com/yutoc05/yeetcode-patterns/actions/workflows/deploy.yml/badge.svg)](https://github.com/yutoc05/yeetcode-patterns/actions/workflows/deploy.yml)
 
-## Background
+## What's in it
 
-This repo is intended for any individual wanting to improve their problem
-solving skills for software engineering interviews.
+- **All Questions**: every question with filters for difficulty, pattern and company, plus stars, notes and review dates.
+- **Beginner and Experienced roadmaps**: ordered paths through the list, phase by phase.
+- **Helpful Tips**: which approach to reach for, based on the problem's constraints.
+- Progress is saved in your browser. Sign in with GitHub to sync it across devices.
 
-Problems are grouped under their respective subtopic, in order to focus on
-repeatedly applying common patterns rather than randomly tackling questions.
+Questions link to [leetcode.com]; some require [LeetCode Premium].
 
-All questions are available on [leetcode.com] with some requiring [leetcode premium].
-
-## Fundamentals
-
-To find the greatest amount of success when practicing, it is highly recommended
-to know the methods and runtimes of the following data structures and their
-operations:
-
-- Arrays
-- Maps
-- Linked Lists
-- Queues
-- Heaps
-- Stacks
-- Trees
-- Graphs
-
-In addition, you should have a good grasp on common algorithms such as:
-
-- Breadth-first search
-- Depth-first search
-- Binary search
-- Recursion
-
-## Notes
-
-[This pdf] contains information for the main data structures in Java.
-
-Other useful methods to know include [`substring()`](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#substring-int-int-), [`toCharArray()`](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#toCharArray--), [`Math.max()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#max-int-int-),
-[`Math.min()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#min-int-int-), and [`Arrays.fill()`](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#fill-int:A-int-).
-
-## Question List
-
-The entire question list can be found here:
-https://seanprashad.com/leetcode-patterns/.
-
-## Solutions
-
-Solutions written in Java can be found in the [solutions] branch.
-
-## Contributing
+## Development
 
 The app is built with [Next.js] (App Router), [React] 19, [TypeScript], [Tailwind CSS] v4, [TanStack Table] v8, and [Lucide React] for icons. Tests use [Vitest] + [React Testing Library].
 
@@ -102,13 +47,20 @@ The publishable key (or legacy `anon` key) is intended for browser use. Never
 put a Supabase `service_role` or secret key in a `NEXT_PUBLIC_*` variable or
 commit it to the repository. Restart the dev server after changing env vars.
 
+For GitHub sign-in on the deployed site, add `https://yutoc05.github.io/yeetcode-patterns/`
+under **Authentication > URL Configuration** in Supabase.
+
 A [Husky] `pre-push` hook runs `npm test` automatically before every push. This is set up for every clone via the `prepare` script.
 
-## Acknowledgements
+## Credits and license
 
-This list is heavily inspired from [Grokking the Coding Interview] with
-additional problems extracted from the [Blind 75 list] and this hackernoon article
-on [14 patterns to ace any coding interview question].
+Yeetcode Patterns is adapted from [Leetcode Patterns] by Sean Prashad and has
+been modified since (a redesign, inline notes, revision tools and more). The
+question list builds on the [Blind 75 list], [Grokking the Coding Interview]
+and [14 patterns to ace any coding interview question].
+
+Licensed under [CC BY-NC 4.0](LICENSE), the original work's license: free to
+use and adapt with attribution, not for commercial use.
 
 [leetcode.com]: https://leetcode.com
 [leetcode premium]: https://leetcode.com/subscribe/
@@ -121,9 +73,7 @@ on [14 patterns to ace any coding interview question].
 [vitest]: https://vitest.dev
 [react testing library]: https://testing-library.com/docs/react-testing-library/intro
 [husky]: https://typicode.github.io/husky
-[this pdf]: https://drive.google.com/open?id=1ao4ZA28zzBttDkuS6MLQI52gDs_CJZEm
-[solutions]: https://github.com/SeanPrashad/leetcode-patterns/tree/solutions
-[grokking the coding interview]: https://www.educative.io/courses/grokking-the-coding-interview
-[issue]: https://github.com/SeanPrashad/leetcode-patterns/issues/new
-[blind 75 list]: https://www.teamblind.com/article/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU?utm_source=share&utm_medium=ios_app
+[leetcode patterns]: https://github.com/SeanPrashad/leetcode-patterns
+[blind 75 list]: https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU
+[grokking the coding interview]: https://www.designgurus.io/course/grokking-the-coding-interview
 [14 patterns to ace any coding interview question]: https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed

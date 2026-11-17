@@ -24,14 +24,14 @@ export default function Home() {
           <p className="mt-3 text-md text-ink-2">
             by{" "}
             <a
-              href="https://github.com/SeanPrashad"
+              href="https://github.com/yutoc05"
               target="_blank"
               rel="noopener noreferrer"
               className="link"
             >
-              Sean Prashad
+              Yuto Chau
             </a>
-            {" · Est. 2019"}
+            {", est. 2026"}
           </p>
           <p className="mt-2 max-w-[60ch] text-lg leading-snug text-ink">
             A collection of {questions.length} questions grouped by pattern to help you prepare for coding interviews.
@@ -47,7 +47,7 @@ export default function Home() {
           <GitHubLink />
           <span className="group/fb relative">
             <a
-              href="https://github.com/SeanPrashad/leetcode-patterns/issues/new/choose"
+              href="https://github.com/yutoc05/yeetcode-patterns/issues/new/choose"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Feedback"

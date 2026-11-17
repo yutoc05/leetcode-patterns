@@ -46,6 +46,9 @@
   --color-accent-ink: oklch(97% 0.006 245);
   --color-focus: oklch(46% 0.190 350);
   --color-sheet: oklch(93.5% 0.008 245);
+  /* Brand: the wordmark's two blues (placeholder until a wordmark is chosen). */
+  --color-brand-ink: oklch(30% 0.13 264);
+  --color-brand: oklch(45% 0.19 264);
   --font-display: var(--font-hanken), "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-newsreader), "Newsreader", ui-serif, Georgia, serif;
   --font-outlier: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
@@ -118,6 +121,8 @@
   --color-hard-wash: oklch(27.5% 0.055 30);
   --color-hard-wash-2: oklch(30.5% 0.060 30);
   --color-scrim: oklch(8% 0.012 245 / 0.65);
+  --color-brand-ink: oklch(93% 0.03 264);
+  --color-brand: oklch(74% 0.13 264);
 }
 @media (max-width: 60rem) { :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; } }
 @media (max-width: 40rem) { :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; } }

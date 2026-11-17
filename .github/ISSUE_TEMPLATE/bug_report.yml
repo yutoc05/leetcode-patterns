@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug or issue with Leetcode Patterns
+description: Report a bug or issue with Yeetcode Patterns
 labels: ["bug"]
 body:
   - type: textarea
