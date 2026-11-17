@@ -213,6 +213,13 @@
   }
 }
 
+/* Revision: the dog's tail swaps between two frames. */
+.dog-frame-a { animation: dog-wag-a 0.8s steps(1, end) infinite; }
+.dog-frame-b { visibility: hidden; animation: dog-wag-b 0.8s steps(1, end) infinite; }
+@keyframes dog-wag-a { 0% { visibility: visible; } 50% { visibility: hidden; } }
+@keyframes dog-wag-b { 0% { visibility: hidden; } 50% { visibility: visible; } }
+
 @media (prefers-reduced-motion: reduce) {
   .toast { animation: none; }
+  .dog-frame-a, .dog-frame-b { animation: none; }
 }

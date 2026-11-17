@@ -734,23 +734,23 @@ await user.click(screen.getByLabelText("Hide completed"));
     expect(allNoteEls.length).toBe(2);
   });
 
-  it("clears reminder when clicking completed button on review pill", async () => {
+  it("schedules the next review when clicking completed button on review pill", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(new Date("2026-03-09T12:00:00Z"));
     localStorage.setItem("leetcode-patterns-completed", JSON.stringify([0]));
-    localStorage.setItem("leetcode-patterns-solved-dates", JSON.stringify({ "0": "2026-03-09T10:00:00.000Z" }));
-    localStorage.setItem("leetcode-patterns-reminders", JSON.stringify({ "0": { nextReview: "2026-03-16", interval: 7 } }));
+    localStorage.setItem("leetcode-patterns-solved-dates", JSON.stringify({ "0": "2026-03-02T10:00:00.000Z" }));
+    localStorage.setItem("leetcode-patterns-reminders", JSON.stringify({ "0": { nextReview: "2026-03-09", interval: 7 } }));
     const user = userEvent.setup();
     render(<QuestionsTable data={testData} updatedDate="2025-01-01" />);
-    expect(screen.getByText("Review in 7d")).toBeInTheDocument();
-    const completedBtn = screen.getByRole("button", { name: /mark review as completed/i });
-    await user.click(completedBtn);
-    await waitFor(() => {
-      expect(screen.queryByText("Review in 7d")).not.toBeInTheDocument();
-      expect(screen.getByText("+ Set review")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Due today")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /mark review as completed/i }));
+    // Counts as a "Good" review: a new, later date instead of leaving the rotation
+    await waitFor(() => expect(screen.queryByText("Due today")).not.toBeInTheDocument());
     const stored = JSON.parse(localStorage.getItem("leetcode-patterns-reminders")!);
-    expect(stored).not.toHaveProperty("0");
+    expect(stored["0"].nextReview > "2026-03-09").toBe(true);
+    expect(stored["0"].fsrs).toBeDefined();
+    expect(JSON.parse(localStorage.getItem("leetcode-patterns-solved-dates")!)["0"].slice(0, 10)).toBe("2026-03-09");
+    expect(mockTrackEvent).toHaveBeenCalledWith("review_complete", { question_id: 0 });
     vi.useRealTimers();
   });
 

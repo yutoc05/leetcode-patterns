@@ -19,6 +19,7 @@ import FormattedNote from "@/components/questions/FormattedNote";
 import { loadCompleted, saveCompleted, loadStarred, saveStarred, loadNotes, saveNotes, loadSolvedDates, saveSolvedDates, loadShuffleOrder, saveShuffleOrder, migrateLegacyProgress, loadReminders, saveReminders } from "@/lib/storage";
 import { useAuth } from "@/components/layout/AuthContext";
 import { type Reminder, isDue, setCustomDate as setCustomReviewDate } from "@/lib/reminders";
+import { rate as rateReview } from "@/lib/revision/scheduler";
 import ProgressBar, { type ProgressStats } from "./ProgressBar";
 import FilterToolbar from "./FilterToolbar";
 import NoteEditor, { type EditingNote } from "./NoteEditor";
@@ -271,7 +272,7 @@ const makeColumns = (
               <button
                 type="button"
                 className="inline-flex cursor-pointer items-center justify-center self-stretch px-2 transition-colors duration-(--dur-micro) hover:bg-wash"
-                title="Mark review as completed"
+                title="Mark reviewed and schedule the next review"
                 aria-label="Mark review as completed"
                 onClick={(e) => { e.stopPropagation(); completeReminder(info.row.original.id); }}
               >
@@ -552,6 +553,24 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
     syncNow();
   }, [syncNow]);
 
+  // Ticking a review here counts as a "Good" review in Revision: the question
+  // gets its next date from the scheduler instead of leaving the rotation.
+  const completeReview = useCallback((id: number) => {
+    const now = new Date();
+    setReminders((prev) => {
+      const next = { ...prev, [id]: rateReview(prev[id], "good", now) };
+      saveReminders(next);
+      return next;
+    });
+    setSolvedDates((prev) => {
+      const next = { ...prev, [id]: now.toISOString() };
+      saveSolvedDates(next);
+      return next;
+    });
+    trackEvent("review_complete", { question_id: id });
+    syncNow();
+  }, [syncNow]);
+
   const onReviewDateClear = useCallback((id: number) => {
     setReminders((prev) => {
       const next = { ...prev };
@@ -665,8 +684,8 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
   );
 
   const columns = useMemo(
-    () => makeColumns(completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear),
-    [completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear]
+    () => makeColumns(completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, completeReview),
+    [completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, completeReview]
   );
 
   useEffect(() => {
