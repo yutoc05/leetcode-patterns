@@ -13,7 +13,7 @@ import {
   type ColumnFiltersState,
 } from "@tanstack/react-table";
 import { Question } from "@/types/question";
-import { ExternalLink, Star, Check } from "lucide-react";
+import { ExternalLink, Star, Check, Lock, ArrowUp, ArrowDown } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import FormattedNote from "@/components/questions/FormattedNote";
 import { loadCompleted, saveCompleted, loadStarred, saveStarred, loadNotes, saveNotes, loadSolvedDates, saveSolvedDates, loadShuffleOrder, saveShuffleOrder, migrateLegacyProgress, loadReminders, saveReminders } from "@/lib/storage";
@@ -30,15 +30,9 @@ import ReviewDateModal, { type ReviewDateTarget } from "./ReviewDateModal";
 const columnHelper = createColumnHelper<Question>();
 
 const difficultyColor: Record<string, string> = {
-  Easy: "text-green-700 dark:text-green-400",
-  Medium: "text-yellow-700 dark:text-yellow-400",
-  Hard: "text-red-700 dark:text-red-400",
-};
-
-const difficultyPill: Record<string, string> = {
-  Easy: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-  Medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400",
-  Hard: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
+  Easy: "text-easy",
+  Medium: "text-medium",
+  Hard: "text-hard",
 };
 
 const makeColumns = (
@@ -58,14 +52,14 @@ const makeColumns = (
 ) => [
   columnHelper.display({
     id: "completed",
-    header: () => <Check className="h-4 w-4" />,
+    header: () => <Check className="h-4 w-4" role="img" aria-label="Completed" />,
     size: 40,
     cell: (info) => (
       <input
         type="checkbox"
         checked={completed.has(info.row.original.id)}
         onChange={() => toggleCompleted(info.row.original.id)}
-        className="h-4 w-4 pointer-events-none accent-blue-600"
+        className="check pointer-events-none"
         aria-label={`Mark ${info.row.original.title} as ${completed.has(info.row.original.id) ? "incomplete" : "complete"}`}
       />
     ),
@@ -73,7 +67,7 @@ const makeColumns = (
   }),
   columnHelper.display({
     id: "starred",
-    header: "★",
+    header: () => <Star className="h-4 w-4" role="img" aria-label="Starred" />,
     size: 40,
     cell: (info) => (
       <span
@@ -82,10 +76,11 @@ const makeColumns = (
         aria-label={`Star ${info.row.original.title}`}
       >
         <Star
+          aria-hidden="true"
           className={`h-4 w-4 pointer-events-none ${
             starred.has(info.row.original.id)
-              ? "fill-amber-400 text-amber-400"
-              : "text-zinc-300 dark:text-zinc-600"
+              ? "fill-ink text-ink"
+              : "text-muted"
           }`}
         />
       </span>
@@ -100,11 +95,11 @@ const makeColumns = (
         href={`https://leetcode.com/problems/${info.row.original.slug}/`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-600 hover:underline dark:text-blue-400"
+        className={`link-row inline-block min-w-40 text-md min-[1400px]:min-w-56 ${completed.has(info.row.original.id) ? "text-muted line-through" : ""}`}
       >
         {info.getValue()}
         {info.row.original.premium && (
-          <span className="ml-1 text-xs text-amber-500">🔒</span>
+          <Lock className="ml-1 inline h-3 w-3 align-baseline text-muted" role="img" aria-label="Premium" />
         )}
       </a>
     ),
@@ -120,9 +115,9 @@ const makeColumns = (
         rel="noopener noreferrer"
         title="View solutions"
         aria-label={`View solutions for ${info.row.original.title}`}
-        className="inline-flex items-center text-zinc-400 hover:text-blue-600 dark:text-zinc-500 dark:hover:text-blue-400"
+        className="relative inline-flex items-center text-muted transition-colors duration-(--dur-micro) after:absolute after:-inset-2 hover:text-ink"
       >
-        <ExternalLink className="h-4 w-4" />
+        <ExternalLink className="h-4 w-4" aria-hidden="true" />
       </a>
     ),
     enableSorting: false,
@@ -131,7 +126,7 @@ const makeColumns = (
   columnHelper.accessor("difficulty", {
     header: "Difficulty",
     cell: (info) => (
-      <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${difficultyPill[info.getValue()]} ${completed.has(info.row.original.id) ? "line-through opacity-60" : ""}`}>
+      <span className={`text-sm font-medium ${completed.has(info.row.original.id) ? "text-muted line-through" : difficultyColor[info.getValue()]}`}>
         {info.getValue()}
       </span>
     ),
@@ -148,7 +143,7 @@ const makeColumns = (
         {info.getValue().map((p) => (
           <span
             key={p}
-            className="whitespace-nowrap rounded-full bg-zinc-100 px-2 py-0.5 text-xs dark:bg-zinc-800"
+            className="tag whitespace-normal"
           >
             {hidePatterns ? "•".repeat(p.length) : p}
           </span>
@@ -166,9 +161,9 @@ const makeColumns = (
     header: () => (
       <div>
         <span>Companies</span>
-        <div className="text-[10px] font-normal text-zinc-400 dark:text-zinc-500">
-          0–6 months, via{" "}
-          <a href="https://leetcode.com/subscribe/" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted">
+        <div className="text-xs font-normal text-muted">
+          0 to 6 months, via{" "}
+          <a href="https://leetcode.com/subscribe/" target="_blank" rel="noopener noreferrer" className="link text-muted">
             LC Premium
           </a>
           {", "}
@@ -185,7 +180,9 @@ const makeColumns = (
             <img
               src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/icons/${c.slug}.png`}
               alt={c.name}
-              className="h-5 w-5 rounded-sm object-contain bg-white/0 p-px dark:bg-white/90 dark:rounded"
+              width={20}
+              height={20}
+              className="h-5 w-5 object-contain p-px dark:bg-ink"
               onError={(e) => {
                 const img = e.target as HTMLImageElement;
                 const fallback = `https://www.google.com/s2/favicons?sz=64&domain_url=https://${c.slug}.com`;
@@ -198,10 +195,10 @@ const makeColumns = (
                 }
               }}
             />
-            <span className="hidden rounded-full bg-zinc-100 px-2 py-0.5 text-xs dark:bg-zinc-800">
+            <span className="hidden tag">
               {c.name}
             </span>
-            <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded bg-zinc-800 px-2 py-1 text-xs text-white opacity-0 shadow transition-opacity group-hover/icon:opacity-100 dark:bg-zinc-200 dark:text-zinc-900">
+            <span className="tip bottom-full left-1/2 mb-2 -translate-x-1/2 group-hover/icon:block group-hover/icon:delay-800">
               {c.name} - asked {c.frequency} {c.frequency === 1 ? "time" : "times"} in the last 6 months
             </span>
           </span>
@@ -237,9 +234,9 @@ const makeColumns = (
             }
 
             aria-label={`${note ? "Edit" : "Add"} note for ${info.row.original.title}`}
-            className="block max-w-[100px] cursor-pointer truncate text-left text-sm text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400"
+            className="block max-w-[100px] cursor-pointer truncate text-left text-sm text-muted transition-colors duration-(--dur-micro) hover:text-ink"
           >
-            {note || <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>}
+            {note || <svg className="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>}
           </button>
         </NoteCell>
       );
@@ -254,39 +251,43 @@ const makeColumns = (
     cell: (info) => {
       const solvedDate = solvedDates[info.row.original.id];
       const reminder = reminders[info.row.original.id];
-      if (!solvedDate && !reminder) return <span className="text-zinc-300 dark:text-zinc-700">—</span>;
+      if (!solvedDate && !reminder) return <span className="block h-px w-4 bg-rule-2/40" aria-hidden="true" />;
       const dateFmt = { month: "short" as const, day: "numeric" as const, year: "numeric" as const };
       return (
         <div className="flex flex-col items-start gap-0.5">
           {solvedDate && (
             <span
-              className="whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ring-inset bg-zinc-100 text-zinc-600 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:ring-zinc-700"
+              className="tag text-muted"
               title={new Date(solvedDate).toLocaleDateString("en-US", dateFmt)}
             >
               Solved {relativeDate(solvedDate, "past")}
             </span>
           )}
           {reminder ? (
-            <span className={`inline-flex items-center whitespace-nowrap rounded-full text-xs font-semibold ring-1 ring-inset ${reviewPillStyle(reminder.nextReview)}`}>
+            <span className={`inline-flex items-center whitespace-nowrap rounded-pill border text-sm font-medium ${reviewPillStyle(reminder.nextReview)}`}>
               <button
-                className="inline-flex items-center gap-1 cursor-pointer pl-2 pr-1.5 py-0.5 rounded-l-full transition-opacity hover:opacity-80"
-                title={`${new Date(reminder.nextReview + "T00:00:00").toLocaleDateString("en-US", dateFmt)} · Click to change`}
+                type="button"
+                className="inline-flex cursor-pointer items-center gap-1 py-0.5 pl-2 pr-2 transition-colors duration-(--dur-micro) hover:bg-wash"
+                title={`${new Date(reminder.nextReview + "T00:00:00").toLocaleDateString("en-US", dateFmt)}. Click to change`}
                 onClick={(e) => { e.stopPropagation(); openReviewModal(info.row.original.id, info.row.original.title); }}
               >
                 {relativeDate(reminder.nextReview, "future")}
               </button>
               <span className="w-px self-stretch bg-current opacity-20" />
               <button
-                className="inline-flex items-center justify-center cursor-pointer px-1.5 py-0.5 rounded-r-full transition-opacity hover:opacity-80"
+                type="button"
+                className="inline-flex cursor-pointer items-center justify-center self-stretch px-2 transition-colors duration-(--dur-micro) hover:bg-wash"
                 title="Mark review as completed"
+                aria-label="Mark review as completed"
                 onClick={(e) => { e.stopPropagation(); completeReminder(info.row.original.id); }}
               >
-                <Check className="h-3 w-3" strokeWidth={2.5} />
+                <Check className="h-3 w-3" strokeWidth={2.5} aria-hidden="true" />
               </button>
             </span>
           ) : solvedDate && (
             <button
-              className="inline-flex items-center gap-1 whitespace-nowrap cursor-pointer rounded-full px-2 py-0.5 text-xs ring-1 ring-inset ring-dashed transition-colors text-zinc-400 ring-zinc-300 hover:text-zinc-600 hover:ring-zinc-400 dark:text-zinc-500 dark:ring-zinc-600 dark:hover:text-zinc-400 dark:hover:ring-zinc-500"
+              type="button"
+              className="inline-flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-pill border border-dashed border-muted px-2 py-0.5 text-sm text-muted transition-colors duration-(--dur-micro) hover:border-ink hover:text-ink"
               title="Set a review date"
               onClick={(e) => { e.stopPropagation(); openReviewModal(info.row.original.id, info.row.original.title); }}
             >
@@ -310,14 +311,10 @@ function daysDiff(isoDate: string): number {
 
 function reviewPillStyle(isoDate: string): string {
   const diff = daysDiff(isoDate);
-  if (diff < 0) return "bg-red-100 text-red-700 ring-red-200 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-400 dark:ring-red-800 dark:hover:bg-red-900/60";
-  if (diff === 0) return "bg-orange-100 text-orange-700 ring-orange-200 hover:bg-orange-200 dark:bg-orange-900/40 dark:text-orange-400 dark:ring-orange-800 dark:hover:bg-orange-900/60";
-  if (diff === 1) return "bg-amber-100 text-amber-700 ring-amber-200 hover:bg-amber-200 dark:bg-amber-900/40 dark:text-amber-400 dark:ring-amber-800 dark:hover:bg-amber-900/60";
-  if (diff <= 3) return "bg-yellow-100 text-yellow-700 ring-yellow-200 hover:bg-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-400 dark:ring-yellow-800 dark:hover:bg-yellow-900/60";
-  if (diff <= 7) return "bg-lime-100 text-lime-700 ring-lime-200 hover:bg-lime-200 dark:bg-lime-900/40 dark:text-lime-400 dark:ring-lime-800 dark:hover:bg-lime-900/60";
-  if (diff <= 14) return "bg-emerald-100 text-emerald-700 ring-emerald-200 hover:bg-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-400 dark:ring-emerald-800 dark:hover:bg-emerald-900/60";
-  if (diff <= 30) return "bg-cyan-100 text-cyan-700 ring-cyan-200 hover:bg-cyan-200 dark:bg-cyan-900/40 dark:text-cyan-400 dark:ring-cyan-800 dark:hover:bg-cyan-900/60";
-  return "bg-zinc-100 text-zinc-600 ring-zinc-200 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:ring-zinc-700 dark:hover:bg-zinc-700";
+  // Due or overdue: the one row the page points at, printed in magenta.
+  if (diff <= 0) return "border-accent text-accent";
+  if (diff <= 3) return "border-rule-2 text-ink";
+  return "border-rule text-muted";
 }
 
 function relativeDate(isoDate: string, mode: "past" | "future"): string {
@@ -378,12 +375,12 @@ function NoteCell({ note, children }: { note: string | undefined; children: Reac
       {children}
       {note && style && (
         <div
-          className="fixed z-50 max-w-xs overflow-y-auto rounded-lg border border-zinc-200 bg-white p-3 text-sm shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+          className="popover fixed z-(--z-tooltip) max-w-xs overflow-y-auto p-3 text-sm"
           style={style}
           onMouseEnter={show}
           onMouseLeave={hide}
         >
-          <FormattedNote text={note} className="whitespace-pre-wrap break-words text-zinc-700 dark:text-zinc-300" />
+          <FormattedNote text={note} className="whitespace-pre-wrap break-words text-ink-2" />
         </div>
       )}
     </div>
@@ -985,7 +982,7 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
   return (
     <div className="space-y-4">
       {/* Sticky: Progress + Filters */}
-      <div className="sticky top-0 z-20 -mx-4 space-y-4 bg-background px-4 pb-4">
+      <div className="z-(--z-sticky) -mx-3 space-y-4 sm:sticky sm:top-0 border-b border-rule bg-sheet px-3 pb-4 sm:-mx-6 sm:px-6">
       {/* Progress */}
       <ProgressBar stats={stats} pct={pct} />
 
@@ -1021,15 +1018,15 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+      <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900">
+          <thead className="border-b-2 border-rule-2">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-2 py-2 font-semibold whitespace-nowrap select-none sm:px-4 sm:py-3"
+                    className={`whitespace-nowrap px-2 py-2 align-bottom font-medium text-muted select-none ${header.column.getCanSort() ? "cursor-pointer transition-colors duration-(--dur-micro) hover:text-ink focus-visible:-outline-offset-2" : ""}`}
                     style={{ width: header.getSize() !== 150 ? header.getSize() : undefined }}
                     onClick={header.column.getToggleSortingHandler()}
                     onKeyDown={header.column.getCanSort() ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); header.column.getToggleSortingHandler()?.(e); } } : undefined}
@@ -1042,16 +1039,15 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {{ asc: " ▲", desc: " ▼" }[
-                        header.column.getIsSorted() as string
-                      ] ?? null}
+                      {header.column.getIsSorted() === "asc" && <ArrowUp className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+                      {header.column.getIsSorted() === "desc" && <ArrowDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
                     </span>
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+          <tbody className="[&>tr:first-child]:border-t-0">
             {flatItems.map((item, idx) => {
               if (item.type === "header") {
                 const isCollapsed = collapsedGroups.has(item.key);
@@ -1152,9 +1148,10 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
       {/* Migration Toast */}
       {migrationToast && (
         <div
-          className={`fixed inset-x-0 bottom-6 z-50 mx-auto w-fit animate-[fadeInUp_0.3s_ease-out] rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 shadow-lg transition-opacity duration-700 ease-in-out dark:border-green-800 dark:bg-green-950 dark:text-green-200 ${toastFading ? "opacity-0" : "opacity-100"}`}
+          role="status"
+          className={`toast ${toastFading ? "opacity-0" : "opacity-100"}`}
         >
-          ✓ {migrationToast}
+          <Check className="h-4 w-4 shrink-0 text-success" aria-hidden="true" /> {migrationToast}
         </div>
       )}
     </div>

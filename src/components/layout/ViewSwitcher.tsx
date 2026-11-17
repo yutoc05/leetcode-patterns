@@ -88,36 +88,29 @@ export default function ViewSwitcher({
 
   return (
     <>
-      {/* View tabs */}
-      <div className="relative mb-4 flex gap-1 overflow-hidden rounded-lg p-1 dark:bg-zinc-900"
-        style={{ background: "linear-gradient(90deg, #FFD200, #FFA500, #FF7800)" }}
-      >
-        <div className="pointer-events-none absolute inset-0 hidden dark:block"
-          style={{ background: "linear-gradient(90deg, rgba(255,210,0,0.08), rgba(255,165,0,0.08), rgba(255,120,0,0.08))", backgroundColor: "rgba(24,24,27,0.60)" }}
-        />
+      {/* View tabs: the active one is cut from the sheet below */}
+      <div className="flex overflow-x-auto border-b-2 border-ink">
         {views.map((v) => {
           const Icon = v.icon;
           const isActive = activeView === v.id;
           return (
             <button
               key={v.id}
+              type="button"
               onClick={() => switchView(v.id)}
-              className={`relative flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-bold transition-all ${
-                isActive
-                  ? "bg-white/80 text-zinc-900 shadow-sm dark:bg-zinc-800/80 dark:text-amber-200 dark:shadow-amber-900/20"
-                  : "text-amber-950 hover:bg-white/40 hover:text-zinc-900 dark:text-amber-200/70 dark:hover:bg-zinc-800/40 dark:hover:text-amber-200"
-              }`}
+              aria-pressed={isActive}
+              className="tab"
             >
-              <Icon className="h-4 w-4" />
-              <span className="hidden sm:inline">{v.label}</span>
+              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>{v.label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* View content */}
+      {/* View content, printed on the sheet */}
       <div
-        className={`transition-opacity duration-150 ${fading ? "opacity-0" : "opacity-100"}`}
+        className={`bg-sheet px-3 pb-10 transition-opacity duration-150 sm:px-6 ${fading ? "opacity-0" : "opacity-100"}`}
         onTransitionEnd={handleTransitionEnd}
       >
         {displayedView === "table" && (

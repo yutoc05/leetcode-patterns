@@ -2,15 +2,9 @@ import { forwardRef } from "react";
 import { ChevronRight, ChevronDown, RotateCcw } from "lucide-react";
 
 const difficultyColor: Record<string, string> = {
-  Easy: "text-green-700 dark:text-green-400",
-  Medium: "text-yellow-700 dark:text-yellow-400",
-  Hard: "text-red-700 dark:text-red-400",
-};
-
-const groupRowStyles: Record<string, string> = {
-  Easy: "border-l-green-500 bg-green-50 hover:bg-green-100 dark:bg-green-900/30 dark:hover:bg-green-900/50",
-  Medium: "border-l-yellow-500 bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:hover:bg-yellow-900/50",
-  Hard: "border-l-red-500 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50",
+  Easy: "text-easy",
+  Medium: "text-medium",
+  Hard: "text-hard",
 };
 
 interface GroupHeaderRowProps {
@@ -31,7 +25,7 @@ const GroupHeaderRow = forwardRef<HTMLTableRowElement, GroupHeaderRowProps>(
         key={`header-${groupKey}`}
         data-index={dataIndex}
         ref={ref}
-        className={`cursor-pointer select-none border-l-4 ${groupRowStyles[groupKey] ?? ""}`}
+        className="cursor-pointer select-none border-t-2 border-rule-2 bg-sheet-2 transition-colors duration-(--dur-micro) hover:bg-sheet-3 focus-visible:-outline-offset-2"
         onClick={() => toggleGroup(groupKey)}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleGroup(groupKey); } }}
         tabIndex={0}
@@ -41,29 +35,30 @@ const GroupHeaderRow = forwardRef<HTMLTableRowElement, GroupHeaderRowProps>(
       >
         <td
           colSpan={colSpan}
-          className="px-2 py-2.5 sm:px-4 sm:py-3"
+          className="px-2 py-2"
         >
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-3">
             {isCollapsed ? (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
             ) : (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
             )}
-            <span className={`text-base font-bold ${difficultyColor[groupKey] ?? ""}`}>
+            <span className={`font-display text-xl font-semibold tracking-[-0.02em] ${difficultyColor[groupKey] ?? ""}`}>
               {groupKey}
             </span>
-            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            <span className="font-outlier text-sm text-muted tabular-nums">
               {groupDone}/{total} completed
             </span>
             {groupDone > 0 && (
               <button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   setResetConfirmGroup(groupKey);
                 }}
-                className="ml-auto flex items-center gap-1 rounded px-1.5 py-1 text-xs text-zinc-400 transition-colors hover:bg-zinc-200 hover:text-zinc-600 dark:hover:bg-zinc-600 dark:hover:text-zinc-300"
+                className="btn btn-quiet ml-auto text-muted hover:text-error"
               >
-                <RotateCcw className="h-3 w-3" />
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
                 <span className="hidden sm:inline">Reset</span>
               </button>
             )}

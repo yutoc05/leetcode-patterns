@@ -15,53 +15,54 @@ const { data: questions } = questionsJson as QuestionsData;
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
-      <div className="mb-4 flex items-start justify-between sm:mb-6">
-        <div>
+    <div className="mx-auto w-full max-w-(--container) px-(--gutter) pb-16">
+      <header className="grid gap-x-10 gap-y-6 pt-10 pb-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+        <div className="min-w-0">
           <h1>
             <Logo />
           </h1>
-          <p className="text-base italic text-zinc-500">
+          <p className="mt-3 text-md text-ink-2">
             by{" "}
             <a
               href="https://github.com/SeanPrashad"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline dark:text-blue-400"
+              className="link"
             >
               Sean Prashad
             </a>
             {" · Est. 2019"}
           </p>
-          <p className="mt-1 text-sm text-zinc-500 sm:mt-2 sm:text-base">
+          <p className="mt-2 max-w-[60ch] text-lg leading-snug text-ink">
             A collection of {questions.length} questions grouped by pattern to help you prepare for coding interviews.
           </p>
+          {/* Reference drawers: each button opens its own fixed panel */}
+          <nav aria-label="Reference" className="-ml-3 mt-4 flex flex-wrap items-center gap-x-1 gap-y-2">
+            <AboutPanel />
+            <TipsPanel />
+            <AcknowledgementsPanel />
+          </nav>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 md:justify-end">
           <GitHubLink />
           <span className="group/fb relative">
             <a
               href="https://github.com/SeanPrashad/leetcode-patterns/issues/new/choose"
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-lg border border-zinc-300 p-2 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              aria-label="Feedback"
+              className="btn btn-icon"
             >
-              <MessageSquarePlus className="h-4 w-4" />
+              <MessageSquarePlus className="h-4 w-4" aria-hidden="true" />
             </a>
-            <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded bg-zinc-800 px-2 py-1 text-xs text-white opacity-0 shadow transition-opacity group-hover/fb:opacity-100 dark:bg-zinc-200 dark:text-zinc-900">
+            <span className="tip left-1/2 top-full mt-2 -translate-x-1/2 group-hover/fb:block group-hover/fb:delay-800 group-focus-within/fb:block">
               Feedback
             </span>
           </span>
           <ThemeToggle />
           <UserMenu />
         </div>
-      </div>
-      {/* Side panel tabs – stacked flush in a fixed column */}
-      <div className="fixed left-0 top-0 bottom-0 z-30 flex flex-col items-start justify-center max-[1439px]:hidden">
-        <AboutPanel />
-        <TipsPanel />
-        <AcknowledgementsPanel />
-      </div>
+      </header>
       <Suspense>
         <ViewSwitcher
           questions={questions}

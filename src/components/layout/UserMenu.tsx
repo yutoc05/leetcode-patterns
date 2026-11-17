@@ -24,8 +24,9 @@ export default function UserMenu() {
   if (!user) {
     return (
       <button
+        type="button"
         onClick={signIn}
-        className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+        className="btn"
       >
         Sign in with GitHub
       </button>
@@ -35,25 +36,31 @@ export default function UserMenu() {
   return (
     <div className="relative" ref={menuRef}>
       <button
+        type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-2 rounded-lg border border-zinc-300 p-1 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className="btn btn-icon"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={user.user_metadata.avatar_url}
           alt={user.user_metadata.user_name}
-          className="h-6 w-6 rounded-full"
+          width={24}
+          height={24}
+          className="h-6 w-6"
         />
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-10 mt-1.5 w-48 rounded-lg border border-zinc-200 bg-white p-2 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-          <p className="px-2 py-1 text-xs text-zinc-500">Signed in as</p>
-          <p className="truncate px-2 pb-1 text-sm font-medium">
+        <div className="popover absolute right-0 top-full z-(--z-dropdown) mt-2 w-56 py-2">
+          <p className="px-3 text-sm text-muted">Signed in as</p>
+          <p className="truncate px-3 pb-2 font-display text-sm font-medium text-ink">
             {user.user_metadata.user_name}
           </p>
           <button
+            type="button"
             onClick={() => { setOpen(false); signOut(); }}
-            className="w-full rounded px-2 py-1 text-left text-sm text-red-600 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="option w-full border-t border-rule font-display text-sm font-medium text-error"
           >
             Sign out
           </button>

@@ -9,6 +9,7 @@ import {
   Check,
   Star,
   Lock,
+  Lightbulb,
 } from "lucide-react";
 import { Question } from "@/types/question";
 import { Roadmap } from "@/data/roadmaps";
@@ -33,11 +34,11 @@ function InlineMarkdown({ text }: { text: string }) {
             if (/^\*(.+)\*$/.test(part))
               return <em key={pi}>{part.slice(1, -1)}</em>;
             if (/^`(.+)`$/.test(part))
-              return <code key={pi} className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs dark:bg-zinc-800">{part.slice(1, -1)}</code>;
+              return <code key={pi} className="rounded-pill bg-sheet-2 px-1 py-0.5 font-outlier text-xs">{part.slice(1, -1)}</code>;
             const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
             if (linkMatch) {
               const isExternal = /^https?:\/\//.test(linkMatch[2]);
-              return <a key={pi} href={linkMatch[2]} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="text-blue-600 underline decoration-dotted hover:decoration-solid dark:text-blue-400">{linkMatch[1]}</a>;
+              return <a key={pi} href={linkMatch[2]} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="link">{linkMatch[1]}</a>;
             }
             return part;
           })}
@@ -47,11 +48,10 @@ function InlineMarkdown({ text }: { text: string }) {
   );
 }
 
-const difficultyPill: Record<string, string> = {
-  Easy: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-  Medium:
-    "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400",
-  Hard: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
+const difficultyColor: Record<string, string> = {
+  Easy: "text-easy",
+  Medium: "text-medium",
+  Hard: "text-hard",
 };
 
 interface Props {
@@ -295,36 +295,33 @@ export default function RoadmapView({ roadmap, questions }: Props) {
     return (
       <div
         key={rq.slug}
-        className={`flex items-start gap-3 border-b border-zinc-100 px-4 py-3 last:border-b-0 dark:border-zinc-800/50 ${
-          isDone ? "bg-green-50/30 dark:bg-green-950/20" : ""
-        }`}
+        className="flex items-start gap-3 border-t border-rule py-3 first:border-t-0"
       >
         <input
           type="checkbox"
           checked={isDone}
           onChange={() => toggleCompleted(q.id)}
-          className="mt-1 h-4 w-4 shrink-0 accent-blue-600"
+          aria-label={`Mark ${q.title} as ${isDone ? "incomplete" : "complete"}`}
+          className="check mt-1"
         />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <a
               href={`https://leetcode.com/problems/${q.slug}/`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`font-medium hover:underline ${
-                isDone
-                  ? "text-zinc-400 line-through dark:text-zinc-500"
-                  : "text-blue-600 dark:text-blue-400"
+              className={`link-row text-md font-medium ${
+                isDone ? "text-muted line-through" : ""
               }`}
             >
               {q.title}
               {q.premium && (
-                <Lock className="ml-1 inline h-3 w-3 text-amber-500" />
+                <Lock className="ml-1 inline h-3 w-3 align-baseline text-muted" role="img" aria-label="Premium" />
               )}
             </a>
             {showDifficulty && (
               <span
-                className={`inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${difficultyPill[q.difficulty]}`}
+                className={`text-sm font-medium ${difficultyColor[q.difficulty]}`}
               >
                 {q.difficulty}
               </span>
@@ -333,7 +330,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
               {q.pattern.map((p) => (
                 <span
                   key={p}
-                  className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs dark:bg-zinc-800"
+                  className="tag"
                 >
                   {p}
                 </span>
@@ -347,7 +344,9 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                     <img
                       src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/icons/${c.slug}.png`}
                       alt={c.name}
-                      className="h-4 w-4 rounded-sm object-contain bg-white/0 p-px dark:bg-white/90 dark:rounded"
+                      width={16}
+                      height={16}
+                      className="h-4 w-4 object-contain p-px dark:bg-ink"
                       onError={(e) => {
                         const img = e.target as HTMLImageElement;
                         const fallback = `https://www.google.com/s2/favicons?sz=64&domain_url=https://${c.slug}.com`;
@@ -360,10 +359,10 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                         }
                       }}
                     />
-                    <span className="hidden rounded-full bg-zinc-100 px-1.5 py-0.5 text-[10px] dark:bg-zinc-800">
+                    <span className="hidden tag text-xs">
                       {c.name}
                     </span>
-                    <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded bg-zinc-800 px-2 py-1 text-xs text-white opacity-0 shadow transition-opacity group-hover/icon:opacity-100 dark:bg-zinc-200 dark:text-zinc-900">
+                    <span className="tip bottom-full left-1/2 mb-2 -translate-x-1/2 group-hover/icon:block group-hover/icon:delay-800">
                       {c.name} - asked {c.frequency} {c.frequency === 1 ? "time" : "times"} in the last 6 months
                     </span>
                   </span>
@@ -381,13 +380,12 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                 return next;
               })
             }
-            className={`mt-1.5 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm transition-colors ${
-              expandedHints.has(rq.slug)
-                ? "bg-amber-50 text-zinc-600 dark:bg-amber-950/30 dark:text-zinc-300"
-                : "bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-950/30 dark:text-amber-400 dark:hover:bg-amber-950/50"
+            aria-expanded={expandedHints.has(rq.slug)}
+            className={`mt-2 inline-flex items-start gap-2 bg-sheet-2 px-2 py-1 text-left text-sm transition-colors duration-(--dur-micro) hover:bg-sheet-3 ${
+              expandedHints.has(rq.slug) ? "text-ink-2" : "font-display font-medium text-ink"
             }`}
           >
-            💡
+            <Lightbulb className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted" aria-hidden="true" />
             {expandedHints.has(rq.slug) ? (
               <span className="break-words text-left">{rq.note}</span>
             ) : (
@@ -395,36 +393,40 @@ export default function RoadmapView({ roadmap, questions }: Props) {
             )}
           </button>
           {userNote && (
-            <p className="mt-1 break-words text-sm text-zinc-600 dark:text-zinc-300">
-              <NotebookPen className="inline h-3.5 w-3.5 shrink-0 text-blue-500" />{" "}
+            <p className="mt-2 break-words text-sm text-ink-2">
+              <NotebookPen className="inline h-3.5 w-3.5 shrink-0 text-muted" aria-hidden="true" />{" "}
               <FormattedNote text={userNote} />
             </p>
           )}
         </div>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="-my-1 flex shrink-0 items-center">
           <button
+            type="button"
             onClick={() => toggleStarred(q.id)}
-            className="rounded p-1 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="btn btn-quiet btn-icon"
             title={isStarred ? "Unstar" : "Star"}
           >
             <Star
+              aria-hidden="true"
               className={`h-4 w-4 ${
                 isStarred
-                  ? "fill-amber-400 text-amber-400"
-                  : "text-zinc-300 dark:text-zinc-600"
+                  ? "fill-ink text-ink"
+                  : "text-muted"
               }`}
             />
           </button>
           <button
+            type="button"
             onClick={() => openNoteModal(q.id, q.title)}
-            className="rounded p-1 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="btn btn-quiet btn-icon"
             title="Add note"
           >
             <NotebookPen
+              aria-hidden="true"
               className={`h-4 w-4 ${
                 userNote
-                  ? "text-blue-500"
-                  : "text-zinc-300 dark:text-zinc-600"
+                  ? "text-ink"
+                  : "text-muted"
               }`}
             />
           </button>
@@ -432,61 +434,61 @@ export default function RoadmapView({ roadmap, questions }: Props) {
             href={`https://leetcode.com/problems/${q.slug}/solutions/`}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded p-1 text-zinc-300 transition-colors hover:bg-zinc-100 hover:text-blue-600 dark:text-zinc-600 dark:hover:bg-zinc-800 dark:hover:text-blue-400"
+            className="btn btn-quiet btn-icon text-muted hover:text-ink"
             title="View solutions"
           >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
       </div>
     );
   };
 
+  const phaseMarker = (complete: boolean, started: boolean, n: number) => (
+    <div
+      className={`flex h-8 w-8 shrink-0 items-center justify-center font-outlier text-sm font-medium tabular-nums ${
+        complete
+          ? "bg-ink text-sheet"
+          : started
+            ? "border border-ink text-ink"
+            : "border border-rule text-muted"
+      }`}
+    >
+      {complete ? <Check className="h-4 w-4" aria-hidden="true" /> : n}
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <div>
       {/* Header */}
-      <div className="group rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-        <h2 className="text-lg font-bold">{roadmap.name}</h2>
-        <p className="mt-1 text-sm text-zinc-500"><InlineMarkdown text={roadmap.description} /></p>
-        <div className="mt-3">
-          <div className="mb-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium">
-            <span>{stats.done}/{stats.total} completed ({stats.pct}%)</span>
-            <div className="flex gap-4 sm:opacity-0 sm:transition-opacity sm:duration-500 sm:ease-in-out sm:group-hover:opacity-100">
+      <div className="pt-6">
+        <h2 className="text-2xl">{roadmap.name}</h2>
+        <p className="mt-2 max-w-[70ch] text-md text-ink-2"><InlineMarkdown text={roadmap.description} /></p>
+        <div className="mt-6">
+          <div className="mb-3 flex flex-wrap items-baseline gap-x-6 gap-y-1">
+            <span className="font-outlier text-lg font-medium text-ink tabular-nums">{stats.done}/{stats.total} completed ({stats.pct}%)</span>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm font-medium tabular-nums">
               {stats.totalByDiff.Easy > 0 && (
-                <span className="text-green-700 dark:text-green-400">
+                <span className="text-easy">
                   Easy: {stats.doneByDiff.Easy}/{stats.totalByDiff.Easy}
                 </span>
               )}
               {stats.totalByDiff.Medium > 0 && (
-                <span className="text-yellow-700 dark:text-yellow-400">
+                <span className="text-medium">
                   Medium: {stats.doneByDiff.Medium}/{stats.totalByDiff.Medium}
                 </span>
               )}
               {stats.totalByDiff.Hard > 0 && (
-                <span className="text-red-700 dark:text-red-400">
+                <span className="text-hard">
                   Hard: {stats.doneByDiff.Hard}/{stats.totalByDiff.Hard}
                 </span>
               )}
             </div>
           </div>
-          <div className="relative h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
-            {/* Default: solid blue bar */}
+          <div className="relative h-1 overflow-hidden bg-sheet-3" role="progressbar" aria-valuenow={stats.pct} aria-valuemin={0} aria-valuemax={100} aria-label="Roadmap progress">
             <div
-              className="absolute inset-0 h-full bg-blue-500 transition-opacity duration-500 ease-in-out sm:group-hover:opacity-0 max-sm:hidden"
-              style={{ width: `${stats.pct}%` }}
-            />
-            {/* Hover: blended difficulty gradient */}
-            <div
-              className="absolute inset-0 h-full transition-opacity duration-500 ease-in-out max-sm:opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-              style={{
-                width: `${stats.pct}%`,
-                background: (() => {
-                  if (!stats.done) return "var(--color-green-500)";
-                  const easyPct = (stats.doneByDiff.Easy / stats.done) * 100;
-                  const medPct = ((stats.doneByDiff.Easy + stats.doneByDiff.Medium) / stats.done) * 100;
-                  return `linear-gradient(90deg, var(--color-green-500) ${Math.max(easyPct - 3, 0)}%, var(--color-yellow-500) ${Math.min(easyPct + 3, medPct - 3)}%, var(--color-yellow-500) ${Math.max(medPct - 3, easyPct + 3)}%, var(--color-red-500) ${medPct + 3}%)`;
-                })(),
-              }}
+              className="absolute inset-0 origin-left bg-accent transition-transform duration-(--dur-long) ease-out"
+              style={{ transform: `scaleX(${stats.pct / 100})` }}
             />
           </div>
         </div>
@@ -494,23 +496,8 @@ export default function RoadmapView({ roadmap, questions }: Props) {
 
       {/* Beginner: group by difficulty → phases */}
       {difficultyGroups ? (
-        <div className="space-y-8">
+        <div className="mt-10 space-y-16">
           {difficultyGroups.map((group) => {
-            const diffBorder: Record<string, string> = {
-              Easy: "border-green-300 dark:border-green-800",
-              Medium: "border-yellow-300 dark:border-yellow-800",
-              Hard: "border-red-300 dark:border-red-800",
-            };
-            const diffHeaderBg: Record<string, string> = {
-              Easy: "bg-green-50 dark:bg-green-950/30",
-              Medium: "bg-yellow-50 dark:bg-yellow-950/30",
-              Hard: "bg-red-50 dark:bg-red-950/30",
-            };
-            const diffPill: Record<string, string> = {
-              Easy: "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400",
-              Medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-400",
-              Hard: "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400",
-            };
             const diffSubtitle: Record<string, string> = {
               Easy: "Build your foundation with these introductory problems",
               Medium: "Medium difficulty problems begin introducing new techniques and algorithms - most of the time you will need to study the optimal solution",
@@ -519,27 +506,25 @@ export default function RoadmapView({ roadmap, questions }: Props) {
             const groupPct = group.total > 0 ? Math.round((group.done / group.total) * 100) : 0;
 
             return (
-              <div key={group.difficulty} className={`overflow-hidden rounded-xl border ${diffBorder[group.difficulty]}`}>
+              <section key={group.difficulty} className="border-t-2 border-rule-2 pt-4">
                 {/* Difficulty header */}
-                <div className={`px-4 py-3 ${diffHeaderBg[group.difficulty]}`}>
-                  <div className="flex items-center gap-3">
-                    <span className={`rounded-full px-3 py-1 text-sm font-bold ${diffPill[group.difficulty]}`}>
-                      {group.difficulty}
-                    </span>
-                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
-                      {group.done}/{group.total} completed ({groupPct}%)
-                    </span>
-                  </div>
-                  {roadmap.id === "beginner" && (
-                    <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-                      {diffSubtitle[group.difficulty]}
-                    </p>
-                  )}
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <h3 className={`text-xl ${difficultyColor[group.difficulty]}`}>
+                    {group.difficulty}
+                  </h3>
+                  <span className="font-outlier text-sm text-muted tabular-nums">
+                    {group.done}/{group.total} completed ({groupPct}%)
+                  </span>
                 </div>
+                {roadmap.id === "beginner" && (
+                  <p className="mt-2 max-w-[70ch] text-md text-ink-2">
+                    {diffSubtitle[group.difficulty]}
+                  </p>
+                )}
 
                 {/* Phases within this difficulty */}
-                <div className="relative p-4">
-                  {group.phases.map((entry, idx) => {
+                <ol className="mt-4">
+                  {group.phases.map((entry) => {
                     const collapseKey = `${group.difficulty}-${entry.phaseIndex}`;
                     const isCollapsed = collapsedPhases.has(collapseKey);
                     const phaseDone = entry.questions.filter((rq) => {
@@ -549,196 +534,125 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                     const phaseComplete = phaseDone === entry.questions.length;
 
                     return (
-                      <Fragment key={collapseKey}>
-                        {idx > 0 && (
-                          <div className="flex justify-center py-1">
-                            <div className={`h-6 w-0.5 ${
-                              (() => {
-                                const prevEntry = group.phases[idx - 1];
-                                const prevDone = prevEntry.questions.filter((rq) => {
-                                  const q = slugToQuestion.get(rq.slug);
-                                  return q && completed.has(q.id);
-                                }).length;
-                                return prevDone === prevEntry.questions.length
-                                  ? "bg-green-400 dark:bg-green-600"
-                                  : "bg-zinc-300 dark:bg-zinc-700";
-                              })()
-                            }`} />
+                      <li key={collapseKey} className="border-t border-rule first:border-t-0">
+                        <button
+                          type="button"
+                          onClick={() => togglePhase(collapseKey)}
+                          aria-expanded={!isCollapsed}
+                          className="flex w-full items-center gap-2 py-3 text-left transition-colors duration-(--dur-micro) hover:bg-wash"
+                        >
+                          {phaseMarker(phaseComplete, phaseDone > 0, entry.phaseIndex + 1)}
+                          <div className="min-w-0 flex-1 pl-2">
+                            <div className="flex items-baseline gap-2">
+                              <span className="font-display font-semibold text-ink">{entry.phase.title}</span>
+                              <span className="font-outlier text-sm text-muted tabular-nums">
+                                {phaseDone}/{entry.questions.length}
+                              </span>
+                            </div>
+                            {roadmap.id === "beginner" && (
+                              <p className="mt-1 text-sm text-ink-2">
+                                <InlineMarkdown text={
+                                  group.difficulty !== "Easy" && entry.phase.mediumDescription
+                                    ? entry.phase.mediumDescription
+                                    : entry.phase.description
+                                } />
+                              </p>
+                            )}
+                          </div>
+                          {isCollapsed ? (
+                            <ChevronRight className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                          )}
+                        </button>
+
+                        {!isCollapsed && (
+                          <div className="border-t border-rule sm:pl-12">
+                            {entry.questions.map((rq) => {
+                              const q = slugToQuestion.get(rq.slug);
+                              if (!q) return null;
+                              return renderQuestionRow(q, rq, { showDifficulty: false });
+                            })}
                           </div>
                         )}
-
-                        <div className={`rounded-lg border transition-colors ${
-                          phaseComplete
-                            ? "border-green-300 bg-green-50/50 dark:border-green-800 dark:bg-green-950/30"
-                            : "border-zinc-200 dark:border-zinc-800"
-                        }`}>
-                          <button
-                            onClick={() => togglePhase(collapseKey)}
-                            className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${
-                              phaseComplete
-                                ? "hover:bg-green-100/50 dark:hover:bg-green-900/20"
-                                : "hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
-                            }`}
-                          >
-                            <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                              phaseComplete
-                                ? "bg-green-500 text-white"
-                                : phaseDone > 0
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
-                            }`}>
-                              {phaseComplete ? <Check className="h-4 w-4" /> : entry.phaseIndex + 1}
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className="font-semibold">{entry.phase.title}</span>
-                                <span className="text-xs text-zinc-500">
-                                  {phaseDone}/{entry.questions.length}
-                                </span>
-                              </div>
-                              {roadmap.id === "beginner" && (
-                                <p className="mt-0.5 text-xs text-zinc-500">
-                                  <InlineMarkdown text={
-                                    group.difficulty !== "Easy" && entry.phase.mediumDescription
-                                      ? entry.phase.mediumDescription
-                                      : entry.phase.description
-                                  } />
-                                </p>
-                              )}
-                            </div>
-                            {isCollapsed ? (
-                              <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" />
-                            ) : (
-                              <ChevronDown className="h-4 w-4 shrink-0 text-zinc-400" />
-                            )}
-                          </button>
-
-                          {!isCollapsed && (
-                            <div className="border-t border-zinc-200 dark:border-zinc-800">
-                              {entry.questions.map((rq) => {
-                                const q = slugToQuestion.get(rq.slug);
-                                if (!q) return null;
-                                return renderQuestionRow(q, rq, { showDifficulty: false });
-                              })}
-                            </div>
-                          )}
-                        </div>
-                      </Fragment>
+                      </li>
                     );
                   })}
-                </div>
-              </div>
+                </ol>
+              </section>
             );
           })}
         </div>
       ) : (
         /* Experienced / default: flat phases */
-        <div className="relative">
+        <ol className="mt-10 border-t-2 border-rule-2">
           {roadmap.phases.map((phase, phaseIndex) => {
             const isCollapsed = collapsedPhases.has(phaseIndex);
             const ps = phaseStats[phaseIndex];
             const phaseComplete = ps.done === ps.total && ps.total > 0;
 
             return (
-              <Fragment key={phaseIndex}>
-                {phaseIndex > 0 && (
-                  <div className="flex justify-center py-1">
-                    <div
-                      className={`h-6 w-0.5 ${
-                        phaseStats[phaseIndex - 1].done ===
-                          phaseStats[phaseIndex - 1].total &&
-                        phaseStats[phaseIndex - 1].total > 0
-                          ? "bg-green-400 dark:bg-green-600"
-                          : "bg-zinc-300 dark:bg-zinc-700"
-                      }`}
-                    />
+              <li key={phaseIndex} className="border-t border-rule first:border-t-0">
+                <button
+                  type="button"
+                  onClick={() => togglePhase(phaseIndex)}
+                  aria-expanded={!isCollapsed}
+                  className="flex w-full items-center gap-2 py-3 text-left transition-colors duration-(--dur-micro) hover:bg-wash"
+                >
+                  {phaseMarker(phaseComplete, ps.done > 0, phaseIndex + 1)}
+                  <div className="min-w-0 flex-1 pl-2">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-display font-semibold text-ink">{phase.title}</span>
+                      <span className="font-outlier text-sm text-muted tabular-nums">
+                        {ps.done}/{ps.total}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-ink-2">
+                      <InlineMarkdown text={phase.description} />
+                    </p>
+                  </div>
+                  {isCollapsed ? (
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+                  )}
+                </button>
+
+                {!isCollapsed && (
+                  <div className="border-t border-rule sm:pl-12">
+                    {phase.questions.map((rq) => {
+                      const q = slugToQuestion.get(rq.slug);
+                      if (!q) return null;
+                      return renderQuestionRow(q, rq);
+                    })}
                   </div>
                 )}
-
-                <div
-                  className={`rounded-lg border transition-colors ${
-                    phaseComplete
-                      ? "border-green-300 bg-green-50/50 dark:border-green-800 dark:bg-green-950/30"
-                      : "border-zinc-200 dark:border-zinc-800"
-                  }`}
-                >
-                  <button
-                    onClick={() => togglePhase(phaseIndex)}
-                    className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${
-                      phaseComplete
-                        ? "hover:bg-green-100/50 dark:hover:bg-green-900/20"
-                        : "hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
-                    }`}
-                  >
-                    <div
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                        phaseComplete
-                          ? "bg-green-500 text-white"
-                          : ps.done > 0
-                            ? "bg-blue-500 text-white"
-                            : "bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
-                      }`}
-                    >
-                      {phaseComplete ? <Check className="h-4 w-4" /> : phaseIndex + 1}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold">{phase.title}</span>
-                        <span className="text-xs text-zinc-500">
-                          {ps.done}/{ps.total}
-                        </span>
-                      </div>
-                      <p className="mt-0.5 text-xs text-zinc-500">
-                        <InlineMarkdown text={phase.description} />
-                      </p>
-                    </div>
-                    {isCollapsed ? (
-                      <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 shrink-0 text-zinc-400" />
-                    )}
-                  </button>
-
-                  {!isCollapsed && (
-                    <div className="border-t border-zinc-200 dark:border-zinc-800">
-                      {phase.questions.map((rq) => {
-                        const q = slugToQuestion.get(rq.slug);
-                        if (!q) return null;
-                        return renderQuestionRow(q, rq);
-                      })}
-                    </div>
-                  )}
-                </div>
-              </Fragment>
+              </li>
             );
           })}
-        </div>
+        </ol>
       )}
 
-      {/* Next Steps */}
+      {/* Next Steps. border-blue-300 and bg-blue-100 are test hooks only: globals.css keeps them from generating CSS. */}
       {roadmap.nextSteps && roadmap.nextSteps.length > 0 && (
-        <div className="mt-8 overflow-hidden rounded-xl border border-blue-300 dark:border-blue-800">
-          <div className="bg-blue-50 px-4 py-3 dark:bg-blue-950/30">
-            <div className="flex items-center gap-3">
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-700 dark:bg-blue-900/50 dark:text-blue-400">
-                Next Steps
-              </span>
-            </div>
-            <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-              What to do after completing this roadmap
-            </p>
-          </div>
-          <div className="space-y-0 divide-y divide-zinc-100 px-4 dark:divide-zinc-800/50">
+        <section className="border-blue-300 mt-16 border-t-2 border-ink pt-4">
+          <h3 className="bg-blue-100 text-xl">
+            Next Steps
+          </h3>
+          <p className="mt-2 text-md text-ink-2">
+            What to do after completing this roadmap
+          </p>
+          <ol className="mt-4">
             {roadmap.nextSteps.map((step, i) => (
-              <div key={i} className="flex items-start gap-3 py-3 text-sm text-zinc-600 dark:text-zinc-400">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700 dark:bg-blue-900/50 dark:text-blue-400">
+              <li key={i} className="flex items-start gap-3 border-t border-rule py-3 text-md text-ink-2 first:border-t-0">
+                <span className="bg-blue-100 flex h-6 w-6 shrink-0 items-center justify-center border border-rule-2 font-outlier text-sm font-medium text-ink tabular-nums">
                   {i + 1}
                 </span>
                 <span><InlineMarkdown text={step} /></span>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ol>
+        </section>
       )}
 
       {/* Note Modal - same as QuestionsTable */}
@@ -755,33 +669,36 @@ export default function RoadmapView({ roadmap, questions }: Props) {
           };
           return (
             <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+              className="fixed inset-0 z-(--z-modal) flex items-center justify-center bg-scrim"
               onClick={tryDismiss}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Edit note for ${editingNote.title}`}
             >
               <div
-                className="mx-4 w-full max-w-lg rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+                className="dialog mx-4 w-full max-w-lg p-6"
                 onClick={(e) => e.stopPropagation()}
               >
                 {editingNote.confirmDiscard ? (
                   <>
-                    <h2 className="mb-2 text-lg font-semibold">
+                    <h2 className="mb-2 text-xl">
                       Unsaved changes
                     </h2>
-                    <p className="mb-3 text-sm text-zinc-500">
+                    <p className="mb-4 text-md text-ink-2">
                       Your note for{" "}
-                      <span className="font-medium text-foreground">
+                      <span className="font-medium text-ink">
                         {editingNote.title}
                       </span>{" "}
                       has been modified but not saved. Would you like to go back
                       and save your changes, or discard them?
                     </p>
-                    <div className="mb-4 rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm dark:border-zinc-700 dark:bg-zinc-800">
-                      <p className="mb-1 text-xs font-medium text-zinc-400">
+                    <div className="mb-6 border-t border-rule-2 bg-sheet-2 p-3 text-sm">
+                      <p className="mb-1 text-sm font-medium text-muted">
                         Your unsaved note:
                       </p>
-                      <p className="whitespace-pre-wrap break-words text-zinc-600 dark:text-zinc-300">
+                      <p className="whitespace-pre-wrap break-words text-ink-2">
                         {editingNote.draft || (
-                          <span className="italic text-zinc-400">(empty)</span>
+                          <span className="italic text-muted">(empty)</span>
                         )}
                       </p>
                     </div>
@@ -793,13 +710,15 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                             confirmDiscard: false,
                           })
                         }
-                        className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                        type="button"
+                        className="btn"
                       >
                         Keep editing
                       </button>
                       <button
                         onClick={() => setEditingNote(null)}
-                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                        type="button"
+                        className="btn btn-danger"
                       >
                         Discard
                       </button>
@@ -807,10 +726,10 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                   </>
                 ) : (
                   <>
-                    <h2 className="mb-1 text-lg font-semibold">
+                    <h2 className="mb-1 text-xl">
                       {editingNote.title}
                     </h2>
-                    <p className="mb-4 text-sm text-zinc-500">
+                    <p className="mb-4 text-md text-ink-2">
                       Add your notes below
                     </p>
                     <textarea
@@ -835,20 +754,21 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                       }}
                       maxLength={MAX_NOTE_LENGTH}
                       placeholder="Write your notes here..."
-                      className="w-full resize-y rounded-lg border border-zinc-300 bg-transparent px-3 py-2 text-sm break-words focus:border-blue-500 focus:outline-none dark:border-zinc-700"
+                      aria-label={`Note for ${editingNote.title}`}
+                      className="field w-full resize-y break-words"
                     />
                     <div className="mt-2 flex items-center justify-between">
-                      <span className={`text-xs ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-red-500" : "text-zinc-400"}`}>
+                      <span className={`font-outlier text-xs tabular-nums ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-error" : "text-muted"}`}>
                         {editingNote.draft.length.toLocaleString()} / {MAX_NOTE_LENGTH.toLocaleString()} characters
                       </span>
                       {hasChanges ? (
-                        <span className="text-xs text-amber-600 dark:text-amber-400">
-                          ⚠ Unsaved changes ·{" "}
+                        <span className="font-display text-sm font-medium text-accent">
+                          Unsaved changes,{" "}
                           {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}
                           +Enter to save
                         </span>
                       ) : (
-                        <span className="text-xs text-zinc-400">
+                        <span className="font-display text-sm text-muted">
                           {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}
                           +Enter to save
                         </span>
@@ -857,7 +777,8 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                     <div className="mt-4 flex justify-end gap-2">
                       <button
                         onClick={tryDismiss}
-                        className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                        type="button"
+                        className="btn"
                       >
                         Cancel
                       </button>
@@ -866,7 +787,8 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                           updateNote(editingNote.id, editingNote.draft);
                           setEditingNote(null);
                         }}
-                        className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                        type="button"
+                        className="btn btn-primary"
                       >
                         Done
                       </button>

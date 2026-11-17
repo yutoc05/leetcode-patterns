@@ -115,7 +115,7 @@ export default function NoteModal({
   };
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-(--z-modal) flex items-center justify-center bg-scrim"
       onMouseDown={(e) => {
         mouseDownOnBackdrop.current = e.target === e.currentTarget;
       }}
@@ -130,35 +130,37 @@ export default function NoteModal({
       aria-label={`Edit note for ${editingNote.title}`}
     >
       <div
-        className="mx-4 w-full max-w-lg rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+        className="dialog mx-4 w-full max-w-lg p-6"
         onClick={(e) => e.stopPropagation()}
       >
         {editingNote.confirmDiscard ? (
           <>
-            <h2 className="mb-2 text-lg font-semibold">Unsaved changes</h2>
-            <p className="mb-3 text-sm text-zinc-500">
-              Your note for <span className="font-medium text-foreground">{editingNote.title}</span> has
+            <h2 className="mb-2 text-xl">Unsaved changes</h2>
+            <p className="mb-4 text-md text-ink-2">
+              Your note for <span className="font-medium text-ink">{editingNote.title}</span> has
               been modified but not saved. Would you like to go back and save
               your changes, or discard them?
             </p>
-            <div className="mb-4 rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm dark:border-zinc-700 dark:bg-zinc-800">
-              <p className="mb-1 text-xs font-medium text-zinc-400">Your unsaved note:</p>
-              <p className="whitespace-pre-wrap break-words text-zinc-600 dark:text-zinc-300">
-                {editingNote.draft || <span className="italic text-zinc-400">(empty)</span>}
+            <div className="mb-6 border-t border-rule-2 bg-sheet-2 p-3 text-sm">
+              <p className="mb-1 text-sm font-medium text-muted">Your unsaved note:</p>
+              <p className="whitespace-pre-wrap break-words text-ink-2">
+                {editingNote.draft || <span className="italic text-muted">(empty)</span>}
               </p>
             </div>
             <div className="flex justify-end gap-2">
               <button
+                type="button"
                 onClick={() =>
                   setEditingNote({ ...editingNote, confirmDiscard: false })
                 }
-                className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                className="btn"
               >
                 Keep editing
               </button>
               <button
+                type="button"
                 onClick={() => setEditingNote(null)}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                className="btn btn-danger"
               >
                 Discard
               </button>
@@ -166,8 +168,8 @@ export default function NoteModal({
           </>
         ) : (
           <>
-            <h2 className="mb-1 text-lg font-semibold">{editingNote.title}</h2>
-            <p className="mb-4 text-sm text-zinc-500">Add your notes below</p>
+            <h2 className="mb-1 text-xl">{editingNote.title}</h2>
+            <p className="mb-4 text-md text-ink-2">Add your notes below</p>
             <div className="mb-2 flex items-center gap-1">
               {formatActions.map(({ icon: Icon, prefix, suffix, title, key }) => (
                 <button
@@ -175,21 +177,21 @@ export default function NoteModal({
                   type="button"
                   onClick={() => wrapSelection(prefix, suffix)}
                   title={`${title} (${navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}+${key.toUpperCase()})`}
-                  className="rounded p-1.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                  className="btn btn-quiet btn-icon text-muted hover:text-ink"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                 </button>
               ))}
-              <div className="mx-1 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+              <div className="mx-1 h-4 w-px bg-rule" aria-hidden="true" />
               {listActions.map(({ icon: Icon, mode, title }) => (
                 <button
                   key={title}
                   type="button"
                   onClick={() => prefixLines(mode)}
                   title={title}
-                  className="rounded p-1.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                  className="btn btn-quiet btn-icon text-muted hover:text-ink"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                 </button>
               ))}
             </div>
@@ -219,26 +221,28 @@ export default function NoteModal({
               }}
               maxLength={MAX_NOTE_LENGTH}
               placeholder="Write your notes here..."
-              className="w-full resize-y rounded-lg border border-zinc-300 bg-transparent px-3 py-2 text-sm break-words focus:border-blue-500 focus:outline-none dark:border-zinc-700"
+              aria-label={`Note for ${editingNote.title}`}
+              className="field w-full resize-y break-words"
             />
             <div className="mt-2 flex items-center justify-between">
-              <span className={`text-xs ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-red-500" : "text-zinc-400"}`}>
+              <span className={`font-outlier text-xs tabular-nums ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-error" : "text-muted"}`}>
                 {editingNote.draft.length.toLocaleString()} / {MAX_NOTE_LENGTH.toLocaleString()} characters
               </span>
               {hasChanges ? (
-                <span className="text-xs text-amber-600 dark:text-amber-400">
-                  ⚠ Unsaved changes · {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}+Enter to save
+                <span className="font-display text-sm font-medium text-accent">
+                  Unsaved changes, {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}+Enter to save
                 </span>
               ) : (
-                <span className="text-xs text-zinc-400">
+                <span className="font-display text-sm text-muted">
                   {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}+Enter to save
                 </span>
               )}
             </div>
             <div className="mt-4 flex justify-end gap-2">
               <button
+                type="button"
                 onClick={guardedClick(tryDismiss)}
-                className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                className="btn"
               >
                 Cancel
               </button>
@@ -247,7 +251,8 @@ export default function NoteModal({
                   updateNote(editingNote.id, editingNote.draft);
                   setEditingNote(null);
                 })}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                type="button"
+                className="btn btn-primary"
               >
                 Done
               </button>

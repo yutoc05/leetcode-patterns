@@ -9,7 +9,7 @@ function formatApproach(text: string) {
   const parts = text.split(/(O\([^)]*\)|\bK\b)/g);
   return parts.map((part, i) =>
     /^O\(/.test(part) || /^\bK\b$/.test(part) ? (
-      <code key={i} className="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs dark:bg-zinc-800">{part}</code>
+      <code key={i} className="rounded-pill bg-sheet-2 px-1 py-0.5 font-outlier text-xs text-ink">{part}</code>
     ) : (
       part
     )
@@ -94,68 +94,71 @@ export default function TipsPanel() {
 
   return (
     <>
-      {/* Tab button – rendered inline inside the fixed flex wrapper in page.tsx */}
+      {/* Opener – sits in the masthead's reference row in page.tsx */}
       <button
+        type="button"
         onClick={() => { setOpen(true); trackEvent("panel_open", { panel: "tips" }); }}
-        className="rounded-r-xl bg-blue-600 px-2.5 py-4 text-white shadow-lg transition-colors hover:bg-blue-700"
+        className="btn btn-quiet"
         aria-label="Open tips"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold [writing-mode:vertical-lr]">
-          <Lightbulb className="h-4 w-4 rotate-90" />
-          Helpful Tips
-        </span>
+        <Lightbulb className="h-4 w-4" aria-hidden="true" />
+        Helpful Tips
       </button>
 
       {/* Panel */}
       <div
-        className={`fixed left-0 top-0 z-50 h-full w-80 transform border-r border-zinc-200 bg-white shadow-xl transition-transform duration-300 ease-in-out dark:border-zinc-700 dark:bg-zinc-900 ${
-          open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-(--z-modal) flex h-full w-80 flex-col border-r border-rule-2 bg-sheet transition-[transform,visibility] duration-(--dur-long) ease-out sm:w-96 ${
+          open ? "visible translate-x-0" : "invisible -translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between bg-blue-600 px-4 py-3 text-white">
-          <h2 className="flex items-center gap-2 text-base font-semibold">
-            <Lightbulb className="h-4 w-4" />
+        <div className="flex items-center justify-between border-b-2 border-ink py-2 pl-6 pr-3">
+          <h2 className="flex items-center gap-2">
+            <Lightbulb className="h-4 w-4" aria-hidden="true" />
             Helpful Tips
           </h2>
           <div className="flex items-center gap-1">
             <button
+              type="button"
               onClick={copyToClipboard}
-              className="rounded p-1 transition-colors hover:bg-blue-700"
+              className="btn btn-quiet btn-icon"
               title="Copy to clipboard"
+              aria-label="Copy to clipboard"
             >
-              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
             </button>
             <button
+              type="button"
               onClick={() => { setOpen(false); trackEvent("panel_close", { panel: "tips" }); }}
-              className="rounded p-1 transition-colors hover:bg-blue-700"
+              aria-label="Close tips"
+              className="btn btn-quiet btn-icon"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         </div>
-        <div className="h-[calc(100%-49px)] overflow-y-auto px-4 py-4">
-          <p className="mb-4 text-xs text-zinc-500">
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+          <p className="mb-4 text-sm text-muted">
             Based on the problem constraints, use these heuristics to identify possible approaches when unsure.
           </p>
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-700">
-                <th className="pb-2 text-left font-semibold">Condition</th>
-                <th className="pb-2 text-left font-semibold">Approach</th>
+              <tr className="border-b-2 border-rule-2">
+                <th className="pb-2 text-left font-medium text-muted">Condition</th>
+                <th className="pb-2 text-left font-medium text-muted">Approach</th>
               </tr>
             </thead>
             <tbody>
               {tipGroups.map((group) => (
                 <Fragment key={group.label}>
                   <tr>
-                    <td colSpan={2} className="pt-4 pb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+                    <td colSpan={2} className="pt-6 pb-1 font-display text-sm font-semibold text-ink">
                       {group.label}
                     </td>
                   </tr>
                   {group.tips.map((tip) => (
-                    <tr key={tip.condition} className="border-b border-zinc-100 dark:border-zinc-800">
-                      <td className="py-2 pr-3 align-top text-zinc-700 dark:text-zinc-300">{formatApproach(tip.condition)}</td>
-                      <td className="py-2 align-top text-zinc-600 dark:text-zinc-400">
+                    <tr key={tip.condition} className="border-b border-rule">
+                      <td className="py-2 pr-3 align-top text-ink">{formatApproach(tip.condition)}</td>
+                      <td className="py-2 align-top text-ink-2">
                         {tip.approaches.map((a, i) => (
                           <span key={i}>{i > 0 && ", "}{formatApproach(a)}</span>
                         ))}
@@ -172,9 +175,10 @@ export default function TipsPanel() {
       {/* Copy toast – portalled to body so it centres on the viewport */}
       {copied && createPortal(
         <div
-          className={`fixed inset-x-0 bottom-6 z-50 mx-auto w-fit animate-[fadeInUp_0.3s_ease-out] rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-800 shadow-lg transition-opacity duration-700 ease-in-out dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200 ${toastFading ? "opacity-0" : "opacity-100"}`}
+          role="status"
+          className={`toast ${toastFading ? "opacity-0" : "opacity-100"}`}
         >
-          ✓ Tips copied to clipboard
+          <Check className="h-4 w-4 shrink-0 text-success" aria-hidden="true" /> Tips copied to clipboard
         </div>,
         document.body
       )}
