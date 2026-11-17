@@ -427,6 +427,24 @@
       ]
     },
     {
+      "id": 7,
+      "title": "Reverse Integer",
+      "slug": "reverse-integer",
+      "pattern": ["Math"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 10,
+      "title": "Regular Expression Matching",
+      "slug": "regular-expression-matching",
+      "pattern": ["String", "Dynamic Programming", "Recursion"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 11,
       "title": "Container With Most Water",
       "slug": "container-with-most-water",
@@ -1052,6 +1070,15 @@
       ]
     },
     {
+      "id": 36,
+      "title": "Valid Sudoku",
+      "slug": "valid-sudoku",
+      "pattern": ["Array", "Hash Table", "Matrix"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 37,
       "title": "Sudoku Solver",
       "slug": "sudoku-solver",
@@ -1263,6 +1290,24 @@
       ]
     },
     {
+      "id": 43,
+      "title": "Multiply Strings",
+      "slug": "multiply-strings",
+      "pattern": ["Math", "String", "Simulation"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 45,
+      "title": "Jump Game II",
+      "slug": "jump-game-ii",
+      "pattern": ["Array", "Dynamic Programming", "Greedy"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 46,
       "title": "Permutations",
       "slug": "permutations",
@@ -1381,6 +1426,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 50,
+      "title": "Pow(x, n)",
+      "slug": "powx-n",
+      "pattern": ["Math", "Recursion"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 51,
@@ -1808,6 +1862,15 @@
       ]
     },
     {
+      "id": 66,
+      "title": "Plus One",
+      "slug": "plus-one",
+      "pattern": ["Array", "Math"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 70,
       "title": "Climbing Stairs",
       "slug": "climbing-stairs",
@@ -1871,6 +1934,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 72,
+      "title": "Edit Distance",
+      "slug": "edit-distance",
+      "pattern": ["String", "Dynamic Programming"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 73,
@@ -2264,6 +2336,15 @@
       ]
     },
     {
+      "id": 84,
+      "title": "Largest Rectangle in Histogram",
+      "slug": "largest-rectangle-in-histogram",
+      "pattern": ["Array", "Stack", "Monotonic Stack", "Range Minimum/Maximum Query"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 90,
       "title": "Subsets II",
       "slug": "subsets-ii",
@@ -2372,6 +2453,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 97,
+      "title": "Interleaving String",
+      "slug": "interleaving-string",
+      "pattern": ["String", "Dynamic Programming"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 98,
@@ -2733,6 +2823,15 @@
       ]
     },
     {
+      "id": 115,
+      "title": "Distinct Subsequences",
+      "slug": "distinct-subsequences",
+      "pattern": ["String", "Dynamic Programming"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 121,
       "title": "Best Time to Buy and Sell Stock",
       "slug": "best-time-to-buy-and-sell-stock",
@@ -2888,6 +2987,15 @@
       ]
     },
     {
+      "id": 127,
+      "title": "Word Ladder",
+      "slug": "word-ladder",
+      "pattern": ["Hash Table", "String", "Breadth-First Search", "Bidirectional Search"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 128,
       "title": "Longest Consecutive Sequence",
       "slug": "longest-consecutive-sequence",
@@ -2941,6 +3049,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 130,
+      "title": "Surrounded Regions",
+      "slug": "surrounded-regions",
+      "pattern": ["Array", "Depth-First Search", "Breadth-First Search", "Union-Find", "Matrix"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 131,
@@ -3081,6 +3198,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 138,
+      "title": "Copy List with Random Pointer",
+      "slug": "copy-list-with-random-pointer",
+      "pattern": ["Hash Table", "Linked List"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 139,
@@ -3250,6 +3376,15 @@
       ]
     },
     {
+      "id": 146,
+      "title": "LRU Cache",
+      "slug": "lru-cache",
+      "pattern": ["Hash Table", "Linked List", "Design", "Doubly-Linked List"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 148,
       "title": "Sort List",
       "slug": "sort-list",
@@ -3284,6 +3419,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 150,
+      "title": "Evaluate Reverse Polish Notation",
+      "slug": "evaluate-reverse-polish-notation",
+      "pattern": ["Array", "Math", "Stack"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 152,
@@ -3381,6 +3525,15 @@
       ]
     },
     {
+      "id": 155,
+      "title": "Min Stack",
+      "slug": "min-stack",
+      "pattern": ["Stack", "Design"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 162,
       "title": "Find Peak Element",
       "slug": "find-peak-element",
@@ -3429,6 +3582,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 167,
+      "title": "Two Sum II - Input Array Is Sorted",
+      "slug": "two-sum-ii-input-array-is-sorted",
+      "pattern": ["Array", "Two Pointers", "Binary Search"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 169,
@@ -3701,6 +3863,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 202,
+      "title": "Happy Number",
+      "slug": "happy-number",
+      "pattern": ["Hash Table", "Math", "Two Pointers", "Floyd's Cycle Finding Algorithm"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 203,
@@ -4839,6 +5010,15 @@
       ]
     },
     {
+      "id": 286,
+      "title": "Walls and Gates",
+      "slug": "walls-and-gates",
+      "pattern": ["Array", "Breadth-First Search", "Matrix"],
+      "difficulty": "Medium",
+      "premium": true,
+      "companies": []
+    },
+    {
       "id": 287,
       "title": "Find the Duplicate Number",
       "slug": "find-the-duplicate-number",
@@ -5122,6 +5302,15 @@
       ]
     },
     {
+      "id": 312,
+      "title": "Burst Balloons",
+      "slug": "burst-balloons",
+      "pattern": ["Array", "Dynamic Programming"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 320,
       "title": "Generalized Abbreviation",
       "slug": "generalized-abbreviation",
@@ -5258,6 +5447,24 @@
       ]
     },
     {
+      "id": 329,
+      "title": "Longest Increasing Path in a Matrix",
+      "slug": "longest-increasing-path-in-a-matrix",
+      "pattern": ["Array", "Dynamic Programming", "Depth-First Search", "Breadth-First Search", "Graph Theory", "Topological Sort", "Memoization", "Matrix", "Directed Acyclic Graph"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 332,
+      "title": "Reconstruct Itinerary",
+      "slug": "reconstruct-itinerary",
+      "pattern": ["Array", "String", "Depth-First Search", "Graph Theory", "Sorting", "Heap (Priority Queue)", "Eulerian Circuit", "Eulerian Path", "Semi-Eulerian Graph"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 338,
       "title": "Counting Bits",
       "slug": "counting-bits",
@@ -5365,6 +5572,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 355,
+      "title": "Design Twitter",
+      "slug": "design-twitter",
+      "pattern": ["Hash Table", "Linked List", "Design", "Heap (Priority Queue)"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 358,
@@ -5868,6 +6084,15 @@
       ]
     },
     {
+      "id": 518,
+      "title": "Coin Change II",
+      "slug": "coin-change-ii",
+      "pattern": ["Array", "Dynamic Programming", "Knapsack Problem", "Complete Knapsack"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 567,
       "title": "Permutation in String",
       "slug": "permutation-in-string",
@@ -6287,6 +6512,33 @@
       ]
     },
     {
+      "id": 678,
+      "title": "Valid Parenthesis String",
+      "slug": "valid-parenthesis-string",
+      "pattern": ["String", "Dynamic Programming", "Stack", "Greedy", "Bracket Sequences"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 684,
+      "title": "Redundant Connection",
+      "slug": "redundant-connection",
+      "pattern": ["Depth-First Search", "Breadth-First Search", "Union-Find", "Graph Theory"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 695,
+      "title": "Max Area of Island",
+      "slug": "max-area-of-island",
+      "pattern": ["Array", "Depth-First Search", "Breadth-First Search", "Union-Find", "Matrix"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 698,
       "title": "Partition to K Equal Sum Subsets",
       "slug": "partition-to-k-equal-sum-subsets",
@@ -6363,6 +6615,24 @@
       "companies": []
     },
     {
+      "id": 739,
+      "title": "Daily Temperatures",
+      "slug": "daily-temperatures",
+      "pattern": ["Array", "Stack", "Monotonic Stack"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 744,
+      "title": "Network Delay Time",
+      "slug": "network-delay-time",
+      "pattern": ["Depth-First Search", "Breadth-First Search", "Graph Theory", "Heap (Priority Queue)", "Shortest Path", "Dijkstra's Algorithm"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 745,
       "title": "Find Smallest Letter Greater Than Target",
       "slug": "find-smallest-letter-greater-than-target",
@@ -6387,6 +6657,15 @@
       "companies": []
     },
     {
+      "id": 747,
+      "title": "Min Cost Climbing Stairs",
+      "slug": "min-cost-climbing-stairs",
+      "pattern": ["Array", "Dynamic Programming"],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 761,
       "title": "Employee Free Time",
       "slug": "employee-free-time",
@@ -6405,6 +6684,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 768,
+      "title": "Partition Labels",
+      "slug": "partition-labels",
+      "pattern": ["Hash Table", "Two Pointers", "String", "Greedy"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 778,
@@ -6484,6 +6772,15 @@
       ]
     },
     {
+      "id": 794,
+      "title": "Swim in Rising Water",
+      "slug": "swim-in-rising-water",
+      "pattern": ["Array", "Binary Search", "Depth-First Search", "Breadth-First Search", "Union-Find", "Minimax", "Heap (Priority Queue)", "Matrix", "Dijkstra's Algorithm"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 800,
       "title": "Letter Case Permutation",
       "slug": "letter-case-permutation",
@@ -6497,6 +6794,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 803,
+      "title": "Cheapest Flights Within K Stops",
+      "slug": "cheapest-flights-within-k-stops",
+      "pattern": ["Dynamic Programming", "Depth-First Search", "Breadth-First Search", "Graph Theory", "Heap (Priority Queue)", "Shortest Path"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 855,
@@ -6526,6 +6832,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 876,
+      "title": "Hand of Straights",
+      "slug": "hand-of-straights",
+      "pattern": ["Array", "Hash Table", "Greedy", "Sorting"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 882,
@@ -6566,6 +6881,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 883,
+      "title": "Car Fleet",
+      "slug": "car-fleet",
+      "pattern": ["Array", "Stack", "Sorting", "Monotonic Stack"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 893,
@@ -6617,6 +6941,15 @@
           "frequency": 2
         }
       ]
+    },
+    {
+      "id": 907,
+      "title": "Koko Eating Bananas",
+      "slug": "koko-eating-bananas",
+      "pattern": ["Array", "Binary Search"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 908,
@@ -6812,6 +7145,15 @@
       ]
     },
     {
+      "id": 1023,
+      "title": "Time Based Key-Value Store",
+      "slug": "time-based-key-value-store",
+      "pattern": ["Hash Table", "String", "Binary Search", "Design"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 1028,
       "title": "Interval List Intersections",
       "slug": "interval-list-intersections",
@@ -6852,6 +7194,15 @@
       ]
     },
     {
+      "id": 1036,
+      "title": "Rotting Oranges",
+      "slug": "rotting-oranges",
+      "pattern": ["Array", "Breadth-First Search", "Matrix"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 1046,
       "title": "Last Stone Weight",
       "slug": "last-stone-weight",
@@ -6870,6 +7221,42 @@
       "companies": []
     },
     {
+      "id": 1544,
+      "title": "Count Good Nodes in Binary Tree",
+      "slug": "count-good-nodes-in-binary-tree",
+      "pattern": ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 1706,
+      "title": "Min Cost to Connect All Points",
+      "slug": "min-cost-to-connect-all-points",
+      "pattern": ["Array", "Union-Find", "Graph Theory", "Minimum Spanning Tree", "Prim's Algorithm", "Kruskal's Algorithm", "Borůvka's Algorithm"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 1977,
+      "title": "Minimum Interval to Include Each Query",
+      "slug": "minimum-interval-to-include-each-query",
+      "pattern": ["Array", "Binary Search", "Sweep Line", "Sorting", "Heap (Priority Queue)"],
+      "difficulty": "Hard",
+      "premium": false,
+      "companies": []
+    },
+    {
+      "id": 2026,
+      "title": "Merge Triplets to Form Target Triplet",
+      "slug": "merge-triplets-to-form-target-triplet",
+      "pattern": ["Array", "Greedy"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
+    },
+    {
       "id": 2132,
       "title": "Convert 1D Array Into 2D Array",
       "slug": "convert-1d-array-into-2d-array",
@@ -6883,6 +7270,15 @@
           "frequency": 3
         }
       ]
+    },
+    {
+      "id": 2139,
+      "title": "Detect Squares",
+      "slug": "detect-squares",
+      "pattern": ["Array", "Hash Table", "Design", "Counting", "Data Stream"],
+      "difficulty": "Medium",
+      "premium": false,
+      "companies": []
     },
     {
       "id": 242,
