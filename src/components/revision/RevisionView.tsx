@@ -78,6 +78,8 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
   const [reviewed, setReviewed] = useState(0);
   const [touched, setTouched] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  // Saved notes can give the answer away too, so they start hidden like the pattern.
+  const [notesRevealed, setNotesRevealed] = useState(false);
   const [editingNotes, setEditingNotes] = useState<Record<number, EditingNote>>({});
 
   // Remote progress arrived (e.g. just after sign-in): refresh, and rebuild the
@@ -124,15 +126,24 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
   const toggleNotes = useCallback(() => {
     if (!card) return;
     const { id, title } = card.question;
-    setEditingNotes((prev) => {
-      const current = prev[id];
-      if (!current) return { ...prev, [id]: { id, title, draft: notes[id] ?? "", confirmDiscard: false } };
-      if (current.draft !== (notes[id] ?? "")) return { ...prev, [id]: { ...current, confirmDiscard: true } };
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
-  }, [card, notes]);
+    const current = editingNotes[id];
+    if (!current) {
+      setNotesRevealed(true); // the editor shows the note anyway
+      setEditingNoteFor(id, { id, title, draft: notes[id] ?? "", confirmDiscard: false });
+    } else if (current.draft !== (notes[id] ?? "")) {
+      setEditingNoteFor(id, { ...current, confirmDiscard: true });
+    } else {
+      setEditingNoteFor(id, null);
+    }
+  }, [card, editingNotes, notes, setEditingNoteFor]);
+
+  // N: show a hidden note first; after that, open or close the editor.
+  const notesKey = useCallback(() => {
+    if (!card) return;
+    const id = card.question.id;
+    if (notes[id] && !notesRevealed && !editingNotes[id]) setNotesRevealed(true);
+    else toggleNotes();
+  }, [card, notes, notesRevealed, editingNotes, toggleNotes]);
 
   const rateCurrent = useCallback((rating: RevisionRating) => {
     if (!card) return;
@@ -167,6 +178,7 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
     setTouched(true);
     setReviewed((n) => n + 1);
     setRevealed(false);
+    setNotesRevealed(false);
     setQueue((q) => q.slice(1));
   }, [card, editingNotes, notes, updateNote, setEditingNoteFor, syncNow]);
 
@@ -174,11 +186,12 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
     if (queue.length < 2) return;
     setTouched(true);
     setRevealed(false);
+    setNotesRevealed(false);
     trackEvent("revision_skip", { question_id: queue[0].question.id });
     setQueue((q) => [...q.slice(1), q[0]]);
   }, [queue]);
 
-  // Keyboard: 1/2/3 rate, S skip, Space shows the pattern, N opens notes.
+  // Keyboard: 1/2/3 rate, S skip, Space shows the pattern, N shows notes, then opens the editor.
   useEffect(() => {
     if (!card) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -199,12 +212,12 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
         setRevealed(true);
       } else if (e.key === "n" || e.key === "N") {
         e.preventDefault();
-        toggleNotes();
+        notesKey();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [card, rateCurrent, skip, toggleNotes]);
+  }, [card, rateCurrent, skip, notesKey]);
 
   const todayIso = today();
   const total = queue.length + reviewed;
@@ -251,6 +264,8 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
           revealed={revealed}
           onReveal={() => setRevealed(true)}
           note={notes[card.question.id]}
+          notesRevealed={notesRevealed}
+          onRevealNotes={() => setNotesRevealed(true)}
           editing={editingNotes[card.question.id]}
           onToggleNotes={toggleNotes}
           setEditingNote={(note) => setEditingNoteFor(card.question.id, note)}
@@ -267,7 +282,7 @@ function RevisionSession({ questions, strategyId }: { questions: Question[]; str
 }
 
 function RevisionCardView({
-  card, solvedDate, todayIso, revealed, onReveal, note, editing, onToggleNotes,
+  card, solvedDate, todayIso, revealed, onReveal, note, notesRevealed, onRevealNotes, editing, onToggleNotes,
   setEditingNote, updateNote, notes, intervals, onRate, onSkip, canSkip,
 }: {
   card: RevisionCard;
@@ -276,6 +291,8 @@ function RevisionCardView({
   revealed: boolean;
   onReveal: () => void;
   note: string | undefined;
+  notesRevealed: boolean;
+  onRevealNotes: () => void;
   editing: EditingNote | undefined;
   onToggleNotes: () => void;
   setEditingNote: (note: EditingNote | null) => void;
@@ -350,30 +367,40 @@ function RevisionCardView({
       </section>
 
       <section aria-label="Notes" className="mt-8">
-        <div className="flex items-center gap-3">
-          <p className="text-sm text-muted">Notes</p>
-          <button
-            type="button"
-            data-note-toggle
-            onClick={onToggleNotes}
-            aria-expanded={!!editing}
-            aria-keyshortcuts="N"
-            className="btn btn-quiet -ml-2"
-          >
+        {note && !notesRevealed && !editing ? (
+          <button type="button" className="btn" onClick={onRevealNotes} aria-keyshortcuts="N">
             <NotebookPen className="h-4 w-4" aria-hidden="true" />
-            {note ? "Edit notes" : "Add notes"}
+            Show notes
             <kbd className="kbd hidden sm:inline">N</kbd>
           </button>
-        </div>
-        {editing ? (
-          <div className="mt-2">
-            <NoteEditor editingNote={editing} setEditingNote={setEditingNote} updateNote={updateNote} notes={notes} />
-          </div>
-        ) : note ? (
-          <div className="mt-2 max-w-[70ch] border-t border-rule pt-3 text-md text-ink-2">
-            <FormattedNote text={note} className="whitespace-pre-wrap break-words" />
-          </div>
-        ) : null}
+        ) : (
+          <>
+            <div className="flex items-center gap-3">
+              <p className="text-sm text-muted">Notes</p>
+              <button
+                type="button"
+                data-note-toggle
+                onClick={onToggleNotes}
+                aria-expanded={!!editing}
+                aria-keyshortcuts="N"
+                className="btn btn-quiet -ml-2"
+              >
+                <NotebookPen className="h-4 w-4" aria-hidden="true" />
+                {note ? "Edit notes" : "Add notes"}
+                <kbd className="kbd hidden sm:inline">N</kbd>
+              </button>
+            </div>
+            {editing ? (
+              <div className="mt-2">
+                <NoteEditor editingNote={editing} setEditingNote={setEditingNote} updateNote={updateNote} notes={notes} />
+              </div>
+            ) : note ? (
+              <div className="mt-2 max-w-[70ch] border-t border-rule pt-3 text-md text-ink-2">
+                <FormattedNote text={note} className="whitespace-pre-wrap break-words" />
+              </div>
+            ) : null}
+          </>
+        )}
       </section>
 
       <div className="mt-10 border-t border-rule pt-6">

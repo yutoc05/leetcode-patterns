@@ -156,6 +156,41 @@ describe("RevisionView", () => {
     expect(screen.getByRole("button", { name: /Edit note for Linked List Cycle II/ })).toBeInTheDocument();
   });
 
+  it("hides a saved note until it is revealed", async () => {
+    seedDue();
+    localStorage.setItem(KEYS.notes, JSON.stringify({ 1: "Floyd's tortoise and hare" }));
+    const user = userEvent.setup();
+    render(<RevisionView questions={questions} />);
+    expect(screen.queryByText("Floyd's tortoise and hare")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /Show notes/ }));
+    expect(screen.getByText("Floyd's tortoise and hare")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Edit notes/ })).toBeInTheDocument();
+  });
+
+  it("N shows a hidden note, then opens the editor", async () => {
+    seedDue();
+    localStorage.setItem(KEYS.notes, JSON.stringify({ 1: "Floyd's tortoise and hare" }));
+    const user = userEvent.setup();
+    render(<RevisionView questions={questions} />);
+    await user.keyboard("n");
+    expect(screen.getByText("Floyd's tortoise and hare")).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText("Write your notes here...")).not.toBeInTheDocument();
+    await user.keyboard("n");
+    expect(screen.getByPlaceholderText("Write your notes here...")).toHaveValue("Floyd's tortoise and hare");
+  });
+
+  it("hides notes again on the next question", async () => {
+    seedDue();
+    localStorage.setItem(KEYS.notes, JSON.stringify({ 0: "hash map of complements", 1: "Floyd's tortoise and hare" }));
+    const user = userEvent.setup();
+    render(<RevisionView questions={questions} />);
+    await user.click(screen.getByRole("button", { name: /Show notes/ }));
+    await user.click(screen.getByRole("button", { name: /Good/ }));
+    expect(cardTitle()).toBe("Two Sum");
+    expect(screen.queryByText("hash map of complements")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Show notes/ })).toBeInTheDocument();
+  });
+
   it("rating keeps an unsaved note draft", async () => {
     seedDue();
     const user = userEvent.setup();
