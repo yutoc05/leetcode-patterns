@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { Fragment, createContext, useContext, useState, useMemo, useCallback, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   useReactTable,
@@ -21,7 +21,8 @@ import { useAuth } from "@/components/layout/AuthContext";
 import { type Reminder, isDue, setCustomDate as setCustomReviewDate } from "@/lib/reminders";
 import ProgressBar, { type ProgressStats } from "./ProgressBar";
 import FilterToolbar from "./FilterToolbar";
-import NoteModal, { type EditingNote } from "./NoteModal";
+import NoteEditor, { type EditingNote } from "./NoteEditor";
+import { doneRowTintStatic } from "./difficultyStyles";
 import ConfirmModal from "./ConfirmModal";
 import GroupHeaderRow from "./GroupHeaderRow";
 import QuestionRow from "./QuestionRow";
@@ -41,7 +42,7 @@ const makeColumns = (
   starred: Set<number>,
   toggleStarred: (id: number) => void,
   notes: Record<number, string>,
-  openNoteModal: (id: number, title: string) => void,
+  toggleNoteEditor: (id: number, title: string) => void,
   hidePatterns: boolean,
   companyFilter: string[],
   updatedDate: string,
@@ -126,7 +127,7 @@ const makeColumns = (
   columnHelper.accessor("difficulty", {
     header: "Difficulty",
     cell: (info) => (
-      <span className={`text-sm font-medium ${completed.has(info.row.original.id) ? "text-muted line-through" : difficultyColor[info.getValue()]}`}>
+      <span className={`text-sm font-medium ${difficultyColor[info.getValue()]} ${completed.has(info.row.original.id) ? "line-through" : ""}`}>
         {info.getValue()}
       </span>
     ),
@@ -143,7 +144,7 @@ const makeColumns = (
         {info.getValue().map((p) => (
           <span
             key={p}
-            className="tag whitespace-normal"
+            className={`tag whitespace-normal ${completed.has(info.row.original.id) ? "bg-sheet" : ""}`}
           >
             {hidePatterns ? "•".repeat(p.length) : p}
           </span>
@@ -225,20 +226,13 @@ const makeColumns = (
     size: 100,
     meta: { hideOnMobile: true, noStrikethrough: true },
     cell: (info) => {
-      const note = notes[info.row.original.id];
       return (
-        <NoteCell note={note}>
-          <button
-            onClick={() =>
-              openNoteModal(info.row.original.id, info.row.original.title)
-            }
-
-            aria-label={`${note ? "Edit" : "Add"} note for ${info.row.original.title}`}
-            className="block max-w-[100px] cursor-pointer truncate text-left text-sm text-muted transition-colors duration-(--dur-micro) hover:text-ink"
-          >
-            {note || <svg className="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>}
-          </button>
-        </NoteCell>
+        <NoteToggle
+          id={info.row.original.id}
+          title={info.row.original.title}
+          note={notes[info.row.original.id]}
+          onToggle={toggleNoteEditor}
+        />
       );
     },
     enableSorting: false,
@@ -332,6 +326,33 @@ function relativeDate(isoDate: string, mode: "past" | "future"): string {
 }
 
 const mobileQuery = "(max-width: 639px)";
+
+// Which inline note editors are open. Read through context so opening one
+// doesn't rebuild the column definitions (which remounts every cell).
+const OpenNotesContext = createContext<Set<number>>(new Set());
+
+function NoteToggle({ id, title, note, onToggle }: {
+  id: number;
+  title: string;
+  note: string | undefined;
+  onToggle: (id: number, title: string) => void;
+}) {
+  const isOpen = useContext(OpenNotesContext).has(id);
+  return (
+    <NoteCell note={isOpen ? undefined : note}>
+      <button
+        type="button"
+        data-note-toggle
+        onClick={() => onToggle(id, title)}
+        aria-expanded={isOpen}
+        aria-label={`${note ? "Edit" : "Add"} note for ${title}`}
+        className={`block max-w-[100px] cursor-pointer truncate text-left text-sm transition-colors duration-(--dur-micro) hover:text-ink ${isOpen ? "text-ink" : "text-muted"}`}
+      >
+        {note || <svg className="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>}
+      </button>
+    </NoteCell>
+  );
+}
 
 function NoteCell({ note, children }: { note: string | undefined; children: ReactNode }) {
   const [rect, setRect] = useState<DOMRect | null>(null);
@@ -585,11 +606,41 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
     syncNow();
   }, [syncNow]);
 
-  const [editingNote, setEditingNote] = useState<EditingNote | null>(null);
+  // Open inline note editors, keyed by question id. Drafts live here so they
+  // survive a row being filtered out or its group collapsed.
+  const [editingNotes, setEditingNotes] = useState<Record<number, EditingNote>>({});
 
-  const openNoteModal = useCallback((id: number, title: string) => {
-    setEditingNote({ id, title, draft: notes[id] ?? "", confirmDiscard: false });
+  const toggleNoteEditor = useCallback((id: number, title: string) => {
+    setEditingNotes((prev) => {
+      const current = prev[id];
+      if (!current) {
+        return { ...prev, [id]: { id, title, draft: notes[id] ?? "", confirmDiscard: false } };
+      }
+      // Closing from the toggle follows the same unsaved-changes guard as Cancel.
+      if (current.draft !== (notes[id] ?? "")) {
+        return { ...prev, [id]: { ...current, confirmDiscard: true } };
+      }
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
   }, [notes]);
+
+  const setEditingNoteFor = useCallback((id: number, note: EditingNote | null) => {
+    setEditingNotes((prev) => {
+      if (note) return { ...prev, [id]: note };
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+  }, []);
+
+  // Only changes when an editor opens or closes, not on every keystroke.
+  const openNoteKey = Object.keys(editingNotes).join(",");
+  const openNoteIds = useMemo(
+    () => new Set(openNoteKey ? openNoteKey.split(",").map(Number) : []),
+    [openNoteKey]
+  );
 
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showStarredOnly, setShowStarredOnly] = useState(false);
@@ -614,8 +665,8 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
   );
 
   const columns = useMemo(
-    () => makeColumns(completed, toggleCompleted, starred, toggleStarred, notes, openNoteModal, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear),
-    [completed, toggleCompleted, starred, toggleStarred, notes, openNoteModal, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear]
+    () => makeColumns(completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear),
+    [completed, toggleCompleted, starred, toggleStarred, notes, toggleNoteEditor, hidePatterns, activeCompanyFilter, updatedDate, solvedDates, reminders, openReviewModal, onReviewDateClear]
   );
 
   useEffect(() => {
@@ -855,15 +906,6 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
         if (reviewTarget) { setReviewTarget(null); return; }
         if (clearConfirm) { setClearConfirm(null); return; }
         if (resetConfirmGroup) { setResetConfirmGroup(null); return; }
-        if (editingNote) {
-          const saved = notes[editingNote.id] ?? "";
-          if (editingNote.draft !== saved) {
-            setEditingNote({ ...editingNote, confirmDiscard: true });
-          } else {
-            setEditingNote(null);
-          }
-          return;
-        }
       }
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -876,7 +918,7 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [pickRandom, editingNote, notes, clearConfirm, resetConfirmGroup, reviewTarget]);
+  }, [pickRandom, clearConfirm, resetConfirmGroup, reviewTarget]);
 
   // Track filter changes
   const activeDifficultyFilter = useMemo(
@@ -1018,6 +1060,7 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
       </div>
 
       {/* Table */}
+      <OpenNotesContext.Provider value={openNoteIds}>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="border-b-2 border-rule-2">
@@ -1066,30 +1109,38 @@ export default function QuestionsTable({ data, updatedDate }: { data: Question[]
                 );
               }
               const row = item.row;
+              const editing = editingNotes[row.original.id];
+              const cellCount = row.getVisibleCells().length;
               return (
-                <QuestionRow
-                  key={row.id}
-                  row={row}
-                  completed={completed}
-                  toggleCompleted={toggleCompleted}
-                  toggleStarred={toggleStarred}
-                  dataIndex={idx}
-                />
+                <Fragment key={row.id}>
+                  <QuestionRow
+                    row={row}
+                    completed={completed}
+                    toggleCompleted={toggleCompleted}
+                    toggleStarred={toggleStarred}
+                    dataIndex={idx}
+                  />
+                  {editing && (
+                    <tr className={completed.has(row.original.id) ? doneRowTintStatic[row.original.difficulty] : ""}>
+                      {/* Skip the checkbox and star columns so the editor lines up with the title */}
+                      {cellCount > 2 && <td colSpan={2} aria-hidden="true" />}
+                      <td colSpan={cellCount > 2 ? cellCount - 2 : cellCount} className="px-2 pt-1 pb-4">
+                        <NoteEditor
+                          editingNote={editing}
+                          setEditingNote={(note) => setEditingNoteFor(row.original.id, note)}
+                          updateNote={updateNote}
+                          notes={notes}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               );
             })}
           </tbody>
         </table>
       </div>
-
-      {/* Note Modal */}
-      {editingNote && (
-        <NoteModal
-          editingNote={editingNote}
-          setEditingNote={setEditingNote}
-          updateNote={updateNote}
-          notes={notes}
-        />
-      )}
+      </OpenNotesContext.Provider>
 
       {/* Review Date Modal */}
       {reviewTarget && (

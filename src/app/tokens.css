@@ -21,6 +21,13 @@
   --color-easy: oklch(45% 0.09 160);
   --color-medium: oklch(47% 0.10 70);
   --color-hard: oklch(46% 0.15 28);
+  /* Completed rows: a printed tint per difficulty, and a deeper step for hover. */
+  --color-easy-wash: oklch(90.5% 0.045 160);
+  --color-easy-wash-2: oklch(88% 0.050 160);
+  --color-medium-wash: oklch(91.5% 0.065 92);
+  --color-medium-wash-2: oklch(89% 0.070 92);
+  --color-hard-wash: oklch(90.5% 0.045 30);
+  --color-hard-wash-2: oklch(88% 0.050 30);
   --color-sheet-2: oklch(90% 0.010 245);
   --color-sheet-3: oklch(87% 0.011 245);
   --color-wash: color-mix(in oklab, var(--color-ink) 7%, transparent);
@@ -104,6 +111,12 @@
   --color-easy: oklch(78% 0.10 160);
   --color-medium: oklch(82% 0.10 80);
   --color-hard: oklch(74% 0.13 28);
+  --color-easy-wash: oklch(27.5% 0.042 160);
+  --color-easy-wash-2: oklch(30.5% 0.047 160);
+  --color-medium-wash: oklch(28.5% 0.050 90);
+  --color-medium-wash-2: oklch(31.5% 0.055 90);
+  --color-hard-wash: oklch(27.5% 0.055 30);
+  --color-hard-wash-2: oklch(30.5% 0.060 30);
   --color-scrim: oklch(8% 0.012 245 / 0.65);
 }
 @media (max-width: 60rem) { :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; } }

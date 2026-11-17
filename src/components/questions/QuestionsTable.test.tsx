@@ -586,6 +586,48 @@ await user.click(screen.getByLabelText("Hide completed"));
     expect(screen.queryByPlaceholderText("Write your notes here...")).not.toBeInTheDocument();
   });
 
+  it("opens notes inline under the row, several at once", async () => {
+    const user = userEvent.setup();
+    render(<QuestionsTable data={testData} updatedDate="2025-01-01" />);
+    // Look buttons up after each click: this suite's useAuth mock rebuilds the cells on every render.
+    const noteButton = (title: string) => screen.getByRole("button", { name: new RegExp(`Add note for ${title}`) });
+    await user.click(noteButton("Two Sum"));
+    await user.click(noteButton("Add Two Numbers"));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.getAllByPlaceholderText("Write your notes here...")).toHaveLength(2);
+    expect(noteButton("Two Sum")).toHaveAttribute("aria-expanded", "true");
+
+    // Each editor sits in the row right after its question
+    const editorRow = screen.getByRole("group", { name: "Edit note for Two Sum" }).closest("tr")!;
+    expect(editorRow.previousElementSibling).toContainElement(noteButton("Two Sum"));
+
+    // Clicking the note button again closes that editor only
+    await user.click(noteButton("Two Sum"));
+    expect(screen.getAllByPlaceholderText("Write your notes here...")).toHaveLength(1);
+    expect(screen.getByRole("group", { name: "Edit note for Add Two Numbers" })).toBeInTheDocument();
+  });
+
+  it("keeps a note draft while its row is filtered out", async () => {
+    const user = userEvent.setup();
+    render(<QuestionsTable data={testData} updatedDate="2025-01-01" />);
+    await user.click(screen.getByRole("button", { name: /Add note for Two Sum/ }));
+    await user.type(screen.getByPlaceholderText("Write your notes here..."), "draft in progress");
+    const search = screen.getByLabelText("Search questions");
+    await user.type(search, "Median");
+    expect(screen.queryByPlaceholderText("Write your notes here...")).not.toBeInTheDocument();
+    await user.clear(search);
+    expect(screen.getByPlaceholderText("Write your notes here...")).toHaveValue("draft in progress");
+  });
+
+  it("keeps the difficulty colour when a question is done", () => {
+    localStorage.setItem("leetcode-patterns-completed", JSON.stringify([0]));
+    render(<QuestionsTable data={testData} updatedDate="2025-01-01" />);
+    const row = screen.getByText("Two Sum").closest("tr")!;
+    const label = within(row).getByText("Easy");
+    expect(label).toHaveClass("text-easy", "line-through");
+    expect(row.className).toContain("bg-easy-wash");
+  });
+
   it("filters questions when typing in search", async () => {
     const user = userEvent.setup();
     render(<QuestionsTable data={testData} updatedDate="2025-01-01" />);

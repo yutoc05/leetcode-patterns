@@ -15,7 +15,9 @@ import { Question } from "@/types/question";
 import { Roadmap } from "@/data/roadmaps";
 import { trackEvent } from "@/lib/analytics";
 import FormattedNote from "@/components/questions/FormattedNote";
-import { loadCompleted, saveCompleted, loadStarred, saveStarred, loadNotes, saveNotes, loadSolvedDates, saveSolvedDates, loadReminders, saveReminders, MAX_NOTE_LENGTH } from "@/lib/storage";
+import NoteEditor, { type EditingNote } from "@/components/questions/NoteEditor";
+import { doneRowTintStatic } from "@/components/questions/difficultyStyles";
+import { loadCompleted, saveCompleted, loadStarred, saveStarred, loadNotes, saveNotes, loadSolvedDates, saveSolvedDates, loadReminders, saveReminders } from "@/lib/storage";
 import { useAuth } from "@/components/layout/AuthContext";
 import { type Reminder, initReminder } from "@/lib/reminders";
 
@@ -76,12 +78,8 @@ export default function RoadmapView({ roadmap, questions }: Props) {
     new Set()
   );
   const [expandedHints, setExpandedHints] = useState<Set<string>>(new Set());
-  const [editingNote, setEditingNote] = useState<{
-    id: number;
-    title: string;
-    draft: string;
-    confirmDiscard: boolean;
-  } | null>(null);
+  // Open inline note editors, keyed by question id.
+  const [editingNotes, setEditingNotes] = useState<Record<number, EditingNote>>({});
 
   useEffect(() => {
     setCompleted(loadCompleted());
@@ -159,17 +157,33 @@ export default function RoadmapView({ roadmap, questions }: Props) {
     syncNow();
   }, [syncNow]);
 
-  const openNoteModal = useCallback(
+  const toggleNoteEditor = useCallback(
     (id: number, title: string) => {
-      setEditingNote({
-        id,
-        title,
-        draft: notes[id] ?? "",
-        confirmDiscard: false,
+      setEditingNotes((prev) => {
+        const current = prev[id];
+        if (!current) {
+          return { ...prev, [id]: { id, title, draft: notes[id] ?? "", confirmDiscard: false } };
+        }
+        // Closing from the toggle follows the same unsaved-changes guard as Cancel.
+        if (current.draft !== (notes[id] ?? "")) {
+          return { ...prev, [id]: { ...current, confirmDiscard: true } };
+        }
+        const next = { ...prev };
+        delete next[id];
+        return next;
       });
     },
     [notes]
   );
+
+  const setEditingNoteFor = useCallback((id: number, note: EditingNote | null) => {
+    setEditingNotes((prev) => {
+      if (note) return { ...prev, [id]: note };
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+  }, []);
 
   const togglePhase = useCallback((index: string | number) => {
     setCollapsedPhases((prev) => {
@@ -179,23 +193,6 @@ export default function RoadmapView({ roadmap, questions }: Props) {
       return next;
     });
   }, []);
-
-  // Escape key handler
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      if (editingNote) {
-        const saved = notes[editingNote.id] ?? "";
-        if (editingNote.draft !== saved) {
-          setEditingNote({ ...editingNote, confirmDiscard: true });
-        } else {
-          setEditingNote(null);
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [editingNote, notes]);
 
   // Compute stats
   const stats = useMemo(() => {
@@ -291,11 +288,14 @@ export default function RoadmapView({ roadmap, questions }: Props) {
     const isDone = completed.has(q.id);
     const isStarred = starred.has(q.id);
     const userNote = notes[q.id];
+    const editing = editingNotes[q.id];
 
     return (
       <div
         key={rq.slug}
-        className="flex items-start gap-3 border-t border-rule py-3 first:border-t-0"
+        className={`flex items-start gap-3 border-t border-rule px-2 py-3 first:border-t-0 ${
+          isDone ? doneRowTintStatic[q.difficulty] ?? "" : ""
+        }`}
       >
         <input
           type="checkbox"
@@ -392,7 +392,16 @@ export default function RoadmapView({ roadmap, questions }: Props) {
               <span>Show hint</span>
             )}
           </button>
-          {userNote && (
+          {editing ? (
+            <div className="mt-3">
+              <NoteEditor
+                editingNote={editing}
+                setEditingNote={(note) => setEditingNoteFor(q.id, note)}
+                updateNote={updateNote}
+                notes={notes}
+              />
+            </div>
+          ) : userNote && (
             <p className="mt-2 break-words text-sm text-ink-2">
               <NotebookPen className="inline h-3.5 w-3.5 shrink-0 text-muted" aria-hidden="true" />{" "}
               <FormattedNote text={userNote} />
@@ -417,14 +426,16 @@ export default function RoadmapView({ roadmap, questions }: Props) {
           </button>
           <button
             type="button"
-            onClick={() => openNoteModal(q.id, q.title)}
-            className="btn btn-quiet btn-icon"
+            onClick={() => toggleNoteEditor(q.id, q.title)}
+            data-note-toggle
+            aria-expanded={!!editing}
+            className={`btn btn-quiet btn-icon ${editing ? "bg-wash" : ""}`}
             title="Add note"
           >
             <NotebookPen
               aria-hidden="true"
               className={`h-4 w-4 ${
-                userNote
+                userNote || editing
                   ? "text-ink"
                   : "text-muted"
               }`}
@@ -655,150 +666,6 @@ export default function RoadmapView({ roadmap, questions }: Props) {
         </section>
       )}
 
-      {/* Note Modal - same as QuestionsTable */}
-      {editingNote &&
-        (() => {
-          const saved = notes[editingNote.id] ?? "";
-          const hasChanges = editingNote.draft !== saved;
-          const tryDismiss = () => {
-            if (hasChanges) {
-              setEditingNote({ ...editingNote, confirmDiscard: true });
-            } else {
-              setEditingNote(null);
-            }
-          };
-          return (
-            <div
-              className="fixed inset-0 z-(--z-modal) flex items-center justify-center bg-scrim"
-              onClick={tryDismiss}
-              role="dialog"
-              aria-modal="true"
-              aria-label={`Edit note for ${editingNote.title}`}
-            >
-              <div
-                className="dialog mx-4 w-full max-w-lg p-6"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {editingNote.confirmDiscard ? (
-                  <>
-                    <h2 className="mb-2 text-xl">
-                      Unsaved changes
-                    </h2>
-                    <p className="mb-4 text-md text-ink-2">
-                      Your note for{" "}
-                      <span className="font-medium text-ink">
-                        {editingNote.title}
-                      </span>{" "}
-                      has been modified but not saved. Would you like to go back
-                      and save your changes, or discard them?
-                    </p>
-                    <div className="mb-6 border-t border-rule-2 bg-sheet-2 p-3 text-sm">
-                      <p className="mb-1 text-sm font-medium text-muted">
-                        Your unsaved note:
-                      </p>
-                      <p className="whitespace-pre-wrap break-words text-ink-2">
-                        {editingNote.draft || (
-                          <span className="italic text-muted">(empty)</span>
-                        )}
-                      </p>
-                    </div>
-                    <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() =>
-                          setEditingNote({
-                            ...editingNote,
-                            confirmDiscard: false,
-                          })
-                        }
-                        type="button"
-                        className="btn"
-                      >
-                        Keep editing
-                      </button>
-                      <button
-                        onClick={() => setEditingNote(null)}
-                        type="button"
-                        className="btn btn-danger"
-                      >
-                        Discard
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="mb-1 text-xl">
-                      {editingNote.title}
-                    </h2>
-                    <p className="mb-4 text-md text-ink-2">
-                      Add your notes below
-                    </p>
-                    <textarea
-                      autoFocus
-                      rows={4}
-                      value={editingNote.draft}
-                      onChange={(e) =>
-                        setEditingNote({
-                          ...editingNote,
-                          draft: e.target.value,
-                        })
-                      }
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          (e.metaKey || e.ctrlKey)
-                        ) {
-                          e.preventDefault();
-                          updateNote(editingNote.id, editingNote.draft);
-                          setEditingNote(null);
-                        }
-                      }}
-                      maxLength={MAX_NOTE_LENGTH}
-                      placeholder="Write your notes here..."
-                      aria-label={`Note for ${editingNote.title}`}
-                      className="field w-full resize-y break-words"
-                    />
-                    <div className="mt-2 flex items-center justify-between">
-                      <span className={`font-outlier text-xs tabular-nums ${editingNote.draft.length >= MAX_NOTE_LENGTH ? "text-error" : "text-muted"}`}>
-                        {editingNote.draft.length.toLocaleString()} / {MAX_NOTE_LENGTH.toLocaleString()} characters
-                      </span>
-                      {hasChanges ? (
-                        <span className="font-display text-sm font-medium text-accent">
-                          Unsaved changes,{" "}
-                          {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}
-                          +Enter to save
-                        </span>
-                      ) : (
-                        <span className="font-display text-sm text-muted">
-                          {navigator.platform?.includes("Mac") ? "⌘" : "Ctrl"}
-                          +Enter to save
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-4 flex justify-end gap-2">
-                      <button
-                        onClick={tryDismiss}
-                        type="button"
-                        className="btn"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={() => {
-                          updateNote(editingNote.id, editingNote.draft);
-                          setEditingNote(null);
-                        }}
-                        type="button"
-                        className="btn btn-primary"
-                      >
-                        Done
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          );
-        })()}
     </div>
   );
 }

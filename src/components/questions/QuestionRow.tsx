@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { flexRender, type Row } from "@tanstack/react-table";
 import { Question } from "@/types/question";
+import { doneRowTint } from "./difficultyStyles";
 
 interface QuestionRowProps {
   row: Row<Question>;
@@ -18,8 +19,8 @@ const QuestionRow = forwardRef<HTMLTableRowElement, QuestionRowProps>(
         key={row.id}
         data-index={dataIndex}
         ref={ref}
-        className={`border-t border-rule transition-colors duration-(--dur-micro) hover:bg-wash ${
-          isDone ? "text-muted" : "text-ink-2"
+        className={`border-t border-rule transition-colors duration-(--dur-micro) ${
+          isDone ? `text-muted ${doneRowTint[row.original.difficulty] ?? ""}` : "text-ink-2 hover:bg-wash"
         }`}
       >
         {row.getVisibleCells().map((cell) => {

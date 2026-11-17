@@ -290,22 +290,34 @@ describe("RoadmapView", () => {
     }));
   });
 
-  it("opens note modal and saves a note", async () => {
+  it("opens the inline note editor and saves a note", async () => {
     const user = userEvent.setup();
     render(<RoadmapView roadmap={beginnerRoadmap} questions={testData} />);
     const noteButtons = screen.getAllByTitle("Add note");
     await user.click(noteButtons[0]);
-    // Modal should open
-    expect(screen.getByText("Add your notes below")).toBeInTheDocument();
+    // Editor opens in the row, not as a dialog
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(noteButtons[0]).toHaveAttribute("aria-expanded", "true");
     const textarea = screen.getByPlaceholderText("Write your notes here...");
     await user.type(textarea, "My study note");
     await user.click(screen.getByText("Done"));
     expect(mockTrackEvent).toHaveBeenCalledWith("note_save", expect.objectContaining({
       has_content: true,
     }));
+    expect(screen.queryByPlaceholderText("Write your notes here...")).not.toBeInTheDocument();
+    expect(screen.getByText("My study note")).toBeInTheDocument();
   });
 
-  it("note modal shows unsaved changes warning on cancel", async () => {
+  it("keeps several note editors open at once", async () => {
+    const user = userEvent.setup();
+    render(<RoadmapView roadmap={beginnerRoadmap} questions={testData} />);
+    const noteButtons = screen.getAllByTitle("Add note");
+    await user.click(noteButtons[0]);
+    await user.click(noteButtons[1]);
+    expect(screen.getAllByPlaceholderText("Write your notes here...")).toHaveLength(2);
+  });
+
+  it("note editor shows unsaved changes warning on cancel", async () => {
     const user = userEvent.setup();
     render(<RoadmapView roadmap={beginnerRoadmap} questions={testData} />);
     const noteButtons = screen.getAllByTitle("Add note");
@@ -316,7 +328,7 @@ describe("RoadmapView", () => {
     expect(screen.getByText("Unsaved changes")).toBeInTheDocument();
   });
 
-  it("note modal discard button closes without saving", async () => {
+  it("note editor discard button closes without saving", async () => {
     const user = userEvent.setup();
     render(<RoadmapView roadmap={beginnerRoadmap} questions={testData} />);
     const noteButtons = screen.getAllByTitle("Add note");
@@ -324,13 +336,14 @@ describe("RoadmapView", () => {
     const textarea = screen.getByPlaceholderText("Write your notes here...");
     await user.type(textarea, "will discard");
     await user.click(screen.getByText("Cancel"));
-    // Should show the confirm dialog
+    // Should show the confirm prompt
     await user.click(screen.getByText("Discard"));
-    // Modal should be closed
-    expect(screen.queryByText("Add your notes below")).not.toBeInTheDocument();
+    // Editor should be closed
+    expect(screen.queryByPlaceholderText("Write your notes here...")).not.toBeInTheDocument();
+    expect(mockTrackEvent).not.toHaveBeenCalledWith("note_save", expect.anything());
   });
 
-  it("note modal keep editing returns to editor", async () => {
+  it("note editor keep editing returns to editor", async () => {
     const user = userEvent.setup();
     render(<RoadmapView roadmap={beginnerRoadmap} questions={testData} />);
     const noteButtons = screen.getAllByTitle("Add note");
