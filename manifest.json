@@ -1,6 +1,6 @@
 {
-  "short_name": "leetcode-patterns",
-  "name": "Leetcode Patterns",
+  "short_name": "Yeetcode",
+  "name": "Yeetcode Patterns",
   "description": "A curated list of LeetCode questions grouped by patterns.",
   "icons": [
     {
@@ -11,6 +11,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#09090b",
-  "background_color": "#ffffff"
+  "theme_color": "#c4cbd2",
+  "background_color": "#c4cbd2"
 }

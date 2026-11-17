@@ -1,2 +1,2 @@
-:HL["/leetcode-patterns/_next/static/chunks/0yrn6isio25f1.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"WetP1eTdBSNhrbF8yOVnN"}
+:HL["/yeetcode-patterns/_next/static/chunks/2ux3i7rxrsaxg.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"ErFBdA8FctdnPcao8kZld"}
