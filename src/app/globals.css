@@ -1,8 +1,9 @@
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, chosen from all 50) · redesign: full
  * nav: kept shell, a masthead on the slate with the three reference drawers moved in from the fixed side tabs; view tabs cut into the sheet
- * signature: the question list set as a tide table on the printed sheet, titles in Newsreader, dates and counts in Plex Mono, a due review printed in magenta
+ * signature: the question list set as a tide table on the printed sheet, all type in Hanken Grotesk with tabular figures, a due review printed in the wordmark blue
+ * owner changes: Almanac's magenta accent replaced by the yeetcodepatterns wordmark blue; its Newsreader serif and Plex Mono figures replaced by an all-sans system (mono kept for code and key hints)
  * states: auth loading, toasts, confirm dialogs, unsaved-note guard, empty dropdown search
- * axes: mid/grotesk-sans/chromatic-magenta · posture: restrained · contrast: pass · modes: light+dark · v2.0.0 */
+ * axes: mid/grotesk-sans/chromatic-blue · posture: restrained · contrast: pass · modes: light+dark · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: E, the title floor pushed the Review column off the sheet at 1280; pattern tags now wrap inside the table, cells sit at 8px and the 224px title floor starts at 1400 */
 /* Hallmark · waive 49b · question titles are LeetCode's own problem names: none wrap at 1440, two lines at most at 768, the eleven longest reach three or four lines at 320 · a problem title cannot be shortened without renaming the problem */
 /* Hallmark · answered F4 · the ink fill marks the pressed Unshuffle toggle, not an action; the magenta and brick fills live only inside dialogs, one per dialog */

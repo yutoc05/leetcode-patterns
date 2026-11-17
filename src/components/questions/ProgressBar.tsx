@@ -9,7 +9,7 @@ export default function ProgressBar({ stats, pct }: { stats: ProgressStats; pct:
   return (
     <div className="pt-6">
       <div className="mb-3 flex flex-wrap items-baseline gap-x-6 gap-y-1">
-        <span className="font-outlier text-lg font-medium text-ink tabular-nums">{stats.totalDone}/{stats.total} completed ({pct}%)</span>
+        <span className="text-lg font-medium text-ink tabular-nums">{stats.totalDone}/{stats.total} completed ({pct}%)</span>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm font-medium tabular-nums">
           {stats.totals.Easy > 0 && (
             <span className="text-easy">

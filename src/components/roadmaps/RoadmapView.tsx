@@ -457,7 +457,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
 
   const phaseMarker = (complete: boolean, started: boolean, n: number) => (
     <div
-      className={`flex h-8 w-8 shrink-0 items-center justify-center font-outlier text-sm font-medium tabular-nums ${
+      className={`flex h-8 w-8 shrink-0 items-center justify-center text-sm font-medium tabular-nums ${
         complete
           ? "bg-ink text-sheet"
           : started
@@ -477,7 +477,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
         <p className="mt-2 max-w-[70ch] text-md text-ink-2"><InlineMarkdown text={roadmap.description} /></p>
         <div className="mt-6">
           <div className="mb-3 flex flex-wrap items-baseline gap-x-6 gap-y-1">
-            <span className="font-outlier text-lg font-medium text-ink tabular-nums">{stats.done}/{stats.total} completed ({stats.pct}%)</span>
+            <span className="text-lg font-medium text-ink tabular-nums">{stats.done}/{stats.total} completed ({stats.pct}%)</span>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm font-medium tabular-nums">
               {stats.totalByDiff.Easy > 0 && (
                 <span className="text-easy">
@@ -523,7 +523,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                   <h3 className={`text-xl ${difficultyColor[group.difficulty]}`}>
                     {group.difficulty}
                   </h3>
-                  <span className="font-outlier text-sm text-muted tabular-nums">
+                  <span className="text-sm text-muted tabular-nums">
                     {group.done}/{group.total} completed ({groupPct}%)
                   </span>
                 </div>
@@ -556,7 +556,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                           <div className="min-w-0 flex-1 pl-2">
                             <div className="flex items-baseline gap-2">
                               <span className="font-display font-semibold text-ink">{entry.phase.title}</span>
-                              <span className="font-outlier text-sm text-muted tabular-nums">
+                              <span className="text-sm text-muted tabular-nums">
                                 {phaseDone}/{entry.questions.length}
                               </span>
                             </div>
@@ -614,7 +614,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
                   <div className="min-w-0 flex-1 pl-2">
                     <div className="flex items-baseline gap-2">
                       <span className="font-display font-semibold text-ink">{phase.title}</span>
-                      <span className="font-outlier text-sm text-muted tabular-nums">
+                      <span className="text-sm text-muted tabular-nums">
                         {ps.done}/{ps.total}
                       </span>
                     </div>
@@ -656,7 +656,7 @@ export default function RoadmapView({ roadmap, questions }: Props) {
           <ol className="mt-4">
             {roadmap.nextSteps.map((step, i) => (
               <li key={i} className="flex items-start gap-3 border-t border-rule py-3 text-md text-ink-2 first:border-t-0">
-                <span className="bg-blue-100 flex h-6 w-6 shrink-0 items-center justify-center border border-rule-2 font-outlier text-sm font-medium text-ink tabular-nums">
+                <span className="bg-blue-100 flex h-6 w-6 shrink-0 items-center justify-center border border-rule-2 text-sm font-medium text-ink tabular-nums">
                   {i + 1}
                 </span>
                 <span><InlineMarkdown text={step} /></span>

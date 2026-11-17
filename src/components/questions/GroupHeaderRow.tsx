@@ -46,7 +46,7 @@ const GroupHeaderRow = forwardRef<HTMLTableRowElement, GroupHeaderRowProps>(
             <span className={`font-display text-xl font-semibold tracking-[-0.02em] ${difficultyColor[groupKey] ?? ""}`}>
               {groupKey}
             </span>
-            <span className="font-outlier text-sm text-muted tabular-nums">
+            <span className="text-sm text-muted tabular-nums">
               {groupDone}/{total} completed
             </span>
             {groupDone > 0 && (

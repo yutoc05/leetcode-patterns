@@ -39,7 +39,7 @@ export default async function GitHubLink() {
       {!!stars && (
         <span className="hidden items-center gap-1 sm:inline-flex">
           <Star className="h-3.5 w-3.5" aria-hidden="true" />
-          <span className="font-outlier text-sm tabular-nums">{formatCount(stars)}</span>
+          <span className="text-sm tabular-nums">{formatCount(stars)}</span>
         </span>
       )}
     </a>
