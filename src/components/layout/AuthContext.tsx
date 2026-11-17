@@ -6,6 +6,13 @@ import { downloadAndMerge, scheduleUpload, flushPendingUpload, mergeFromRealtime
 import { trackEvent } from "@/lib/analytics";
 import type { User } from "@supabase/supabase-js";
 
+declare global {
+  interface Window {
+    // Set by the inline script in app/layout.tsx when the URL carries an OAuth hash.
+    __SUPABASE_AUTH_HASH__?: string;
+  }
+}
+
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
@@ -83,9 +90,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Next.js App Router clears the URL hash during hydration before
     // Supabase can detect it. We capture it early in an inline <script>
     // and fall back to setSession if auto-detection missed it.
-    const savedHash = (window as Record<string, unknown>).__SUPABASE_AUTH_HASH__ as string | undefined;
+    const savedHash = window.__SUPABASE_AUTH_HASH__;
     if (savedHash) {
-      delete (window as Record<string, unknown>).__SUPABASE_AUTH_HASH__;
+      delete window.__SUPABASE_AUTH_HASH__;
       const params = new URLSearchParams(savedHash.substring(1));
       const accessToken = params.get("access_token");
       const refreshToken = params.get("refresh_token");

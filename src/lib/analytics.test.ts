@@ -1,37 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-
-const { mockSendGAEvent } = vi.hoisted(() => ({
-  mockSendGAEvent: vi.fn(),
-}));
-
-vi.mock("@next/third-parties/google", () => ({
-  sendGAEvent: mockSendGAEvent,
-}));
-
+import { describe, it, expect, vi } from "vitest";
 import { trackEvent } from "@/lib/analytics";
 
 describe("trackEvent", () => {
-  beforeEach(() => {
-    mockSendGAEvent.mockClear();
-  });
-
-  it("calls sendGAEvent with event name and params", () => {
-    trackEvent("test_event", { key: "value" });
-    expect(mockSendGAEvent).toHaveBeenCalledWith("event", "test_event", { key: "value" });
-  });
-
-  it("passes empty object when no params provided", () => {
-    trackEvent("bare_event");
-    expect(mockSendGAEvent).toHaveBeenCalledWith("event", "bare_event", {});
-  });
-
-  it("handles numeric params", () => {
-    trackEvent("count_event", { count: 42 });
-    expect(mockSendGAEvent).toHaveBeenCalledWith("event", "count_event", { count: 42 });
-  });
-
-  it("handles boolean params", () => {
-    trackEvent("toggle_event", { enabled: true });
-    expect(mockSendGAEvent).toHaveBeenCalledWith("event", "toggle_event", { enabled: true });
+  it("is a silent no-op while analytics is disabled", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    expect(() => trackEvent("test_event", { key: "value", count: 1, on: true })).not.toThrow();
+    expect(() => trackEvent("bare_event")).not.toThrow();
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 });

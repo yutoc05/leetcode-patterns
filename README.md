@@ -72,7 +72,7 @@ Solutions written in Java can be found in the [solutions] branch.
 
 ## Contributing
 
-The app is built with [Next.js] (App Router), [React] 19, [TypeScript], [Tailwind CSS] v4, [TanStack Table] v8, [Lucide React] for icons, and Google Analytics via `@next/third-parties`. Tests use [Vitest] + [React Testing Library].
+The app is built with [Next.js] (App Router), [React] 19, [TypeScript], [Tailwind CSS] v4, [TanStack Table] v8, and [Lucide React] for icons. Tests use [Vitest] + [React Testing Library].
 
 ```bash
 npm install
