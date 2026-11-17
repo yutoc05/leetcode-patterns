@@ -21,7 +21,7 @@ function parseInlineMarkdown(text: string): React.ReactNode[] {
       tokens.push(<em key={keyCounter++}>{parseInlineMarkdown(match[6])}</em>);
     } else if (match[7]) {
       tokens.push(
-        <code key={keyCounter++} className="rounded bg-zinc-100 px-1 py-0.5 text-xs dark:bg-zinc-800">
+        <code key={keyCounter++} className="rounded-pill bg-sheet-2 px-1 py-0.5 font-outlier text-xs">
           {match[8]}
         </code>
       );

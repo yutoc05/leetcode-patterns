@@ -2,12 +2,6 @@ import { forwardRef } from "react";
 import { flexRender, type Row } from "@tanstack/react-table";
 import { Question } from "@/types/question";
 
-const completedRowStyles: Record<string, string> = {
-  Easy: "bg-green-100/60 hover:bg-green-100 dark:bg-green-900/30 dark:hover:bg-green-900/40",
-  Medium: "bg-yellow-100/60 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:hover:bg-yellow-900/40",
-  Hard: "bg-red-100/60 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/40",
-};
-
 interface QuestionRowProps {
   row: Row<Question>;
   completed: Set<number>;
@@ -24,11 +18,9 @@ const QuestionRow = forwardRef<HTMLTableRowElement, QuestionRowProps>(
         key={row.id}
         data-index={dataIndex}
         ref={ref}
-        className={
-          isDone
-            ? `text-zinc-400 dark:text-zinc-500 ${completedRowStyles[row.original.difficulty]}`
-            : "hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
-        }
+        className={`border-t border-rule transition-colors duration-(--dur-micro) hover:bg-wash ${
+          isDone ? "text-muted" : "text-ink-2"
+        }`}
       >
         {row.getVisibleCells().map((cell) => {
           const meta = cell.column.columnDef.meta as { clickable?: boolean; toggleFn?: string; noStrikethrough?: boolean } | undefined;
@@ -36,11 +28,11 @@ const QuestionRow = forwardRef<HTMLTableRowElement, QuestionRowProps>(
           const onClick = isClickable
             ? () => (meta?.toggleFn === "starred" ? toggleStarred : toggleCompleted)(row.original.id)
             : undefined;
-          const strikethrough = isDone && !meta?.noStrikethrough ? "line-through decoration-zinc-300 dark:decoration-zinc-600" : "";
+          const strikethrough = isDone && !meta?.noStrikethrough ? "line-through decoration-rule-2/40" : "";
           return (
             <td
               key={cell.id}
-              className={`px-2 py-2 sm:px-4 sm:py-3 ${strikethrough} ${isClickable ? "cursor-pointer select-none" : ""}`}
+              className={`px-2 py-2 align-middle ${strikethrough} ${isClickable ? "cursor-pointer select-none" : ""}`}
               onClick={onClick}
             >
               {flexRender(cell.column.columnDef.cell, cell.getContext())}

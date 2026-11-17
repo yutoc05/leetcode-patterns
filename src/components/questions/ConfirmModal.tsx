@@ -13,32 +13,34 @@ export default function ConfirmModal({
 }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-(--z-modal) flex items-center justify-center bg-scrim"
       onClick={onCancel}
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
       <div
-        className="mx-4 w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+        className="dialog rounded-xl mx-4 w-full max-w-sm p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="mb-2 text-lg font-semibold">
+        <h2 className="mb-2 text-xl">
           {title}
         </h2>
-        <p className="mb-4 text-sm text-zinc-500">
+        <p className="mb-6 text-md text-ink-2">
           {message}
         </p>
         <div className="flex justify-end gap-2">
           <button
+            type="button"
             onClick={onCancel}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+            className="btn"
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={onConfirm}
-            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+            className="btn btn-danger"
           >
             {confirmLabel}
           </button>

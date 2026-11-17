@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { downloadAndMerge, scheduleUpload, flushPendingUpload, mergeFromRealtimePayload } from "@/lib/sync";
 import { trackEvent } from "@/lib/analytics";
 import type { User } from "@supabase/supabase-js";
+import { Check, X } from "lucide-react";
 
 declare global {
   interface Window {
@@ -190,13 +191,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
       {toast && (
         <div
-          className={`fixed inset-x-0 bottom-6 z-50 mx-auto w-fit animate-[fadeInUp_0.3s_ease-out] rounded-lg border px-4 py-3 text-sm font-medium shadow-lg transition-opacity duration-700 ease-in-out ${
-            toast.type === "error"
-              ? "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200"
-              : "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-200"
-          } ${toastFading ? "opacity-0" : "opacity-100"}`}
+          role="status"
+          className={`toast ${toast.type === "error" ? "toast-error" : ""} ${toastFading ? "opacity-0" : "opacity-100"}`}
         >
-          {toast.type === "error" ? "✕" : "✓"} {toast.message}
+          {toast.type === "error" ? (
+            <X className="h-4 w-4 shrink-0 text-error" aria-hidden="true" />
+          ) : (
+            <Check className="h-4 w-4 shrink-0 text-success" aria-hidden="true" />
+          )}{" "}
+          {toast.message}
         </div>
       )}
     </AuthContext.Provider>

@@ -36,63 +36,65 @@ export default function AcknowledgementsPanel() {
 
   return (
     <>
-      {/* Tab button – rendered inline inside the fixed flex wrapper in page.tsx */}
+      {/* Opener – sits in the masthead's reference row in page.tsx */}
       <button
+        type="button"
         onClick={() => { setOpen(true); trackEvent("panel_open", { panel: "acknowledgements" }); }}
-        className="rounded-r-xl bg-amber-600 px-2.5 py-4 text-white shadow-lg transition-colors hover:bg-amber-700"
+        className="btn btn-quiet"
         aria-label="Open acknowledgements"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold [writing-mode:vertical-lr]">
-          <Heart className="h-4 w-4 rotate-90" />
-          Acknowledgements
-        </span>
+        <Heart className="h-4 w-4" aria-hidden="true" />
+        Acknowledgements
       </button>
 
       {/* Panel */}
       <div
-        className={`fixed left-0 top-0 z-50 h-full w-80 transform border-r border-zinc-200 bg-white shadow-xl transition-transform duration-300 ease-in-out dark:border-zinc-700 dark:bg-zinc-900 ${
-          open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-(--z-modal) flex h-full w-80 flex-col border-r border-rule-2 bg-sheet transition-[transform,visibility] duration-(--dur-long) ease-out ${
+          open ? "visible translate-x-0" : "invisible -translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between bg-amber-600 px-4 py-3 text-white">
-          <h2 className="flex items-center gap-2 text-base font-semibold">
-            <Heart className="h-4 w-4" />
+        <div className="flex items-center justify-between border-b-2 border-ink py-2 pl-6 pr-3">
+          <h2 className="flex items-center gap-2">
+            <Heart className="h-4 w-4 shrink-0" aria-hidden="true" />
             Acknowledgements
           </h2>
           <button
+            type="button"
             onClick={() => { setOpen(false); trackEvent("panel_close", { panel: "acknowledgements" }); }}
-            className="rounded p-1 transition-colors hover:bg-amber-700"
+            aria-label="Close acknowledgements"
+            className="btn btn-quiet btn-icon"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
-        <div className="h-[calc(100%-49px)] overflow-y-auto px-4 py-4">
-          <p className="mb-4 text-xs text-zinc-500">
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+          <p className="mb-6 text-sm text-muted">
             Leetcode Patterns wouldn&apos;t exist without the following resources:
           </p>
-          <div className="space-y-4">
+          <ul className="space-y-6">
             {sources.map((source) => (
-              <a
-                key={source.title}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block overflow-hidden rounded-lg border border-zinc-200 transition-colors hover:border-blue-300 dark:border-zinc-800 dark:hover:border-blue-700"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${source.image}`}
-                  alt={source.title}
-                  className="h-32 w-full object-cover"
-                />
-                <div className="p-3">
-                  <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
+              <li key={source.title}>
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${source.image}`}
+                    alt={source.title}
+                    width={256}
+                    height={256}
+                    className="h-32 w-full object-cover outline outline-1 -outline-offset-1 outline-rule-2"
+                  />
+                  <span className="link mt-2 block text-md leading-snug group-hover:decoration-2">
                     {source.title}
-                  </p>
-                </div>
-              </a>
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </>
